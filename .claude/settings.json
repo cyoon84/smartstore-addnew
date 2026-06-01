@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "allow": [
+      "Read",
+      "Edit",
+      "Write",
+      "Bash(python3 scripts/price_calc.py:*)",
+      "Bash(python3 scripts/test_price_calc.py)",
+      "Bash(python3 scripts/seo_pick.py:*)",
+      "Bash(python3 scripts/slack_notify.py:*)",
+      "Bash(python3 scripts/organize_output.py:*)",
+      "WebSearch",
+      "WebFetch"
+    ]
+  }
+}

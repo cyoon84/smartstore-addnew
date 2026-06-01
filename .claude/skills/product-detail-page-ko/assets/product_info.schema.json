@@ -1,0 +1,201 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "product_info.json schema for product-detail-page-ko skill",
+  "description": "Structured product metadata extracted from a shopping URL, paired with the generated HTML detail page. Leave any field null or empty-string rather than inventing values.",
+  "type": "object",
+  "properties": {
+    "source": {
+      "type": "string",
+      "description": "Human-readable site label (e.g., 'Walmart Canada', 'Amazon US')."
+    },
+    "source_url": {
+      "type": "string",
+      "format": "uri"
+    },
+    "product_id": {
+      "type": "string",
+      "description": "Site-native SKU / ASIN / listing ID."
+    },
+    "title_en": {
+      "type": "string"
+    },
+    "model_name": {
+      "type": "string",
+      "description": "Official English full product name from the source store (= 현재 보고 있는 매장). Goes into the Naver 모델명 field. Extract directly when crawlable; leave empty / confirm with user if blocked. Single product."
+    },
+    "model_options": {
+      "type": "array",
+      "description": "Group products only: per-option official English names for the Naver 모델명 field.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "option": {
+            "type": "string"
+          },
+          "model_name": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "title_ko": {
+      "type": "string",
+      "description": "Natural Korean translation, not literal."
+    },
+    "brand": {
+      "type": "string"
+    },
+    "seller": {
+      "type": "string"
+    },
+    "rating": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "review_count": {
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "best_seller": {
+      "type": "boolean"
+    },
+    "pricing": {
+      "type": "object",
+      "properties": {
+        "cost_original": {
+          "type": "number"
+        },
+        "cost_currency": {
+          "type": "string"
+        },
+        "markup": {
+          "type": "number"
+        },
+        "markup_currency": {
+          "type": "string"
+        },
+        "sell_original": {
+          "type": "number"
+        },
+        "sell_krw": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "exchange_rate": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "tax_applied": {
+          "type": "boolean"
+        },
+        "tax_rate": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "shipping_rule": {
+          "type": "string",
+          "description": "Free-form rule as shown in the HTML (e.g., '4개당 ₩15,000')."
+        }
+      },
+      "required": [
+        "cost_original",
+        "cost_currency",
+        "sell_original",
+        "tax_applied",
+        "shipping_rule"
+      ]
+    },
+    "specs": {
+      "type": "object",
+      "description": "Flat key-value map of product specifications. Keys in English; Korean versions can be added in the HTML render only."
+    },
+    "description_bullets_en": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "description_bullets_ko": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "ingredients_en": {
+      "type": "string"
+    },
+    "ingredients_ko": {
+      "type": "string"
+    },
+    "allergens": {
+      "type": "object",
+      "properties": {
+        "contains": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "may_contain": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "images": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "format": "uri"
+      },
+      "description": "Full-resolution CDN URLs, query strings stripped."
+    },
+    "reviews": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "rating": {
+            "type": "integer"
+          },
+          "title": {
+            "type": "string"
+          },
+          "body": {
+            "type": "string"
+          },
+          "author": {
+            "type": "string"
+          },
+          "date": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "notes": {
+      "type": "string",
+      "description": "Any caveats about extraction (e.g., 'Description is image-only; gallery images contain the full description')."
+    }
+  },
+  "required": [
+    "source",
+    "source_url",
+    "title_en",
+    "title_ko",
+    "pricing",
+    "images"
+  ]
+}

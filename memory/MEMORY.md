@@ -1,0 +1,42 @@
+- [Sub-agent model is Claude Code desktop only](feedback_subagent_env_split.md) — 서브에이전트는 Claude Code `/register-agents` 전용. 모바일 현장 dispatch 는 기존 Cowork 그대로, Cowork instructions 엔 안 심음
+- [SEO refresh daily automation](project_seo_refresh_automation.md) — 매일 17:00 launchd → /seo-refresh 헤드리스: 판매중 2개 SEO 감사·재생성·Slack. seo-auditor 에이전트 + seo_pick/slack_notify/seo_refresh_cron 스크립트
+- [Mobile output sync](project_mobile_output_sync.md) — 매일 23:30 launchd → Cowork output 을 여기로 no-clobber 복사(동일 파일명은 여기꺼 keep). sync_mobile_output.sh, Claude 불필요
+- [Agents & orchestrator overview](project_agents_overview.md) — 서브에이전트 5종(market-strategist·market-researcher·product-extractor·listing-writer·seo-auditor) + 커맨드(/market-launch·/register-agents·/seo-refresh) 역할
+- [Model name from current store](feedback_model_name_from_store.md) — dispatch "현재 보고 있는 매장" 을 소스로 공식 영어 풀네임 추출 → 네이버 모델명 필드. 그룹은 옵션별. 크롤 가능=직접 추출 / 차단=사용자 확인
+- [Naver Smart Store fee always 6.6%](feedback_naver_fee.md) — 스마트스토어 판매가 산정 시 항상 6.6% 수수료를 가격에 포함 (gross-up)
+- [No unverified usage/recipe tips in product pages](feedback_no_usage_tips.md) — 상세페이지에 검증 안 된 활용 팁/레시피/조리법 섹션 만들지 말 것
+- [Brand name Korean transliteration for Naver search](feedback_brand_ko_names.md) — 브랜드명 한글 표기는 네이버 검색량 기준으로 표기 (예: Chosen Foods → 초슨푸드)
+- [No French in detail pages](feedback_no_french.md) — 캐나다 이중언어 라벨이어도 프랑스어 표기 사용 금지, 영어만
+- [HST/GST tax — always ask, never auto-apply](reference_hst_zero_rated.md) — 세금은 매번 물어봄. 사용자 제공 가격은 세전(pre-tax). 참고 세율: 일반 13% / 소스·커피·쿠키 0% / 키즈 의류·신발 5%
+- [Dispatch quick-input template](feedback_dispatch_template.md) — 폰에서 사진+한 줄 입력으로 상세페이지 워크플로 자동 시작하는 형식
+- [Slack delivery of 등록정보](feedback_slack_delivery.md) — 등록 완료 후 등록정보.md 전체(형식 A)를 Slack #new-item 채널에 자동 전송
+- [Title spec label](feedback_title_spec_label.md) — 상품명 수치 사양은 단독 숫자 말고 라벨 결합 (23g → 단백질23g)
+- [Naver title SEO guide](feedback_naver_title_seo_guide.md) — 네이버 공식 SEO 가이드 기반 상품명 작성 규칙 (50자 내외/동의어 중복 금지/판매처명 금지 등)
+- [Naver group product names lock after creation](feedback_naver_group_lock.md) — 그룹 상품은 생성 후 그룹명/옵션명 수정 불가, 처음부터 포괄적으로 만들 것
+- [Smart Store ID: finchmart_ca](reference_smartstore_id.md) — 사용자 네이버 스마트스토어 ID와 상품 URL 패턴
+- [Title source tag rules — no "정품", store name only for store-exclusive SKU](feedback_title_source_tag.md) — 상품명 끝 출처: 매장 한정 SKU만 "캐나다 코스트코" 식, 일반 유통은 "캐나다"만, "정품"은 항상 제외. NB+소매사이즈는 디폴트 일반 유통 (사용자 "코스트코 라인" 발언만으로 매장 한정 자동 가정 X)
+- [Source tag in title — no repeat in detail body](feedback_no_source_repeat.md) — 상품명에 들어간 출처/매장 태그는 상세페이지 본문에서 반복하지 않고 제품 자체 매력 중심으로 작성
+- [Naver tag policy — no category/brand/seller names](feedback_naver_tags.md) — 태그에 카테고리·브랜드·판매처명 사용 금지. 트렌드/USP·재료·변형·시나리오·타겟·사양·원산지로 10개 구성
+- [Free shipping + absorbed shipping cost in price](feedback_free_shipping_absorb.md) — "무료배송 + N$ 흡수" 패턴: 배송비를 상품가에 얹고 네이버에는 무료배송으로 등록 (수수료 gross-up 그대로 적용)
+- [HST-included cost — skip HST gross-up](feedback_hst_included_cost.md) — 사용자가 "원가 HST 포함"이라 명시하면 HST 가산 스킵, 마진+수수료 gross-up만 적용
+- [Price pattern dispatch table](feedback_price_patterns.md) — HST 가산/포함 + 배송비(개당/무배흡수) 짧은 입력 → 정확한 산식 분류 마스터 테이블
+- [Percent margin pricing](feedback_percent_margin.md) — % 마진: "수수료 감안 N%" = 판매가 = 원가KRW ÷ (0.934 − N/100), gross-up 별도 적용 X
+- [Pre-workflow domestic price check](feedback_domestic_price_check.md) — 산출물 만들기 전에 쿠팡·네이버 검색으로 국내 시세 확인하고 가격 경쟁력 보고, GO 받으면 진행
+- [Skip §0-A when "not sold in Korea"](feedback_skip_domestic_check_not_in_korea.md) — 사용자가 "한국에 안 판다/국내 미출시" 명시 시 §0-A 국내 시세 확인 스킵
+- [Target price-match pricing pattern](feedback_target_price_match.md) — "가격 N$로 맞춰" 명시 시 cost-plus 스킵, N CAD를 목표 판매가(pre-fee)로 사용
+- [Shipping per-unit, no bundle rule](feedback_shipping_per_unit_no_bundle.md) — "배송비 N원 (몇 개당 그런 거 없이)" = 수량당 단순 곱셈, 묶음 룰 없음
+- [Canadian price tag "N/X.XX OR Y.YY EA" format](feedback_price_tag_or_format.md) — Loblaws 양식 = N개 묶음 X.XX / 단품 Y.YY. 기본 단품가 사용, OCR 오인 흔함 → 사용자 확정 받기
+- [Group product — one unified detail page](feedback_group_product_one_detail.md) — 그룹상품 상세페이지는 옵션별 분리 X, 통합 1장으로 작성하고 본문에서 옵션 자연스럽게 안내
+- [Naver category for ice/slush/freezies](feedback_naver_category_ice.md) — 슬러시·아이스바·얼려먹는 빙과 모두 "식품 > 아이스크림/빙수 > 아이스크림" (빙과/아이스 > 슬러시 노드 존재 X)
+- [detail.html — skip shipping section and outro](feedback_detail_skip_shipping_outro.md) — 상세페이지 본문에 🚚 배송 안내·마무리 인사 한 줄 자동 삽입 금지 (instructions.md 명시 룰)
+- [detail.html — English subtitle under headline](feedback_detail_english_subtitle.md) — 헤드라인 바로 아래 영문 풀네임 부제 한 줄 추가 패턴
+- [Naver detail — text+image split, not standalone HTML](feedback_naver_detail_format.md) — 최종 산출물은 HTML 말고 섹션별 붙여넣기용 텍스트 + 이미지 URL 분리 형식
+- [Loss-leader / traffic-driver pricing](feedback_loss_leader.md) — "검색 유입용·끼워팔기·마진 포기" 표현 시 마진 최소화 모드 (gross-up은 유지, 2안 제시)
+- [Made-to-order fulfillment](feedback_made_to_order.md) — "재고 없이 주문 들어오면 매입" SKU는 made-to-order, 네이버 발송예정일 길게 설정
+- [Ceramic mugs ship under 1kg](feedback_mug_shipping_weight.md) — 세라믹 머그·컵류는 배송 중량 1kg 미만, 배송 원가 마진 잠식 경고 달지 말 것
+- [Release market is not country of origin](feedback_origin_vs_release_market.md) — "캐나다 한정 출시"는 판매 시장, 제조국 아님. 페이지에 제조국 미명시면 원산지 캐나다로 단정 금지
+- [Granola spelling — Quaker uses 그라놀라](feedback_granola_spelling.md) — Quaker Harvest Crunch 등록 시 "그라놀라" 표기 (그래놀라 X). 다른 브랜드는 케이스별 확인
+- [Output location — workspace output/, flat naming](feedback_output_location.md) — 데스크톱·모바일 dispatch 둘 다 ~/smartstore-addnew/output/에 `<slug>_detail.html` 식 평탄 저장 (Downloads X, 중첩 폴더 X)
+- [detail.html — bare fragment format](feedback_detail_html_bare_fragment.md) — 데스크톱·모바일 동일하게 p/strong/br + 이모지만 사용, div/style/script/table/article 금지 (네이버 에디터 붙여넣기용)
+- [Group detail — condense option/size text](feedback_group_detail_condensation.md) — 그룹상품 detail.html에서 옵션·사이즈 안내는 시각 카드 캡션 수준 한 줄로 응축 (사용자가 네이버 에디터에서 박스 사진·callout 등 시각 요소로 처리)
+- [Pre-sale regular price as cost](feedback_pre_sale_regular_price.md) — "세일전 가격으로 책정" 명시 시 매대 세일가 무시, 정상가 채택. 등록정보·product_info에 정상가/세일가 둘 다 기록 (LEARNED_RULES §12)

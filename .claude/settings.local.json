@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -fsSL https://claude.ai/install.sh)",
+      "Bash(bash)",
+      "Read(//Users/chulhee-macmini/**)",
+      "Bash(timeout 90 ~/.local/bin/claude -p \"Reply with exactly one word: READY\" --output-format text)",
+      "Bash(echo \"exit=$?\")",
+      "Bash(~/.local/bin/claude --help)",
+      "Bash(chmod +x /Volumes/External/claude/smartstore-addnew/scripts/seo_refresh_cron.sh)",
+      "Bash(/Volumes/External/claude/smartstore-addnew/scripts/seo_refresh_cron.sh)",
+      "Bash(SRC=\"/Volumes/External/claude/smartstore-project/output\"; DST=\"/Volumes/External/claude/smartstore-addnew/output\" *)",
+      "Read(//Volumes/External/claude/smartstore-project/output/**)",
+      "Bash(mkdir -p seo_refresh)",
+      "Bash(mv -v *_seo_* seo_refresh/)",
+      "Bash(mv -v seo_refresh_log.csv seo_refresh/)",
+      "Bash(python3 -c ' *)",
+      "mcp__9e5fe0a6-8659-45ac-bfe2-dcb7d7d607f2__slack_send_message"
+    ]
+  }
+}

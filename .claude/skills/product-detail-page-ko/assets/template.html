@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<!--
+  Korean product detail page template.
+  Replace placeholders wrapped in {{DOUBLE_BRACES}}.
+  Sections that don't apply (e.g., no ingredients) should be removed entirely rather than left blank.
+-->
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{TITLE_KO}} — {{SOURCE_LABEL}}</title>
+<style>
+  :root {
+    --brand: #0071ce;
+    --accent: #ffc220;
+    --ink: #1a1a1a;
+    --muted: #6b7280;
+    --line: #e5e7eb;
+    --bg-soft: #f7f8fa;
+    --price: #d23d22;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", "Segoe UI", sans-serif;
+    color: var(--ink);
+    background: #fff;
+    line-height: 1.6;
+  }
+  .page { max-width: 860px; margin: 0 auto; padding: 24px 20px 64px; }
+  .badge { display: inline-block; background: var(--accent); color: #000; font-weight: 700; font-size: 12px; padding: 4px 10px; border-radius: 4px; letter-spacing: 0.3px; }
+  .brand-row { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--muted); margin-bottom: 8px; flex-wrap: wrap; }
+  .brand-chip { background: #eef3ff; color: var(--brand); padding: 3px 8px; border-radius: 12px; font-weight: 600; }
+  h1 { font-size: 26px; line-height: 1.35; margin: 4px 0 12px; }
+  .rating { display: inline-flex; align-items: center; gap: 6px; color: #f59e0b; font-size: 14px; margin-bottom: 20px; }
+  .rating .count { color: var(--muted); }
+  .gallery { display: grid; grid-template-columns: 1fr; gap: 12px; margin-bottom: 28px; }
+  .hero { width: 100%; aspect-ratio: 1/1; background: var(--bg-soft); border-radius: 12px; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+  .hero img { width: 100%; height: 100%; object-fit: contain; }
+  .thumbs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  .thumb { aspect-ratio: 1/1; background: var(--bg-soft); border-radius: 8px; overflow: hidden; border: 1px solid var(--line); }
+  .thumb img { width: 100%; height: 100%; object-fit: contain; }
+
+  .price-card { border: 1px solid var(--line); border-radius: 12px; padding: 20px; margin-bottom: 28px; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,0.03); }
+  .price-card .origin { font-size: 13px; color: var(--muted); margin-bottom: 4px; }
+  .price-card .sell { font-size: 30px; font-weight: 800; color: var(--price); }
+  .price-card .sell small { font-size: 14px; color: var(--muted); font-weight: 500; margin-left: 8px; }
+  .price-card .calc { font-size: 13px; color: var(--muted); margin-top: 8px; }
+  .meta-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px 20px; margin-top: 16px; padding-top: 16px; border-top: 1px dashed var(--line); }
+  .meta-list .k { color: var(--muted); font-size: 13px; }
+  .meta-list .v { font-weight: 600; font-size: 14px; }
+
+  .section { margin: 36px 0; }
+  .section h2 { font-size: 18px; margin: 0 0 12px; padding-bottom: 10px; border-bottom: 2px solid var(--ink); }
+  .section h3 { font-size: 15px; margin: 18px 0 8px; color: #374151; }
+  ul.clean { margin: 10px 0; padding-left: 20px; }
+  ul.clean li { margin: 6px 0; }
+  .spec-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  .spec-table td { padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .spec-table td:first-child { width: 35%; background: var(--bg-soft); color: var(--muted); font-weight: 600; }
+  .ingredients { font-size: 13px; background: var(--bg-soft); padding: 14px 16px; border-radius: 8px; color: #374151; }
+  .allergen { margin-top: 10px; padding: 10px 12px; border-left: 3px solid #d23d22; background: #fff5f3; font-size: 13px; color: #9a1e08; }
+
+  .shipping-box { border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; background: #fafbff; }
+  .shipping-box .row { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; }
+  .shipping-box .row + .row { border-top: 1px dashed var(--line); }
+  .shipping-box .row .label { color: var(--muted); }
+  .shipping-box .row .val { font-weight: 700; }
+
+  .note { font-size: 12px; color: var(--muted); margin-top: 16px; line-height: 1.6; }
+  a.src { color: var(--brand); font-size: 12px; text-decoration: none; }
+  a.src:hover { text-decoration: underline; }
+
+  @media (min-width: 720px) {
+    .gallery { grid-template-columns: 1.2fr 1fr; align-items: start; }
+    .thumbs { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="brand-row">
+    <span class="brand-chip">{{BRAND}}</span>
+    <!-- Remove badge if not a best-seller -->
+    <span class="badge">{{BADGE}}</span>
+    <span>·</span>
+    <span>{{SOURCE_LABEL}}</span>
+  </div>
+
+  <h1>{{TITLE_KO}}<br><small style="font-weight:500;color:var(--muted);font-size:16px">{{SUBTITLE}}</small></h1>
+
+  <div class="rating">
+    <span>{{STAR_STRING}}</span>
+    <span>{{RATING_NUMBER}}</span>
+    <span class="count">(리뷰 {{REVIEW_COUNT}}개)</span>
+  </div>
+
+  <div class="gallery">
+    <div class="hero">
+      <img src="{{HERO_IMAGE_URL}}" alt="{{TITLE_KO}} 대표 이미지">
+    </div>
+    <div class="thumbs">
+      <!-- Repeat .thumb for each additional image -->
+      <div class="thumb"><img src="{{IMAGE_URL_2}}" alt="이미지 2"></div>
+      <div class="thumb"><img src="{{IMAGE_URL_3}}" alt="이미지 3"></div>
+      <div class="thumb"><img src="{{IMAGE_URL_4}}" alt="이미지 4"></div>
+      <div class="thumb"><img src="{{IMAGE_URL_5}}" alt="이미지 5"></div>
+    </div>
+  </div>
+
+  <div class="price-card">
+    <div class="origin">현지 원가 ({{SOURCE_LABEL}}): <b>{{COST_DISPLAY}}</b></div>
+    <div class="sell">{{SELL_DISPLAY}} <small>({{MARKUP_NOTE}})</small></div>
+    <div class="calc">{{PRICE_CALC_EXPLANATION}}</div>
+    <div class="meta-list">
+      <!-- Repeat .meta-list children for each spec worth highlighting -->
+      <div><div class="k">중량</div><div class="v">{{WEIGHT}}</div></div>
+      <div><div class="k">구성</div><div class="v">{{PACK_CONFIG}}</div></div>
+      <div><div class="k">원산지</div><div class="v">{{ORIGIN}}</div></div>
+      <div><div class="k">보관</div><div class="v">{{STORAGE}}</div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>배송 안내</h2>
+    <div class="shipping-box">
+      <div class="row"><span class="label">배송비</span><span class="val">{{SHIPPING_RULE}}</span></div>
+      <!-- Optional shipping examples -->
+      <div class="row"><span class="label">예시 (1~4개)</span><span class="val">{{SHIPPING_1_4}}</span></div>
+      <div class="row"><span class="label">예시 (5~8개)</span><span class="val">{{SHIPPING_5_8}}</span></div>
+      <div class="row"><span class="label">세금</span><span class="val">{{TAX_STATUS}}</span></div>
+    </div>
+    <p class="note">{{SHIPPING_NOTE}}</p>
+  </div>
+
+  <div class="section">
+    <h2>상품 소개</h2>
+    <p>{{SHORT_DESCRIPTION_KO}}</p>
+
+    <h3>포인트</h3>
+    <ul class="clean">
+      <!-- Repeat <li> per bullet -->
+      <li>{{BULLET_1}}</li>
+      <li>{{BULLET_2}}</li>
+      <li>{{BULLET_3}}</li>
+    </ul>
+  </div>
+
+  <!-- Remove this section if there are no specs -->
+  <div class="section">
+    <h2>제품 사양</h2>
+    <table class="spec-table">
+      <tr><td>{{SPEC_KEY_1}}</td><td>{{SPEC_VAL_1}}</td></tr>
+      <tr><td>{{SPEC_KEY_2}}</td><td>{{SPEC_VAL_2}}</td></tr>
+      <!-- add more rows as needed -->
+    </table>
+  </div>
+
+  <!-- Remove this section if no ingredients were extracted -->
+  <div class="section">
+    <h2>원재료</h2>
+    <div class="ingredients">
+      {{INGREDIENTS_KO}}
+    </div>
+    <div class="allergen">
+      <b>알레르기 유의:</b> {{ALLERGENS_CONTAINS}}<br>
+      <b>교차오염 가능성:</b> {{ALLERGENS_MAY_CONTAIN}}
+    </div>
+  </div>
+
+  <!-- Remove this section if there are no reviews -->
+  <div class="section">
+    <h2>구매자 후기 요약</h2>
+    <ul class="clean">
+      <li>{{REVIEW_SUMMARY_1}}</li>
+      <li>{{REVIEW_SUMMARY_2}}</li>
+      <li>{{REVIEW_SUMMARY_3}}</li>
+    </ul>
+    <p class="note">※ {{SOURCE_LABEL}} 리뷰에서 발췌·번역한 요약입니다. 평점 {{RATING_NUMBER}} / 리뷰 {{REVIEW_COUNT}}개 기준.</p>
+  </div>
+
+  <p class="note">
+    원본 상품 페이지: <a class="src" href="{{SOURCE_URL}}" target="_blank" rel="noopener">{{SOURCE_LABEL}} — {{TITLE_EN}}</a><br>
+    이미지 저작권은 원 판매처 및 제조사에 있으며, 본 페이지는 재판매용 상세 소개 목적의 재구성본입니다.
+  </p>
+
+</div>
+</body>
+</html>

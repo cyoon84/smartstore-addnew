@@ -1,0 +1,8 @@
+# 생성 산출물 — 용량 크고 결과물이라 백업 제외
+output/
+*.DS_Store
+__pycache__/
+*.pyc
+
+# 비밀 — Slack webhook URL
+scripts/.slack_webhook
