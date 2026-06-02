@@ -35,3 +35,6 @@ done
 python3 "$PROJECT/scripts/organize_output.py" --apply >> "$LOG" 2>&1
 
 echo "[$TS] sync 완료 — 새 파일 ${copied}개 복사 후 제품폴더 정리 (project→addnew)" >> "$LOG"
+
+# 매시간 실행이라 로그 누적 — 7일 지난 sync 로그 자동 정리
+find "$LOG_DIR" -name 'sync_*.log' -mtime +7 -delete 2>/dev/null || true

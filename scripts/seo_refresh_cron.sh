@@ -1,10 +1,20 @@
 #!/bin/bash
-# 매일 launchd 가 실행 — /seo-refresh 워크플로를 헤드리스로 돌린다.
-# 인증은 Keychain 공유(claude -p). 권한은 무인용으로 bypass.
+# launchd 가 매 시 0분에 실행(트리거). 실제 작업은 하루 1번만 — 17시 이후 첫 틱에서.
+# 시계 점프·정시 미발화 대비 anacron 방식(하루 1회 가드 + 따라잡기). 인증 Keychain 공유.
 set -u
 PROJECT="/Volumes/External/claude/smartstore-addnew"
 CLAUDE="$HOME/.local/bin/claude"
 LOG_DIR="$PROJECT/output/cron_logs"
+
+# ── 하루 1회 가드 (스탬프는 내장디스크) ──
+STAMP="$HOME/.finchmart_seo_lastrun"
+TARGET_HOUR=17
+TODAY="$(date +%Y%m%d)"
+HOUR=$((10#$(date +%H)))          # 08/09 8진수 에러 방지
+[ "$(cat "$STAMP" 2>/dev/null)" = "$TODAY" ] && exit 0   # 오늘 이미 실행함
+[ "$HOUR" -lt "$TARGET_HOUR" ] && exit 0                  # 아직 17시 전
+echo "$TODAY" > "$STAMP"                                  # 실행 표시(중복 방지 먼저)
+
 TS="$(date +%Y%m%d_%H%M%S)"
 LOG="$LOG_DIR/seo_refresh_$TS.log"
 

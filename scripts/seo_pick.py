@@ -18,11 +18,22 @@ LOG = os.path.join(SEO_DIR, "seo_refresh_log.csv")
 STORE_ID = "finchmart_ca"
 
 
+def _selling_count(p):
+    try:
+        with open(p, encoding="utf-8-sig") as f:
+            return sum(1 for r in csv.DictReader(f) if r.get("판매상태") == "판매중")
+    except Exception:
+        return 0
+
+
 def latest_csv():
     files = sorted(glob.glob(os.path.join(GUIDE, "Product_*.csv")))
     if not files:
         sys.exit("guide/Product_*.csv 없음")
-    return files[-1]  # 파일명에 날짜시간 → 사전순 = 최신순
+    # 부분 업로드(수정한 몇 개만 export) 방지 — 판매중 >= 50 인 '전체 목록'만 후보로,
+    # 그중 파일명 사전순 최신을 채택. (전체 스토어는 수백 개라 50 미만은 부분 export로 간주.)
+    full = [f for f in files if _selling_count(f) >= 50]
+    return (full or files)[-1]
 
 
 def done_ids():

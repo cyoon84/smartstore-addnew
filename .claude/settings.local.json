@@ -15,7 +15,13 @@
       "Bash(mv -v *_seo_* seo_refresh/)",
       "Bash(mv -v seo_refresh_log.csv seo_refresh/)",
       "Bash(python3 -c ' *)",
-      "mcp__9e5fe0a6-8659-45ac-bfe2-dcb7d7d607f2__slack_send_message"
+      "mcp__9e5fe0a6-8659-45ac-bfe2-dcb7d7d607f2__slack_send_message",
+      "Bash(cd /Volumes/External/claude/smartstore-investigate-new-item *)",
+      "Bash(cat)",
+      "Bash(rm -f /tmp/slack_batch.txt)",
+      "Bash(python3 -)",
+      "Bash(git ls-remote *)",
+      "Bash(git push *)"
     ]
   }
 }

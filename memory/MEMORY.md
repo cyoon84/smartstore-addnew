@@ -2,6 +2,7 @@
 - [SEO refresh daily automation](project_seo_refresh_automation.md) — 매일 17:00 launchd → /seo-refresh 헤드리스: 판매중 2개 SEO 감사·재생성·Slack. seo-auditor 에이전트 + seo_pick/slack_notify/seo_refresh_cron 스크립트
 - [Mobile output sync](project_mobile_output_sync.md) — 매일 23:30 launchd → Cowork output 을 여기로 no-clobber 복사(동일 파일명은 여기꺼 keep). sync_mobile_output.sh, Claude 불필요
 - [Agents & orchestrator overview](project_agents_overview.md) — 서브에이전트 5종(market-strategist·market-researcher·product-extractor·listing-writer·seo-auditor) + 커맨드(/market-launch·/register-agents·/seo-refresh) 역할
+- [Source-launch batch command](project_source_launch_batch.md) — investigate products.json → 등록 산출물 배치(/source-launch). 매장수 기반 가격(2곳+ 최고가+$1.50 / 1곳 +$2), 정액 ₩15,000 배송이 저단가품 경쟁력 죽임. 매일 13:30 launchd 자동(없으면 14:30·15:30 재시도)
 - [Model name from current store](feedback_model_name_from_store.md) — dispatch "현재 보고 있는 매장" 을 소스로 공식 영어 풀네임 추출 → 네이버 모델명 필드. 그룹은 옵션별. 크롤 가능=직접 추출 / 차단=사용자 확인
 - [Naver Smart Store fee always 6.6%](feedback_naver_fee.md) — 스마트스토어 판매가 산정 시 항상 6.6% 수수료를 가격에 포함 (gross-up)
 - [No unverified usage/recipe tips in product pages](feedback_no_usage_tips.md) — 상세페이지에 검증 안 된 활용 팁/레시피/조리법 섹션 만들지 말 것
@@ -13,6 +14,7 @@
 - [Title spec label](feedback_title_spec_label.md) — 상품명 수치 사양은 단독 숫자 말고 라벨 결합 (23g → 단백질23g)
 - [Naver title SEO guide](feedback_naver_title_seo_guide.md) — 네이버 공식 SEO 가이드 기반 상품명 작성 규칙 (50자 내외/동의어 중복 금지/판매처명 금지 등)
 - [Naver group product names lock after creation](feedback_naver_group_lock.md) — 그룹 상품은 생성 후 그룹명/옵션명 수정 불가, 처음부터 포괄적으로 만들 것
+- [Group product per-option shipping](feedback_group_shipping_per_option.md) — 네이버 그룹상품은 옵션(제품)별로 배송비 다르게 설정 가능. 묶음/개당/금액 차등 OK, 별도 분리 권고 X
 - [Smart Store ID: finchmart_ca](reference_smartstore_id.md) — 사용자 네이버 스마트스토어 ID와 상품 URL 패턴
 - [Title source tag rules — no "정품", store name only for store-exclusive SKU](feedback_title_source_tag.md) — 상품명 끝 출처: 매장 한정 SKU만 "캐나다 코스트코" 식, 일반 유통은 "캐나다"만, "정품"은 항상 제외. NB+소매사이즈는 디폴트 일반 유통 (사용자 "코스트코 라인" 발언만으로 매장 한정 자동 가정 X)
 - [Source tag in title — no repeat in detail body](feedback_no_source_repeat.md) — 상품명에 들어간 출처/매장 태그는 상세페이지 본문에서 반복하지 않고 제품 자체 매력 중심으로 작성
@@ -27,6 +29,7 @@
 - [Shipping per-unit, no bundle rule](feedback_shipping_per_unit_no_bundle.md) — "배송비 N원 (몇 개당 그런 거 없이)" = 수량당 단순 곱셈, 묶음 룰 없음
 - [Canadian price tag "N/X.XX OR Y.YY EA" format](feedback_price_tag_or_format.md) — Loblaws 양식 = N개 묶음 X.XX / 단품 Y.YY. 기본 단품가 사용, OCR 오인 흔함 → 사용자 확정 받기
 - [Group product — one unified detail page](feedback_group_product_one_detail.md) — 그룹상품 상세페이지는 옵션별 분리 X, 통합 1장으로 작성하고 본문에서 옵션 자연스럽게 안내
+- [Naver category — 식품>스낵/과자 verified tree](feedback_naver_category_snack.md) — 스낵·과자 상위는 식품>스낵/과자(과자/베이커리 아님). 세분류 8개만 실존(일반스낵·쿠키/비스킷·파이/케익·팝콘/강냉이류 등). 감자스낵·감자칩·포테이토칩 등 잎 노드 지어내기 금지 → 칩류=일반스낵
 - [Naver category for ice/slush/freezies](feedback_naver_category_ice.md) — 슬러시·아이스바·얼려먹는 빙과 모두 "식품 > 아이스크림/빙수 > 아이스크림" (빙과/아이스 > 슬러시 노드 존재 X)
 - [detail.html — skip shipping section and outro](feedback_detail_skip_shipping_outro.md) — 상세페이지 본문에 🚚 배송 안내·마무리 인사 한 줄 자동 삽입 금지 (instructions.md 명시 룰)
 - [detail.html — English subtitle under headline](feedback_detail_english_subtitle.md) — 헤드라인 바로 아래 영문 풀네임 부제 한 줄 추가 패턴
@@ -39,4 +42,4 @@
 - [Output location — workspace output/, flat naming](feedback_output_location.md) — 데스크톱·모바일 dispatch 둘 다 ~/smartstore-addnew/output/에 `<slug>_detail.html` 식 평탄 저장 (Downloads X, 중첩 폴더 X)
 - [detail.html — bare fragment format](feedback_detail_html_bare_fragment.md) — 데스크톱·모바일 동일하게 p/strong/br + 이모지만 사용, div/style/script/table/article 금지 (네이버 에디터 붙여넣기용)
 - [Group detail — condense option/size text](feedback_group_detail_condensation.md) — 그룹상품 detail.html에서 옵션·사이즈 안내는 시각 카드 캡션 수준 한 줄로 응축 (사용자가 네이버 에디터에서 박스 사진·callout 등 시각 요소로 처리)
-- [Pre-sale regular price as cost](feedback_pre_sale_regular_price.md) — "세일전 가격으로 책정" 명시 시 매대 세일가 무시, 정상가 채택. 등록정보·product_info에 정상가/세일가 둘 다 기록 (LEARNED_RULES §12)
+- [Pre-sale regular price as cost](feedback_pre_sale_regular_price.md) — 세일가 식별되면(SAVE/정가 동시표시) 명시 없어도 세일전 정상가가 디폴트(2026-06-02 격상). 정상가/세일가 둘 다 기록 (LEARNED_RULES §12)
