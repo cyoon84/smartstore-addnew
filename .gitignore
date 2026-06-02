@@ -6,3 +6,7 @@ __pycache__/
 
 # 비밀 — Slack webhook URL
 scripts/.slack_webhook
+
+# guide/ 안 — 스토어 상품 export(민감/대용량)·가이드 PDF, github 제외 (폴더 구조만 유지)
+guide/*
+!guide/.gitkeep
