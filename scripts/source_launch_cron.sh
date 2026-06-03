@@ -1,10 +1,10 @@
 #!/bin/bash
-# launchd 가 매 시 30분에 실행(트리거). 실제 작업은 하루 1번만.
-# 흐름: investigate 가 오전에 크롤 → 이 스크립트는 13:30부터 매시 점검,
+# launchd 가 주 1회(토요일 02:05·03:05·04:05·05:05 틱)에 실행(트리거). 실제 작업은 하루 1번만.
+# 흐름: ca-grocery-sourcing-daily 가 토 01:00 크롤 → 이 스크립트는 02:05에 점검,
 #       오늘 날짜 crawl_<YYYY-MM-DD>/products.json 이 있으면 /source-launch 배치 실행.
-#       아직 없으면(폴더 미생성) 스탬프를 안 찍고 종료 → 14:30·15:30… 다음 틱에서 재시도.
-#       성공/실행 착수하면 스탬프 = 오늘 → 그날은 더 안 돈다.
-# 시계 점프·정시 미발화 대비 anacron 방식(하루 1회 가드 + 따라잡기). 인증 Keychain 공유.
+#       아직 없으면(크롤 지연) 스탬프를 안 찍고 종료 → 03:05·04:05·05:05 다음 틱에서 따라잡기.
+#       성공/실행 착수하면 스탬프 = 오늘 → 그날 나머지 틱은 즉시 종료(중복·슬립 후 재발화 방지).
+# 시계 점프·정시 미발화·크롤 지연 대비 anacron 방식(하루 1회 가드 + 토요일 내 따라잡기). 인증 Keychain 공유.
 set -u
 PROJECT="/Volumes/External/claude/smartstore-addnew"
 INVESTIGATE="/Volumes/External/claude/smartstore-investigate-new-item"
@@ -13,7 +13,7 @@ LOG_DIR="$PROJECT/output/cron_logs"
 
 # ── 하루 1회 가드 (스탬프는 내장디스크) ──
 STAMP="$HOME/.finchmart_source_launch_lastrun"
-TARGET_HOUR=13          # 13:30(오후 1:30) 첫 실행 — 트리거는 매시 30분, 13시 전 틱은 가드
+TARGET_HOUR=2           # 토 02:05 트리거 — 그 전(슬립 후 새벽 발화 등) 시각은 가드
 TODAY="$(date +%Y%m%d)"
 CRAWL_DATE="$(date +%Y-%m-%d)"
 HOUR=$((10#$(date +%H)))          # 08/09 8진수 에러 방지

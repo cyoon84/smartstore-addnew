@@ -2,7 +2,7 @@
 - [SEO refresh daily automation](project_seo_refresh_automation.md) — 매일 17:00 launchd → /seo-refresh 헤드리스: 판매중 2개 SEO 감사·재생성·Slack. seo-auditor 에이전트 + seo_pick/slack_notify/seo_refresh_cron 스크립트
 - [Mobile output sync](project_mobile_output_sync.md) — 매일 23:30 launchd → Cowork output 을 여기로 no-clobber 복사(동일 파일명은 여기꺼 keep). sync_mobile_output.sh, Claude 불필요
 - [Agents & orchestrator overview](project_agents_overview.md) — 서브에이전트 5종(market-strategist·market-researcher·product-extractor·listing-writer·seo-auditor) + 커맨드(/market-launch·/register-agents·/seo-refresh) 역할
-- [Source-launch batch command](project_source_launch_batch.md) — investigate products.json → 등록 산출물 배치(/source-launch). 매장수 기반 가격(2곳+ 최고가+$1.50 / 1곳 +$2), 정액 ₩15,000 배송이 저단가품 경쟁력 죽임. 매일 13:30 launchd 자동(없으면 14:30·15:30 재시도)
+- [Source-launch batch command](project_source_launch_batch.md) — investigate products.json → 등록 산출물 배치(/source-launch). 매장수 기반 가격(2곳+ 최고가+$1.50 / 1곳 +$2), 정액 ₩15,000 배송이 저단가품 경쟁력 죽임. 토요일 02:05 launchd 주1회 자동(크롤 ca-grocery-sourcing-daily 토 01:00, 18:00 oneshot 제거)
 - [Model name from current store](feedback_model_name_from_store.md) — dispatch "현재 보고 있는 매장" 을 소스로 공식 영어 풀네임 추출 → 네이버 모델명 필드. 그룹은 옵션별. 크롤 가능=직접 추출 / 차단=사용자 확인
 - [Naver Smart Store fee always 6.6%](feedback_naver_fee.md) — 스마트스토어 판매가 산정 시 항상 6.6% 수수료를 가격에 포함 (gross-up)
 - [No unverified usage/recipe tips in product pages](feedback_no_usage_tips.md) — 상세페이지에 검증 안 된 활용 팁/레시피/조리법 섹션 만들지 말 것
@@ -31,6 +31,7 @@
 - [Group product — one unified detail page](feedback_group_product_one_detail.md) — 그룹상품 상세페이지는 옵션별 분리 X, 통합 1장으로 작성하고 본문에서 옵션 자연스럽게 안내
 - [Naver category — 식품>스낵/과자 verified tree](feedback_naver_category_snack.md) — 스낵·과자 상위는 식품>스낵/과자(과자/베이커리 아님). 세분류 8개만 실존(일반스낵·쿠키/비스킷·파이/케익·팝콘/강냉이류 등). 감자스낵·감자칩·포테이토칩 등 잎 노드 지어내기 금지 → 칩류=일반스낵
 - [Naver category for ice/slush/freezies](feedback_naver_category_ice.md) — 슬러시·아이스바·얼려먹는 빙과 모두 "식품 > 아이스크림/빙수 > 아이스크림" (빙과/아이스 > 슬러시 노드 존재 X)
+- [Naver top-level category lock — copy & re-register](feedback_naver_category_toplevel_lock.md) — 등록 후 대(최상위)분류 카테고리 변경 불가. 같은 대분류 내 이동만 즉시 수정, 대분류 바뀌면 기존 상품 복사 후 새 상품 재등록(셀러). SEO 리프레시는 대분류 넘는 이동이면 "⚠️ 복사 재등록 필요" 명시
 - [detail.html — skip shipping section and outro](feedback_detail_skip_shipping_outro.md) — 상세페이지 본문에 🚚 배송 안내·마무리 인사 한 줄 자동 삽입 금지 (instructions.md 명시 룰)
 - [detail.html — English subtitle under headline](feedback_detail_english_subtitle.md) — 헤드라인 바로 아래 영문 풀네임 부제 한 줄 추가 패턴
 - [Naver detail — text+image split, not standalone HTML](feedback_naver_detail_format.md) — 최종 산출물은 HTML 말고 섹션별 붙여넣기용 텍스트 + 이미지 URL 분리 형식

@@ -18,11 +18,14 @@ listing-writer 가 카피, market-researcher 가 브랜드품 §0-A.
 
 **How to apply:** products.json 들어오면 매장수 산정→최고가/마진→price_calc→PB·캐나다한정NB는 §0-A 스킵·국내유통가능 NB만 조사→listing-writer→`output/new-item/<slug>/` 저장→Slack #new-item.
 
-**자동 스케줄 (2026-06-02 변경, 기존 10시→13:30):** investigate 가 오전 크롤 → 이 배치는 **매일 13:30(오후 1:30)부터** 자동 실행.
-launchd `com.finchmart.source-launch`(매시 **:30** 트리거) + `scripts/source_launch_cron.sh`(anacron식 하루1회 가드, `TARGET_HOUR=13`).
-스크립트가 오늘자 `crawl_<YYYY-MM-DD>/products.json` 존재를 확인 — 있으면 `claude -p "/source-launch <dir>"`
-헤드리스 실행 후 스탬프(`~/.finchmart_source_launch_lastrun`); **없으면 스탬프 안 찍고 종료 → 14:30·15:30… 다음 틱 재시도**.
-실패 시 Slack 경보. 대기 로그 `output/cron_logs/source_launch_wait.log`. (seo-refresh·mobile-sync 와 동일 launchd 패턴.)
+**자동 스케줄 (2026-06-03 변경, 매일→주1회):** `ca-grocery-sourcing-daily` 가 **토요일 01:00** 크롤 →
+이 배치는 **토요일 02:05** 첫 시도, 크롤 지연/슬립 대비 **03:05·04:05·05:05 따라잡기**(전부 Weekday 6).
+launchd `com.finchmart.source-launch`(StartCalendarInterval 4틱) + `scripts/source_launch_cron.sh`(anacron식
+하루1회 스탬프 가드, `TARGET_HOUR=2` → 실제 실행은 하루 한 번만). 스크립트가 오늘자
+`crawl_<YYYY-MM-DD>/products.json` 존재를 확인 — 있으면 `claude -p "/source-launch <dir>"` 헤드리스 실행 후
+스탬프(`~/.finchmart_source_launch_lastrun`); 없으면 스탬프 안 찍고 종료 → 다음 틱 따라잡기(그 주 토요일 내).
+실패 시 Slack 경보. 대기 로그 `output/cron_logs/source_launch_wait.log`. 18:00 일회성 oneshot 잡은 2026-06-03 제거.
+**잔여 한계:** 토 05:05까지 머신이 계속 슬립이거나 크롤이 안 끝나면 그 주는 건너뜀(다음 토요일까지). (seo-refresh·mobile-sync 와 동일 launchd 패턴.)
 
 **핵심 인사이트:** 2026-06-01 첫 배치(15종)에서 정액 배송비 ₩15,000 이 스낵·칩 등 저단가/부피품의 도착가 경쟁력을
 죽인다는 게 드러남 — 브랜드품 §0-A 5종 전부 "가격으로 안 됨", 공통 원인이 제품가가 아니라 배송비였음. 국내는
