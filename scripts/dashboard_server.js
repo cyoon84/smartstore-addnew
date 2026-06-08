@@ -196,7 +196,16 @@ const $=s=>document.querySelector(s);
 const esc=s=>s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
 const won=n=>n?"₩"+n.toLocaleString("ko-KR"):"";
 const ICON={md:"📄",html:"🌐",json:"🧩",xlsx:"📊",image:"🖼",other:"📎"};
-async function load(){PRODUCTS=await(await fetch("/api/products")).json();renderList();}
+let SIG="";
+async function load(){
+  try{
+    const r=await(await fetch("/api/products")).json();
+    const sig=r.length+":"+r.map(x=>x.slug+(x.live?"*":"")).join(",");
+    if(sig!==SIG){const first=SIG==="";SIG=sig;PRODUCTS=r;renderList();
+      if(!first)flash(r.length);}
+  }catch(e){}
+}
+function flash(n){const b=$("#cnt");if(b){b.style.color="#1f8a4c";setTimeout(()=>b.style.color="",1500);}}
 function renderList(){
   const q=$("#q").value.trim().toLowerCase();
   const rows=PRODUCTS.filter(p=>!q||(p.title+" "+p.slug).toLowerCase().includes(q));
@@ -271,5 +280,6 @@ function mdToHtml(src){
 }
 $("#q").addEventListener("input",renderList);
 load();
+setInterval(load,20000);  // 새 제품 자동 감지·리프레시(20초)
 </script>
 </body></html>`;
