@@ -47,10 +47,15 @@ argument-hint: [crawl 폴더 경로 또는 날짜 (생략 시 최신 crawl_*) / 
    - `<slug>_등록정보.md` (상품명·모델명·가격산식·검산·태그·카테고리·배송·이미지 URL·소싱 채널가 비교·§0-A 결과)
    - `<slug>_detail.html` (listing-writer fragment)
    - `<slug>_product_info.json` (products.json 원본 + price_calc `--json` pricing 블록 + 소싱 메타)
-7. **Slack** — #new-item 에 배치 요약(제품·판매가·도착가·§0-A 신호) 전송. `scripts/slack_notify.py` 사용.
+7. **일괄등록 엑셀 (배치 = 한 파일에 전부)** — 메인이 GO 통과한 전 슬러그를 **한 번에** 넘겨 1개 엑셀로:
+   `python3 scripts/build_bulk_excel.py <slug1> <slug2> … --out output/new-item/_batch/bulk_upload_<crawl날짜>.xlsx`
+   → 각 SKU 가 데이터 한 행. product_info + detail.html 을 네이버 템플릿 칸에 매핑(상세설명=detail.html, 원산지 텍스트 0보존,
+   배송방법 U+201A, 영양제=기타건강보조식품 고정, 반품/교환·A/S 스토어 공통값 자동). 대표이미지(W)는 사용자가 직접 업로드.
+   실행 로그의 ⚠️ 경고(상품명/판매가 누락·카테고리 미해석)는 Slack 요약에 함께 보고. (규칙: [[feedback_bulk_upload_excel]] / LEARNED_RULES §16)
+8. **Slack** — #new-item 에 배치 요약(제품·판매가·도착가·§0-A 신호 + 일괄등록 엑셀 경로·경고) 전송. `scripts/slack_notify.py` 사용.
 
 ## 역할 분담 (절대)
-- **메인(너)**: 파싱·매장수/최고가 산정·세금분류·가격계산(`price_calc.py`)·GO 게이트·product_info 조립·저장·Slack.
+- **메인(너)**: 파싱·매장수/최고가 산정·세금분류·가격계산(`price_calc.py`)·GO 게이트·product_info 조립·저장·**일괄등록 엑셀(`build_bulk_excel.py`, 배치 1파일)**·Slack.
 - **market-researcher**: §0-A 국내 시세(브랜드품). **listing-writer**: 상품명·모델명·태그·카테고리·detail.html.
 - 가격·진실성(§9)은 메인 소유. 추출 안 된 필드는 비움. products.json 에 이미 데이터가 있으므로 URL 재크롤(product-extractor)은 보통 생략.
 
