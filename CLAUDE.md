@@ -106,11 +106,11 @@ single 기본. 형식은 @docs/LEARNED_RULES.md §0-B, @memory/feedback_dispatch
 
 ## 7. 상세페이지(detail.html) 포맷
 
-- **베어 fragment.** 허용 태그 `<p> <strong> <br>` + 이모지만. `<div><style><script><table>
-  <article><ul><h1~6><img>` 등 전부 금지 (네이버 에디터에서 제거됨).
+- **베어 fragment.** 허용 태그 `<p> <strong> <br>` + 이모지 + **`<img src="<외부 호스팅 URL>">`**(2026-06-12 확인 — 호스팅 직링크는 네이버 에디터에서 생존). `<div><style><script><table>
+  <article><ul><h1~6>` 등은 전부 금지 (네이버 에디터에서 제거됨).
 - 섹션: 헤드라인 → 영문 부제 → 소개 → 핵심 포인트 → "이런 점이 좋아요" → "이런 분들께 추천".
 - **제외:** 배송 안내, 마무리 인사 한 줄, 스펙 테이블, footer, 검증 안 된 활용 팁/레시피.
-- 이미지는 HTML 에 박지 않고 URL 리스트로 등록정보.md 에 분리.
+- 이미지: **호스팅 URL 있으면** 본문 적절한 위치에 `<p><img src="URL" alt="상품명"></p>`로 직접 삽입 OK. 없으면 URL 리스트로 등록정보.md 에 분리 (@memory/feedback_detail_html_bare_fragment.md).
 - 그룹상품은 옵션별 분리 X, 통합 1장. 자세한 포맷은 @docs/cowork_instructions_patch.md §5.
 
 ## 8. 네이버 태그 (10개)

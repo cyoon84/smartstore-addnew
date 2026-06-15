@@ -49,7 +49,29 @@
       "Bash(/usr/local/bin/node --check /tmp/p.js)",
       "Bash(curl -s \"http://localhost:4178/api/products\")",
       "Bash(git add *)",
-      "Bash(git commit *)"
+      "Bash(git commit *)",
+      "Bash(python3 -c \"import xlrd; print\\('xlrd ok'\\)\")",
+      "Bash(pip3 list *)",
+      "Bash(curl -s -o tim_hortons_20oz_travel_mug_retro_logo_1_front.jpg \"https://timshop.timhortons.ca/cdn/shop/files/TravelMugSSWithHandle_EngFront-Refreshed.jpg?v=1776268501&width=3200\")",
+      "Bash(curl -s -o tim_hortons_20oz_travel_mug_retro_logo_2_back.jpg \"https://timshop.timhortons.ca/cdn/shop/files/TravelMugSSWithHandle_EngBack-Refreshed.jpg?v=1776268501&width=3200\")",
+      "Bash(curl -s -o tim_hortons_20oz_travel_mug_retro_logo_3_lidclosed.jpg \"https://timshop.timhortons.ca/cdn/shop/files/TravelMugSSWithHandle_LidClosed-Refreshed.jpg?v=1776268452&width=3200\")",
+      "Bash(curl -s -o tim_hortons_20oz_travel_mug_retro_logo_4_lidopen.jpg \"https://timshop.timhortons.ca/cdn/shop/files/TravelMugSSWithHandle_LidOpen-Refreshed.jpg?v=1776268452&width=3200\")",
+      "Bash(file *.jpg)",
+      "Bash(python3 scripts/build_bulk_excel.py tim_hortons_20oz_travel_mug_retro_logo)",
+      "Bash(python3 scripts/build_bulk_excel.py cafe_william_sumatra_1kg restorafibre_daily_gummies_2x140 metamucil_fibre_gummies_no_sugar_180 --out output/new-item/_batch/bulk_upload_2026-06-12.xlsx)",
+      "Bash(curl -sL -o meta.jpg \"https://live.staticflickr.com/65535/55329569232_9691d09774_c.jpg\")",
+      "Bash(curl -sL -o cafe.jpg \"https://live.staticflickr.com/65535/55330912455_17ed1acfd7_c.jpg\")",
+      "Bash(curl -sL -o resto.jpg \"https://live.staticflickr.com/65535/55330900835_685cdcabe2_c.jpg\")",
+      "Bash(python3 scripts/build_bulk_excel.py organika_canadian_bee_propolis_2x100ml)",
+      "Bash(mkdir -p downy_unstopables_paradise_680g downy_unstopables_paradise_853g)",
+      "Bash(cp downy_unstopables_paradise_373g/downy_unstopables_paradise_373g_detail.html downy_unstopables_paradise_680g/downy_unstopables_paradise_680g_detail.html)",
+      "Bash(cp downy_unstopables_paradise_373g/downy_unstopables_paradise_373g_detail.html downy_unstopables_paradise_853g/downy_unstopables_paradise_853g_detail.html)",
+      "Bash(python3 scripts/build_bulk_excel.py downy_unstopables_paradise_373g downy_unstopables_paradise_680g downy_unstopables_paradise_853g --out output/new-item/_batch/bulk_upload_downy_paradise_20260614.xlsx)",
+      "Bash(python3 scripts/build_bulk_excel.py caprina_goat_milk_soap_original_110g_16)",
+      "Bash(node scripts/dashboard_server.js)",
+      "Bash(curl -s -o /dev/null -w \"HTTP %{http_code}\\\\n\" http://localhost:4178/)",
+      "Bash(open http://localhost:4178)",
+      "Bash(git check-ignore *)"
     ]
   }
 }

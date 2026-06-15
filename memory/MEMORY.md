@@ -14,7 +14,7 @@
 - [Slack delivery of 등록정보](feedback_slack_delivery.md) — 등록 완료 후 등록정보.md 전체(형식 A)를 Slack #new-item 채널에 자동 전송
 - [Title spec label](feedback_title_spec_label.md) — 상품명 수치 사양은 단독 숫자 말고 라벨 결합 (23g → 단백질23g)
 - [Naver title SEO guide](feedback_naver_title_seo_guide.md) — 네이버 공식 SEO 가이드 기반 상품명 작성 규칙 (50자 내외/동의어 중복 금지/판매처명 금지 등)
-- [Naver group product names lock after creation](feedback_naver_group_lock.md) — 그룹 상품은 생성 후 그룹명/옵션명 수정 불가, 처음부터 포괄적으로 만들 것
+- [Naver group product names lock after creation](feedback_naver_group_lock.md) — 그룹명(상품명)은 사후 수정 가능 / 기존 옵션은 잠겨 수정 불가. 새 옵션 추가 가능, 그룹명이 새 옵션과 안 맞으면 일반화 수정 (2026-06-09 정정)
 - [Group product per-option shipping](feedback_group_shipping_per_option.md) — 네이버 그룹상품은 옵션(제품)별로 배송비 다르게 설정 가능. 묶음/개당/금액 차등 OK, 별도 분리 권고 X
 - [Smart Store ID: finchmart_ca](reference_smartstore_id.md) — 사용자 네이버 스마트스토어 ID와 상품 URL 패턴
 - [Title source tag rules — no "정품", store name only for store-exclusive SKU](feedback_title_source_tag.md) — 상품명 끝 출처: 매장 한정 SKU만 "캐나다 코스트코" 식, 일반 유통은 "캐나다"만, "정품"은 항상 제외. NB+소매사이즈는 디폴트 일반 유통 (사용자 "코스트코 라인" 발언만으로 매장 한정 자동 가정 X)
@@ -26,6 +26,7 @@
 - [Percent margin pricing](feedback_percent_margin.md) — % 마진: "수수료 감안 N%" = 판매가 = 원가KRW ÷ (0.934 − N/100), gross-up 별도 적용 X
 - [Pre-workflow domestic price check](feedback_domestic_price_check.md) — 산출물 만들기 전에 쿠팡·네이버 검색으로 국내 시세 확인하고 가격 경쟁력 보고, GO 받으면 진행
 - [Skip §0-A when "not sold in Korea"](feedback_skip_domestic_check_not_in_korea.md) — 사용자가 "한국에 안 판다/국내 미출시" 명시 시 §0-A 국내 시세 확인 스킵
+- [Source store affects price comparison](feedback_source_store_price_comparison.md) — 같은 그룹/라인업 형제라도 매입처(코스트코 vs 월마트) 다르면 원가 baseline 달라 판매가 직접 비교 불가. 매입처 다른 형제보다 비싸도 "과하다" 자동 판정 X, 원가(손익분기) 기준 책정
 - [Target price-match pricing pattern](feedback_target_price_match.md) — "가격 N$로 맞춰" 명시 시 cost-plus 스킵, N CAD를 목표 판매가(pre-fee)로 사용
 - [Shipping per-unit, no bundle rule](feedback_shipping_per_unit_no_bundle.md) — "배송비 N원 (몇 개당 그런 거 없이)" = 수량당 단순 곱셈, 묶음 룰 없음
 - [Canadian price tag "N/X.XX OR Y.YY EA" format](feedback_price_tag_or_format.md) — Loblaws 양식 = N개 묶음 X.XX / 단품 Y.YY. 기본 단품가 사용, OCR 오인 흔함 → 사용자 확정 받기
@@ -43,7 +44,7 @@
 - [Release market is not country of origin](feedback_origin_vs_release_market.md) — "캐나다 한정 출시"는 판매 시장, 제조국 아님. 페이지에 제조국 미명시면 원산지 캐나다로 단정 금지
 - [Granola spelling — Quaker uses 그라놀라](feedback_granola_spelling.md) — Quaker Harvest Crunch 등록 시 "그라놀라" 표기 (그래놀라 X). 다른 브랜드는 케이스별 확인
 - [Output location — workspace output/, flat naming](feedback_output_location.md) — 데스크톱·모바일 dispatch 둘 다 ~/smartstore-addnew/output/에 `<slug>_detail.html` 식 평탄 저장 (Downloads X, 중첩 폴더 X)
-- [detail.html — bare fragment format](feedback_detail_html_bare_fragment.md) — 데스크톱·모바일 동일하게 p/strong/br + 이모지만 사용, div/style/script/table/article 금지 (네이버 에디터 붙여넣기용)
+- [detail.html — bare fragment format](feedback_detail_html_bare_fragment.md) — 데스크톱·모바일 동일하게 p/strong/br + 이모지 + img(외부 호스팅 URL은 네이버 에디터 생존, 2026-06-12 확인) 사용, div/style/script/table/article 금지 (네이버 에디터 붙여넣기용)
 - [Group detail — condense option/size text](feedback_group_detail_condensation.md) — 그룹상품 detail.html에서 옵션·사이즈 안내는 시각 카드 캡션 수준 한 줄로 응축 (사용자가 네이버 에디터에서 박스 사진·callout 등 시각 요소로 처리)
 - [Pre-sale regular price as cost](feedback_pre_sale_regular_price.md) — 세일가 식별되면(SAVE/정가 동시표시) 명시 없어도 세일전 정상가가 디폴트(2026-06-02 격상). 정상가/세일가 둘 다 기록 (LEARNED_RULES §12)
-- [Bulk-upload Excel — 5th artifact](feedback_bulk_upload_excel.md) — 등록 4종 뒤 네이버 일괄등록 엑셀도 build_bulk_excel.py 로 생성(메인 소유). 원산지 텍스트 0보존(캐나다 0204006)·배송방법 U+201A 구분자·상세설명=detail.html. 해외사업자라 영양제는 기타건강보조식품(50002615) 고정. 이미지·반품교환비는 사용자 직접 (LEARNED_RULES §16)
+- [Bulk-upload Excel — 5th artifact](feedback_bulk_upload_excel.md) — 등록 4종 뒤 네이버 일괄등록 엑셀도 build_bulk_excel.py 로 생성(메인 소유). 원산지 텍스트 0보존(캐나다 0204006)·배송방법 U+201A 구분자·상세설명=detail.html. 해외사업자라 영양제는 기타건강보조식품(50002615) 고정. 배송비는 resolve_shipping 으로 product_info 에서 SKU별 자동 도출(CONFIG 6개당 15,000 은 fallback, 일괄로 덮지 말 것). 대표이미지는 호스팅 URL 있으면 bulk.rep_image 로 자동 입력 (LEARNED_RULES §16)

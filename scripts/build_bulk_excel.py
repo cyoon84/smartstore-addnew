@@ -46,7 +46,7 @@ SUPPLEMENT_FORCED_CODE = 50002615   # 식품 > 건강식품 > 영양제 > 기타
 CONFIG = {
     "product_state": "신상품",
     "tax_type": "과세상품",            # 부가세
-    "import_tax": "관부가세 미포함",     # 관부가세
+    "import_tax": "관부가세 미포함",     # 관부가세(K) 기본 — 단 영양제·음식(식품) 카테고리는 '관부가세 포함' 자동 적용
     "unit_price_use": "N",            # 단위가격 사용여부
     "stock": 1000,
     "delivery_code": "EPOST",         # 우체국택배 (기본 — 사용자가 필요시 수동 변경)
@@ -74,6 +74,7 @@ FIELD = {
     "import_tax":   "관부가세",
     "stock":        "재고수량",
     "rep_image":    "대표이미지",
+    "add_image":    "추가이미지",
     "detail":       "상세설명",
     "brand":        "브랜드",
     "maker":        "제조사",
@@ -155,6 +156,69 @@ def resolve_category(rows, *paths):
     return None, None, False
 
 
+def resolve_shipping(pinfo):
+    """product_info 의 shipping 정보 → (배송비유형, 기본배송비, 수량별부과-수량).
+
+    스키마 변형 모두 흡수:
+      - shipping dict: {per_unit_krw, per_N_units_krw, policy, absorbed_into_price}
+      - shipping_krw / shipping(str): "2개당 15,000원 (개당 7,500원), 별도" 식 문자열
+    찾지 못하면 (None, None, None) → 호출부에서 CONFIG 기본값으로 fallback.
+
+    네이버 '수량별' 모델: 기본배송비가 '수량'개마다 부과.
+      개당 N원        → 수량별, fee=N, qty=1
+      M개당 N원       → 수량별, fee=N, qty=M
+      무료/흡수        → 무료, fee=0, qty=None
+    """
+    import re
+
+    def parse_str(s):
+        if not s or not isinstance(s, str):
+            return None
+        if any(t in s for t in ("무료", "무배", "흡수")):
+            return ("무료", 0, None)
+        # "M개당 N원" 우선 (M>1 묶음). 콤마 제거 후 매칭.
+        flat = s.replace(",", "")
+        m = re.search(r"(\d+)\s*개당\s*([\d]+)\s*원?", flat)
+        if m:
+            return ("수량별", int(m.group(2)), int(m.group(1)))
+        # "개당 N원" (수량 표기 없음 = 1개당)
+        m = re.search(r"개당\s*([\d]+)\s*원?", flat)
+        if m:
+            return ("수량별", int(m.group(1)), 1)
+        # "N원/개" (원/개 역순 표기 = 1개당)
+        m = re.search(r"([\d]+)\s*원?\s*/\s*개", flat)
+        if m:
+            return ("수량별", int(m.group(1)), 1)
+        # "수량당 N원" (묶음 없음 = 1개당 단순곱셈)
+        m = re.search(r"수량당\s*([\d]+)\s*원?", flat)
+        if m:
+            return ("수량별", int(m.group(1)), 1)
+        return None
+
+    sh = pinfo.get("shipping")
+    if isinstance(sh, dict):
+        if sh.get("absorbed_into_price"):
+            return ("무료", 0, None)
+        # per_unit_krw 가 있으면 개당(수량별 qty=1) — 가장 명확한 신호
+        if sh.get("per_unit_krw") not in (None, ""):
+            return ("수량별", int(sh["per_unit_krw"]), 1)
+        # dict 안 policy 문자열 파싱 시도
+        r = parse_str(sh.get("policy") or sh.get("bundle_rule"))
+        if r:
+            return r
+    elif isinstance(sh, str):
+        r = parse_str(sh)
+        if r:
+            return r
+
+    # 최상위 문자열 키들
+    for key in ("shipping_krw", "shipping_policy", "shipping_fee_krw"):
+        r = parse_str(pinfo.get(key))
+        if r:
+            return r
+    return (None, None, None)
+
+
 def build_data(pinfo, detail_html, cat_rows, deliv_rows):
     bulk = pinfo.get("bulk", {})
     warn = []
@@ -176,27 +240,39 @@ def build_data(pinfo, detail_html, cat_rows, deliv_rows):
     brand_ko = pinfo.get("brand_ko") or pinfo.get("brand")
     d = {}
     d["title"] = pick("title", pinfo.get("product_name_ko"), pinfo.get("title_ko"))
-    # 판매가: pricing dict 내부 또는 최상위 키(스키마 변형: sell_price_krw·selling_price_krw·sell_krw) 모두 탐색
+    # 판매가: pricing dict 내부 또는 최상위 키(스키마 변형: sell_price_krw·selling_price_krw·sell_krw)
+    # 또는 calculation 중첩 블록(calculation.sell_price_krw / step4_sell_krw_raw) 모두 탐색
+    calc = pinfo.get("calculation") if isinstance(pinfo.get("calculation"), dict) else {}
     d["sale_price"] = pick("sale_price",
                            pricing.get("sell_price_krw"), pricing.get("sell_krw"),
-                           pinfo.get("sell_price_krw"), pinfo.get("selling_price_krw"), pinfo.get("sell_krw"))
+                           pinfo.get("sell_price_krw"), pinfo.get("selling_price_krw"), pinfo.get("sell_krw"),
+                           calc.get("sell_price_krw"), calc.get("sell_krw"))
     d["brand"] = pick("brand", brand_ko)
     d["maker"] = pick("maker", brand_ko)
     d["importer"] = pick("importer", brand_ko)
     d["product_state"] = pick("product_state")
     d["tax_type"] = pick("tax_type")
-    d["import_tax"] = pick("import_tax")
+    # import_tax(K 관부가세)는 카테고리 판정 후 설정 (아래 카테고리 블록 뒤)
     d["unit_price_use"] = pick("unit_price_use")
     d["stock"] = pick("stock")
     d["multi_origin"] = pick("multi_origin")
     d["ship_method"] = SHIP_METHOD
     d["delivery_code"] = pick("delivery_code")
-    d["shipping_type"] = pick("shipping_type")
-    d["shipping_fee"] = pick("shipping_fee")
+    # 배송비: bulk 오버라이드 > product_info 파생값(resolve_shipping) > CONFIG 기본
+    auto_st, auto_sf, auto_sq = resolve_shipping(pinfo)
+    d["shipping_type"] = pick("shipping_type", auto_st)
+    d["shipping_fee"] = pick("shipping_fee", auto_sf)
     d["shipping_pay"] = pick("shipping_pay")
-    d["shipping_qty"] = pick("shipping_qty")
+    d["shipping_qty"] = pick("shipping_qty", auto_sq)
     d["detail"] = detail_html
     d["rep_image"] = pick("rep_image")           # 보통 비어있음 → 사용자가 네이버에서 직접 업로드
+    # 추가이미지(X) — 최대 9개, 줄바꿈(\n)으로 구분. bulk.add_images(list/str) 우선, 없으면 images.additional_image_urls
+    add_imgs = bulk.get("add_images") or bulk.get("additional_images")
+    if add_imgs is None:
+        add_imgs = (pinfo.get("images") or {}).get("additional_image_urls")
+    if isinstance(add_imgs, str):
+        add_imgs = [add_imgs]
+    d["add_image"] = "\n".join(str(u) for u in add_imgs[:9]) if add_imgs else None
     d["return_fee"] = pick("return_fee")         # 스토어 공통 50000
     d["exchange_fee"] = pick("exchange_fee")     # 스토어 공통 50000
     d["as_phone"] = pick("as_phone")             # A/S 전화번호 (스토어 공통)
@@ -219,6 +295,19 @@ def build_data(pinfo, detail_html, cat_rows, deliv_rows):
                 warn.append(f"카테고리: 1순위 경로 미발견 → fallback '{full}'({code}) 사용. 등록화면 확인")
         else:
             warn.append("카테고리코드 자동해석 실패 — bulk.category_code 직접 지정 필요")
+
+    # K컬럼 관부가세 — 영양제·음식(식품 카테고리)은 무조건 '관부가세 포함' (2026-06-12 사용자 지시).
+    # 그 외 카테고리는 CONFIG 기본('관부가세 미포함'). bulk.import_tax 명시는 최우선 존중.
+    is_food_or_supp = (
+        any(t in cat_paths for t in ("식품", "영양제", "건강식품", "건강보조식품"))
+        or d.get("category_code") == SUPPLEMENT_FORCED_CODE
+    )
+    if bulk.get("import_tax"):
+        d["import_tax"] = bulk["import_tax"]
+    elif is_food_or_supp:
+        d["import_tax"] = "관부가세 포함"
+    else:
+        d["import_tax"] = CONFIG["import_tax"]      # 관부가세 미포함
 
     # 원산지코드 — bulk 우선, 없으면 캐나다(0204006) 기본 고정 (전 상품 캐나다로 깔고 사용자 수동 보정)
     # (앞자리 0 보존 위해 문자열. 국가명 자동해석은 안 씀 — 사용자 지시로 캐나다 기본.)
@@ -330,8 +419,12 @@ def main():
               f"배송 {d.get('delivery_code')}/{d.get('shipping_type')} {d.get('shipping_fee')}")
         for w in warn:
             print(f"    ⚠️ {w}")
-    print("\n📌 사용자 직접 처리: 대표이미지(W) — 네이버에서 직접 업로드 "
-          "(반품/교환배송비·A/S 는 자동 채움)")
+    missing_rep = [slug for slug, _f, d, _w in results if not d.get("rep_image")]
+    if missing_rep:
+        print("\n📌 사용자 직접 처리: 대표이미지(W) — 네이버에서 직접 업로드 "
+              f"({', '.join(missing_rep)}). 반품/교환배송비·A/S 는 자동 채움")
+    else:
+        print("\n📌 대표이미지(W) 호스팅 URL 자동 입력 완료. 반품/교환배송비·A/S 자동 채움")
 
 
 if __name__ == "__main__":

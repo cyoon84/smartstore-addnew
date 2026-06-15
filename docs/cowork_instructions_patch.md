@@ -36,11 +36,11 @@ Cowork 앱 → smartstore-addnew 프로젝트 → 프로젝트 설정(Instructio
 ```
 5. HTML 포맷 (detail.html — 네이버 에디터 붙여넣기용 베어 fragment)
 
-- 허용 태그: <p>, <strong>, <br>. 이모지 자유롭게.
-- 금지 태그: <div>, <style>, <script>, <table>, <tr>, <td>, <article>, <section>, <ul>, <li>, <h1>~<h6>, <img>, <head>, <body>, <html> (네이버에서 다 제거됨)
+- 허용 태그: <p>, <strong>, <br>. 이모지 자유롭게. <img src="외부 호스팅 URL">도 허용 (2026-06-12 확인 — 호스팅 직링크는 네이버 에디터에서 생존).
+- 금지 태그: <div>, <style>, <script>, <table>, <tr>, <td>, <article>, <section>, <ul>, <li>, <h1>~<h6>, <head>, <body>, <html> (네이버에서 다 제거됨)
 - 풀 HTML 문서 만들지 않음. <!DOCTYPE>, <head>, <body> 래퍼 없음. <p> fragment를 평탄하게 나열.
-- CSS·class·style·id 속성 전부 없음.
-- 이미지는 HTML에 박지 않음 — 별도 URL 리스트로 등록정보.md에 분리 ([[feedback_naver_detail_format]] 룰).
+- CSS·class·style·id 속성 전부 없음 (단 <img>의 src/alt는 허용).
+- 이미지: 호스팅 URL 있으면 본문에 <p><img src="URL" alt="상품명"></p>로 직접 삽입 OK. 없으면 URL 리스트로 등록정보.md에 분리 ([[feedback_detail_html_bare_fragment]] 룰).
 
 섹션 순서 (모드 공통):
 1) 헤드라인 — <p><strong>🏷️ <상품명></strong></p>

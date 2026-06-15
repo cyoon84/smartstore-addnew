@@ -125,65 +125,74 @@ const PAGE = String.raw`<!DOCTYPE html>
 <html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>finchmart_ca · 등록상품</title>
 <style>
-:root{--bg:#fff;--side:#fafbfc;--line:#ebedf0;--txt:#2d2f36;--mut:#8a909c;--acc:#4f7cff;--acc-bg:#eef3ff;--grp:#e8810c;--code:#f6f7f9;}
+/* Notion 스타일 */
+:root{--bg:#fff;--side:#fbfbfa;--line:#e9e9e7;--txt:#37352f;--mut:#9b9a97;--acc:#2383e2;--hover:#efefee;--sel:rgba(35,131,226,.12);--code:#f7f6f3;--codetxt:#eb5757;--grp:#d9730d;}
 *{box-sizing:border-box;}
-body{margin:0;height:100vh;display:flex;font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;background:var(--bg);color:var(--txt);font-size:14px;}
-#left{width:300px;min-width:240px;max-width:42%;background:var(--side);border-right:1px solid var(--line);display:flex;flex-direction:column;}
-#brand{padding:16px 18px 12px;font-size:16px;font-weight:700;color:var(--acc);display:flex;align-items:center;gap:8px;}
-#brand .cnt{margin-left:auto;font-size:11px;color:var(--mut);font-weight:400;}
-#qbox{padding:0 14px 12px;}
-#q{width:100%;background:#fff;border:1px solid var(--line);color:var(--txt);padding:8px 11px;border-radius:8px;font-size:13px;}
-#list{overflow:auto;flex:1;padding:4px 0 30px;}
-.sec-label{font-size:11px;letter-spacing:.04em;color:#aab0bc;text-transform:uppercase;padding:14px 18px 6px;}
-.it-head{padding:7px 16px 7px 18px;cursor:pointer;display:flex;gap:8px;align-items:center;color:#4a4f59;}
-.it-head:hover{color:var(--txt);}
-.it-head.active{color:var(--acc);font-weight:600;}
-.it-title{flex:1;min-width:0;font-size:13px;line-height:1.4;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+body{margin:0;height:100vh;display:flex;font-family:ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI","Apple SD Gothic Neo","Malgun Gothic","Apple Color Emoji",sans-serif;background:var(--bg);color:var(--txt);font-size:14px;-webkit-font-smoothing:antialiased;}
+#left{width:280px;min-width:220px;max-width:42%;background:var(--side);border-right:1px solid var(--line);display:flex;flex-direction:column;}
+#brand{padding:18px 16px 10px;font-size:14px;font-weight:600;color:var(--txt);display:flex;align-items:center;gap:8px;}
+#brand .cnt{margin-left:auto;font-size:12px;color:var(--mut);font-weight:400;}
+#qbox{padding:0 12px 10px;}
+#q{width:100%;background:#fff;border:1px solid var(--line);color:var(--txt);padding:6px 10px;border-radius:6px;font-size:13px;outline:none;}
+#q:focus{border-color:#b9b9b6;}
+#list{overflow:auto;flex:1;padding:2px 8px 30px;}
+.sec-label{font-size:11px;font-weight:600;letter-spacing:.02em;color:var(--mut);padding:14px 10px 4px;}
+.item{border-radius:6px;}
+.it-head{padding:5px 8px;cursor:pointer;display:flex;gap:6px;align-items:center;color:#5f5e5b;border-radius:6px;}
+.it-head:hover{background:var(--hover);color:var(--txt);}
+.it-head.active{background:var(--hover);color:var(--txt);font-weight:500;}
+.it-title{flex:1;min-width:0;font-size:14px;line-height:1.4;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .it-head.active .it-title{white-space:normal;}
-.caret{color:#b8bdc8;font-size:10px;transition:transform .15s;}
+.caret{color:var(--mut);font-size:9px;width:12px;text-align:center;transition:transform .12s;}
 .item.open .caret{transform:rotate(90deg);}
 .dot{font-size:10px;}
 .dot.group{color:var(--grp);}
-.files{display:none;padding:2px 0 8px;}
+.files{display:none;padding:1px 0 6px;}
 .item.open .files{display:block;}
-.file{padding:5px 16px 5px 38px;font-size:12.5px;cursor:pointer;color:#6b7280;display:flex;gap:7px;align-items:center;}
-.file:hover{background:#f0f2f5;color:var(--txt);}
-.file.sel{color:var(--acc);background:var(--acc-bg);box-shadow:inset 2px 0 0 var(--acc);}
-.ficon{width:15px;text-align:center;}
-.fsize{margin-left:auto;color:#b8bdc8;font-size:10.5px;}
-.meta-line{padding:1px 16px 6px 38px;font-size:11px;color:var(--mut);display:flex;gap:8px;align-items:center;}
-.price{color:#1f8a4c;font-weight:600;}
+.file{padding:4px 8px 4px 26px;font-size:13.5px;cursor:pointer;color:#5f5e5b;display:flex;gap:7px;align-items:center;border-radius:6px;margin:0 0 0 4px;}
+.file:hover{background:var(--hover);color:var(--txt);}
+.file.sel{background:var(--sel);color:var(--txt);}
+.ficon{width:16px;text-align:center;opacity:.85;}
+.fsize{margin-left:auto;color:var(--mut);font-size:11px;}
+.meta-line{padding:2px 8px 6px 26px;font-size:12px;color:var(--mut);display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+.price{color:#448361;font-weight:500;}
 #right{flex:1;display:flex;flex-direction:column;overflow:hidden;}
-#rhead{padding:11px 26px;border-bottom:1px solid var(--line);font-size:12.5px;color:var(--mut);display:flex;gap:12px;align-items:center;}
-#rhead #rtitle{color:var(--txt);font-weight:600;}
+#rhead{padding:10px 24px;border-bottom:1px solid var(--line);font-size:12.5px;color:var(--mut);display:flex;gap:12px;align-items:center;}
+#rhead #rtitle{color:var(--txt);font-weight:500;}
 #rhead a{color:var(--acc);text-decoration:none;}
-#view{flex:1;overflow:auto;padding:30px 42px;max-width:920px;}
-#view.pad0{padding:0;max-width:none;}
-.placeholder{color:var(--mut);padding:70px 20px;text-align:center;}
-.md h1{font-size:24px;margin:.2em 0 .6em;}
-.md h2{font-size:19px;margin-top:1.4em;padding-bottom:5px;border-bottom:1px solid var(--line);}
-.md h3{font-size:15.5px;margin-top:1.2em;}
-.md table{border-collapse:collapse;margin:14px 0;font-size:13px;width:100%;}
-.md th,.md td{border:1px solid var(--line);padding:7px 11px;text-align:left;vertical-align:top;}
-.md th{background:#f6f8fb;font-weight:600;}
-.md code{background:var(--code);padding:1px 5px;border-radius:4px;font-size:12.5px;color:#c7254e;}
-.md pre{background:var(--code);border:1px solid var(--line);border-radius:8px;padding:14px;overflow:auto;}
+#view{flex:1;overflow:auto;padding:56px 60px 120px;}
+#view>*{max-width:760px;margin-left:auto;margin-right:auto;}
+#view.pad0{padding:0;}
+#view.pad0>*{max-width:none;margin:0;}
+.placeholder{color:var(--mut);padding:90px 20px;text-align:center;}
+.md{line-height:1.65;}
+.md h1{font-size:32px;font-weight:700;letter-spacing:-.01em;margin:.1em 0 .5em;}
+.md h2{font-size:22px;font-weight:600;margin-top:1.6em;margin-bottom:.3em;}
+.md h3{font-size:17px;font-weight:600;margin-top:1.3em;margin-bottom:.2em;}
+.md table{border-collapse:collapse;margin:14px 0;font-size:14px;width:100%;}
+.md th,.md td{border:1px solid var(--line);padding:7px 12px;text-align:left;vertical-align:top;}
+.md th{background:#f7f6f3;font-weight:600;}
+.md code{background:var(--code);padding:2px 5px;border-radius:4px;font-size:85%;color:var(--codetxt);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;}
+.md pre{background:var(--code);border-radius:6px;padding:16px 18px;overflow:auto;}
 .md pre code{background:none;padding:0;color:var(--txt);}
-.md blockquote{border-left:3px solid var(--acc);margin:12px 0;padding:4px 16px;color:#6b7280;background:#f9fafb;}
-.md a{color:var(--acc);}
-.md ul,.md ol{padding-left:24px;}
-.md li{margin:4px 0;}
-.md hr{border:none;border-top:1px solid var(--line);margin:22px 0;}
-.md p{line-height:1.7;}
-.json{font-family:ui-monospace,Menlo,monospace;font-size:12.5px;white-space:pre;color:#2d2f36;}
+.md blockquote{border-left:3px solid var(--txt);margin:12px 0;padding:2px 16px;color:#5f5e5b;}
+.md a{color:var(--acc);text-decoration:underline;text-underline-offset:2px;}
+.md ul,.md ol{padding-left:26px;}
+.md li{margin:3px 0;}
+.md hr{border:none;border-top:1px solid var(--line);margin:24px 0;}
+.md p{margin:.5em 0;}
+.json{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px;white-space:pre;color:var(--txt);line-height:1.55;}
 iframe{width:100%;height:100%;border:0;background:#fff;}
-img.preview{max-width:100%;height:auto;border-radius:8px;border:1px solid var(--line);}
+img.preview{max-width:100%;height:auto;border-radius:6px;border:1px solid var(--line);}
+::-webkit-scrollbar{width:10px;height:10px;}
+::-webkit-scrollbar-thumb{background:#d3d2ce;border-radius:6px;border:2px solid var(--bg);}
+::-webkit-scrollbar-thumb:hover{background:#b9b9b6;}
 </style></head>
 <body>
 <div id="left">
   <div id="brand">🛒 등록상품 <span class="cnt" id="cnt"></span></div>
   <div id="qbox"><input id="q" type="search" placeholder="상품명·슬러그 검색…"></div>
-  <div class="sec-label">DOCUMENTATION</div>
+  <div class="sec-label">전체 제품</div>
   <div id="list"></div>
 </div>
 <div id="right">
