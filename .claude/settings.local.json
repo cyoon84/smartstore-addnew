@@ -72,7 +72,11 @@
       "Bash(curl -s -o /dev/null -w \"HTTP %{http_code}\\\\n\" http://localhost:4178/)",
       "Bash(open http://localhost:4178)",
       "Bash(git check-ignore *)",
-      "Bash(python3 scripts/build_bulk_excel.py spanglish_asadero_pollo_asado_seasoning_292g)"
+      "Bash(python3 scripts/build_bulk_excel.py spanglish_asadero_pollo_asado_seasoning_292g)",
+      "Bash(crontab -l)",
+      "Bash(ls -d output/new-item/*starbucks* output/new-item/*crema*)",
+      "Bash(ls output/new-item/starbucks_crema_salted_caramel_202g/)",
+      "Bash(python3 scripts/build_bulk_excel.py starbucks_crema_salted_caramel_202g starbucks_crema_madagascar_vanilla_202g --out output/new-item/_batch/bulk_upload_starbucks_crema_20260615.xlsx)"
     ]
   }
 }

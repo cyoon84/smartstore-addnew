@@ -176,8 +176,13 @@ def resolve_shipping(pinfo):
             return None
         if any(t in s for t in ("무료", "무배", "흡수")):
             return ("무료", 0, None)
-        # "M개당 N원" 우선 (M>1 묶음). 콤마 제거 후 매칭.
         flat = s.replace(",", "")
+        # 균일/유료 flat — "개수 상관없이"·"수량 무관"·"균일"·"주문당" N원 = 유료(수량 무관)
+        if any(t in s for t in ("개수 상관없이", "개수상관없이", "수량 무관", "수량무관", "수량 상관없이", "균일", "주문당", "건당")):
+            m = re.search(r"([\d]+)\s*원", flat)
+            if m:
+                return ("유료", int(m.group(1)), None)
+        # "M개당 N원" 우선 (M>1 묶음). 콤마 제거 후 매칭.
         m = re.search(r"(\d+)\s*개당\s*([\d]+)\s*원?", flat)
         if m:
             return ("수량별", int(m.group(2)), int(m.group(1)))
@@ -264,6 +269,9 @@ def build_data(pinfo, detail_html, cat_rows, deliv_rows):
     d["shipping_fee"] = pick("shipping_fee", auto_sf)
     d["shipping_pay"] = pick("shipping_pay")
     d["shipping_qty"] = pick("shipping_qty", auto_sq)
+    # 수량별부과-수량은 '수량별' 유형에서만 유효. 유료(균일)·무료·조건부무료면 비움.
+    if d["shipping_type"] != "수량별":
+        d["shipping_qty"] = ""
     d["detail"] = detail_html
     d["rep_image"] = pick("rep_image")           # 보통 비어있음 → 사용자가 네이버에서 직접 업로드
     # 추가이미지(X) — 최대 9개, 줄바꿈(\n)으로 구분. bulk.add_images(list/str) 우선, 없으면 images.additional_image_urls
