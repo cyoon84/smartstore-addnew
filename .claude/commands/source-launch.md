@@ -17,6 +17,18 @@ argument-hint: [crawl 폴더 경로 또는 날짜 (생략 시 최신 crawl_*) / 
   `category`, `image_url`, `source`, `selling_point`, **`prices`**(walmart/loblaws/nofrills 채널별 가격 문자열).
 - 같은 폴더의 `walmart/`·`loblaws/`·`nofrills/` 하위에 참고 이미지가 있을 수 있음.
 
+### 🔑 픽(선택) 입력 — 사용자가 결과 보고 고른 것만 등록 (2026-06-16)
+주 1회 `com.finchmart.grocery-crawl` 크론이 3사를 크롤해 **판매중 제외 신규후보**를 `products.json` + `candidates_review.html`
+로 만들고 Slack 으로 "검토하세요" 알림만 보낸다(**자동 등록 안 함**). 사용자가 검토 후 **"이거 이거 등록해줘"**(번호/이름)
+하면:
+1. **메인이 픽 필터 실행** — `python3 .../scripts/pick_products.py <crawl_dir> "<이름…>"` 또는 `--idx 1 4 10`
+   → `products_pick.json` 생성(고른 것만, /source-launch 스키마, `name_ko`는 비어있음).
+2. 그 **`products_pick.json` 을 이 커맨드 입력으로** 사용한다(있으면 `products.json` 대신 우선). 즉 `$ARGUMENTS` 에 픽 파일
+   경로가 오거나, 대화로 "올드더치·키킹홀스·트와이닝스 등록"이면 메인이 pick_products 로 거른 뒤 그 subset 만 파이프라인에 태운다.
+3. `name_ko`·`selling_point` 가 비어 있으면 **listing-writer 가 생성**(영문 `name_en` 기준 한글 상품명·모델명·태그·카피).
+   나머지(가격계산·§0-A·저장·일괄엑셀·Slack)는 아래 파이프라인과 동일.
+> 자동 등록 크론(`com.finchmart.source-launch`)은 수동 픽 전환으로 **비활성화(.disabled)** 됨. 다시 켜려면 그 plist 복구.
+
 ## 가격 규칙 (이 커맨드 전용 — 사용자 지정)
 채널별 `prices` 를 파싱해 **그 SKU 를 실제로 취급하는 매장 수**를 센다.
 ("미취급(PB)"·"미확인"·"동일맛 미취급"·낱봉 등 **다른 규격/미취급 표기는 카운트 제외**.)
