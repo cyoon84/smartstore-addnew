@@ -102,7 +102,22 @@
       "Bash(launchctl unload *)",
       "Bash(launchctl load *)",
       "Bash(mv ~/Library/LaunchAgents/com.finchmart.source-launch.plist ~/Library/LaunchAgents/com.finchmart.source-launch.plist.disabled)",
-      "Bash(python3 scripts/pick_products.py output/crawl_2026-06-16_auto \"old dutch jalapeno\" \"kicking horse\" \"twinings english breakfast\")"
+      "Bash(python3 scripts/pick_products.py output/crawl_2026-06-16_auto \"old dutch jalapeno\" \"kicking horse\" \"twinings english breakfast\")",
+      "Bash(curl -s -o maynards.jpg \"https://live.staticflickr.com/65535/55340523856_620fe90fa6_c.jpg\")",
+      "Bash(curl -s -o kirkland_new.jpg \"https://live.staticflickr.com/65535/55340513691_07f309292d_b.jpg\")",
+      "Bash(cd *)",
+      "Bash(python3 scripts/build_bulk_excel.py old_el_paso_taco_seasoning_original_24g old_el_paso_taco_seasoning_mild_24g old_el_paso_taco_seasoning_hot_spicy_24g --out output/new-item/_batch/bulk_upload_old_el_paso_taco_seasoning_2026-06-17.xlsx)",
+      "Bash(mkdir -p /tmp/subway)",
+      "Bash(curl -s -o /tmp/subway/rep.jpg \"http://shop1.phinf.naver.net/20240630_267/1719724279581MwtX1_JPEG/66085466301581642_2013279634.jpg\")",
+      "Bash(python3 -c \"from PIL import Image; print\\(Image.open\\('/tmp/subway/rep.jpg'\\).size\\)\")",
+      "Bash(curl -s -o /tmp/subway/honey.jpg \"https://i5.walmartimages.ca/asr/8c2c0a6f-c9e1-485b-8dde-ec7346a1a69f.9c3d31fa67ef019d8570eefcbd4f84a4.jpeg?odnHeight=640&odnWidth=640&odnBg=FFFFFF\")",
+      "Bash(curl -s -o img1.jpg \"https://live.staticflickr.com/65535/55342270244_28f0b0315e_b.jpg\")",
+      "Bash(curl -s -o img2.jpg \"https://live.staticflickr.com/65535/55341126602_d1e08d37bd_b.jpg\")",
+      "Bash(curl -s -o img3.jpg \"https://live.staticflickr.com/65535/55342055196_e350c8f8aa_b.jpg\")",
+      "Bash(curl -s -o img4.jpg \"https://live.staticflickr.com/65535/55342055201_150d6f9aff_b.jpg\")",
+      "Bash(python3 *)",
+      "mcp__claude_ai_Slack__slack_search_channels",
+      "mcp__claude_ai_Slack__slack_send_message"
     ]
   }
 }

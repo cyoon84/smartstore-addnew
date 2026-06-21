@@ -200,19 +200,34 @@ def resolve_shipping(pinfo):
             return ("수량별", int(m.group(1)), 1)
         return None
 
+    def from_dict(sh):
+        if sh.get("absorbed_into_price") or sh.get("naver_free") is True:
+            return ("무료", 0, None)
+        # per_unit_krw / shipping_krw_per_unit 있으면 개당(수량별 qty=1) — 가장 명확한 신호
+        per_unit = sh.get("per_unit_krw")
+        if per_unit in (None, ""):
+            per_unit = sh.get("shipping_krw_per_unit")
+        # bundle_rule 문자열에 'M개당' 묶음이 명시돼 있으면 그쪽 우선
+        r = parse_str(sh.get("policy") or sh.get("bundle_rule"))
+        if r and r[2] not in (None, 1):
+            return r
+        if per_unit not in (None, ""):
+            return ("수량별", int(per_unit), 1)
+        return r
+
     sh = pinfo.get("shipping")
     if isinstance(sh, dict):
-        if sh.get("absorbed_into_price"):
-            return ("무료", 0, None)
-        # per_unit_krw 가 있으면 개당(수량별 qty=1) — 가장 명확한 신호
-        if sh.get("per_unit_krw") not in (None, ""):
-            return ("수량별", int(sh["per_unit_krw"]), 1)
-        # dict 안 policy 문자열 파싱 시도
-        r = parse_str(sh.get("policy") or sh.get("bundle_rule"))
+        r = from_dict(sh)
         if r:
             return r
     elif isinstance(sh, str):
         r = parse_str(sh)
+        if r:
+            return r
+
+    sp = pinfo.get("shipping_policy")
+    if isinstance(sp, dict):
+        r = from_dict(sp)
         if r:
             return r
 

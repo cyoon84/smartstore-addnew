@@ -28,7 +28,8 @@
 - [Skip §0-A when "not sold in Korea"](feedback_skip_domestic_check_not_in_korea.md) — 사용자가 "한국에 안 판다/국내 미출시" 명시 시 §0-A 국내 시세 확인 스킵
 - [Source store affects price comparison](feedback_source_store_price_comparison.md) — 같은 그룹/라인업 형제라도 매입처(코스트코 vs 월마트) 다르면 원가 baseline 달라 판매가 직접 비교 불가. 매입처 다른 형제보다 비싸도 "과하다" 자동 판정 X, 원가(손익분기) 기준 책정
 - [Target price-match pricing pattern](feedback_target_price_match.md) — "가격 N$로 맞춰" 명시 시 cost-plus 스킵, N CAD를 목표 판매가(pre-fee)로 사용
-- [Shipping per-unit, no bundle rule](feedback_shipping_per_unit_no_bundle.md) — "배송비 N원 (몇 개당 그런 거 없이)" = 수량당 단순 곱셈, 묶음 룰 없음
+- [Shipping per-unit, no bundle rule](feedback_shipping_per_unit_no_bundle.md) — "배송비 N원 (몇 개당 그런 거 없이)"=수량당 단순곱셈(수량별,AP=1). vs "flat/균일 N원(개당 없이)"=수량 무관 유료(AP 공란) — 정반대 주의 (2026-06-20 트위즐러)
+- [Overseas shipping weight-tiered $9+$4.5/kg](feedback_overseas_shipping_baseline.md) — 해외 배송비 무게기반: $9(첫1kg≈₩10,000)+추가kg당$4.5(2kg≈₩15,000). 부과수량=1kg경계 넘기는 개수(765g→2개당15,000). 미지정이면 개당₩10,000 디폴트·하한, 명시값 우선 (LEARNED_RULES §7-1)
 - [Canadian price tag "N/X.XX OR Y.YY EA" format](feedback_price_tag_or_format.md) — Loblaws 양식 = N개 묶음 X.XX / 단품 Y.YY. 기본 단품가 사용, OCR 오인 흔함 → 사용자 확정 받기
 - [Group product — one unified detail page](feedback_group_product_one_detail.md) — 그룹상품 상세페이지는 옵션별 분리 X, 통합 1장으로 작성하고 본문에서 옵션 자연스럽게 안내
 - [Naver category — 식품>스낵/과자 verified tree](feedback_naver_category_snack.md) — 스낵·과자 상위는 식품>스낵/과자(과자/베이커리 아님). 세분류 8개만 실존(일반스낵·쿠키/비스킷·파이/케익·팝콘/강냉이류 등). 감자스낵·감자칩·포테이토칩 등 잎 노드 지어내기 금지 → 칩류=일반스낵
@@ -37,6 +38,7 @@
 - [Naver top-level category lock — copy & re-register](feedback_naver_category_toplevel_lock.md) — 등록 후 대(최상위)분류 카테고리 변경 불가. 같은 대분류 내 이동만 즉시 수정, 대분류 바뀌면 기존 상품 복사 후 새 상품 재등록(셀러). SEO 리프레시는 대분류 넘는 이동이면 "⚠️ 복사 재등록 필요" 명시
 - [detail.html — skip shipping section and outro](feedback_detail_skip_shipping_outro.md) — 상세페이지 본문에 🚚 배송 안내·마무리 인사 한 줄 자동 삽입 금지 (instructions.md 명시 룰)
 - [detail.html — English subtitle under headline](feedback_detail_english_subtitle.md) — 헤드라인 바로 아래 영문 풀네임 부제 한 줄 추가 패턴
+- [detail.html — English blocked-word rejection](feedback_detail_blocked_word_english.md) — 네이버 상세설명 금칙어는 공백 제거 후 매칭. 영문 제품유형명(Taco Seasoning Mix→tacoseasoningmix) 거부 가능 → 거부 시 영문 부제 줄 제거(한글 헤드라인 유지)
 - [Naver detail — text+image split, not standalone HTML](feedback_naver_detail_format.md) — 최종 산출물은 HTML 말고 섹션별 붙여넣기용 텍스트 + 이미지 URL 분리 형식
 - [Loss-leader / traffic-driver pricing](feedback_loss_leader.md) — "검색 유입용·끼워팔기·마진 포기" 표현 시 마진 최소화 모드 (gross-up은 유지, 2안 제시)
 - [Made-to-order fulfillment](feedback_made_to_order.md) — "재고 없이 주문 들어오면 매입" SKU는 made-to-order, 네이버 발송예정일 길게 설정
