@@ -207,12 +207,17 @@ def resolve_shipping(pinfo):
         per_unit = sh.get("per_unit_krw")
         if per_unit in (None, ""):
             per_unit = sh.get("shipping_krw_per_unit")
-        # bundle_rule 문자열에 'M개당' 묶음이 명시돼 있으면 그쪽 우선
-        r = parse_str(sh.get("policy") or sh.get("bundle_rule"))
+        # bundle_rule/policy/description 문자열에 'M개당' 묶음이 명시돼 있으면 그쪽 우선
+        r = parse_str(sh.get("policy") or sh.get("bundle_rule") or sh.get("description"))
         if r and r[2] not in (None, 1):
             return r
         if per_unit not in (None, ""):
             return ("수량별", int(per_unit), 1)
+        # {krw + per_units} 묶음 스키마 (rule:"bundle") — krw 가 per_units 개마다 부과
+        krw = sh.get("krw")
+        per_units = sh.get("per_units")
+        if krw not in (None, "") and per_units not in (None, ""):
+            return ("수량별", int(krw), int(per_units))
         return r
 
     sh = pinfo.get("shipping")

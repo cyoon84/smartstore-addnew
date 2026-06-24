@@ -14,7 +14,7 @@
 - [Slack delivery of 등록정보](feedback_slack_delivery.md) — 등록 완료 후 등록정보.md 전체(형식 A)를 Slack #new-item 채널에 자동 전송
 - [Title spec label](feedback_title_spec_label.md) — 상품명 수치 사양은 단독 숫자 말고 라벨 결합 (23g → 단백질23g)
 - [Naver title SEO guide](feedback_naver_title_seo_guide.md) — 네이버 공식 SEO 가이드 기반 상품명 작성 규칙 (50자 내외/동의어 중복 금지/판매처명 금지 등)
-- [Naver group product names lock after creation](feedback_naver_group_lock.md) — 그룹명(상품명)은 사후 수정 가능 / 기존 옵션은 잠겨 수정 불가. 새 옵션 추가 가능, 그룹명이 새 옵션과 안 맞으면 일반화 수정 (2026-06-09 정정)
+- [Naver group product names and options editable](feedback_naver_group_lock.md) — 그룹명(상품명)도 기존 옵션도 사후 수정 가능. 새 옵션 추가 가능, 그룹명이 새 옵션과 안 맞으면 일반화 수정 (2026-06-21 정정 — 이전 "옵션 잠김"은 오류)
 - [Group product per-option shipping](feedback_group_shipping_per_option.md) — 네이버 그룹상품은 옵션(제품)별로 배송비 다르게 설정 가능. 묶음/개당/금액 차등 OK, 별도 분리 권고 X
 - [Smart Store ID: finchmart_ca](reference_smartstore_id.md) — 사용자 네이버 스마트스토어 ID와 상품 URL 패턴
 - [Title source tag rules — no "정품", store name only for store-exclusive SKU](feedback_title_source_tag.md) — 상품명 끝 출처: 매장 한정 SKU만 "캐나다 코스트코" 식, 일반 유통은 "캐나다"만, "정품"은 항상 제외. NB+소매사이즈는 디폴트 일반 유통 (사용자 "코스트코 라인" 발언만으로 매장 한정 자동 가정 X)
@@ -28,7 +28,7 @@
 - [Skip §0-A when "not sold in Korea"](feedback_skip_domestic_check_not_in_korea.md) — 사용자가 "한국에 안 판다/국내 미출시" 명시 시 §0-A 국내 시세 확인 스킵
 - [Source store affects price comparison](feedback_source_store_price_comparison.md) — 같은 그룹/라인업 형제라도 매입처(코스트코 vs 월마트) 다르면 원가 baseline 달라 판매가 직접 비교 불가. 매입처 다른 형제보다 비싸도 "과하다" 자동 판정 X, 원가(손익분기) 기준 책정
 - [Target price-match pricing pattern](feedback_target_price_match.md) — "가격 N$로 맞춰" 명시 시 cost-plus 스킵, N CAD를 목표 판매가(pre-fee)로 사용
-- [Shipping per-unit, no bundle rule](feedback_shipping_per_unit_no_bundle.md) — "배송비 N원 (몇 개당 그런 거 없이)"=수량당 단순곱셈(수량별,AP=1). vs "flat/균일 N원(개당 없이)"=수량 무관 유료(AP 공란) — 정반대 주의 (2026-06-20 트위즐러)
+- [Shipping per-unit, no bundle rule](feedback_shipping_per_unit_no_bundle.md) — "배송비 N원 (몇 개당 그런 거 없이)"=수량당 단순곱셈(수량별,AP=1). vs "flat/균일 N원(개당 없이)"=수량 무관 유료(AP 공란) — 정반대 주의 (2026-06-20 트위즐러). "M개당 N원"은 액면 그대로 수량별 fee=N·AP=M — "=개당 X원" 분담 환산으로 재해석 금지(2026-06-23 자미에슨)
 - [Overseas shipping weight-tiered $9+$4.5/kg](feedback_overseas_shipping_baseline.md) — 해외 배송비 무게기반: $9(첫1kg≈₩10,000)+추가kg당$4.5(2kg≈₩15,000). 부과수량=1kg경계 넘기는 개수(765g→2개당15,000). 미지정이면 개당₩10,000 디폴트·하한, 명시값 우선 (LEARNED_RULES §7-1)
 - [Canadian price tag "N/X.XX OR Y.YY EA" format](feedback_price_tag_or_format.md) — Loblaws 양식 = N개 묶음 X.XX / 단품 Y.YY. 기본 단품가 사용, OCR 오인 흔함 → 사용자 확정 받기
 - [Group product — one unified detail page](feedback_group_product_one_detail.md) — 그룹상품 상세페이지는 옵션별 분리 X, 통합 1장으로 작성하고 본문에서 옵션 자연스럽게 안내

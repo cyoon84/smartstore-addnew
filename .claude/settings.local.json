@@ -117,7 +117,26 @@
       "Bash(curl -s -o img4.jpg \"https://live.staticflickr.com/65535/55342055201_150d6f9aff_b.jpg\")",
       "Bash(python3 *)",
       "mcp__claude_ai_Slack__slack_search_channels",
-      "mcp__claude_ai_Slack__slack_send_message"
+      "mcp__claude_ai_Slack__slack_send_message",
+      "Bash(launchctl list *)",
+      "Bash(mkdir -p /tmp/newprod)",
+      "Bash(curl -s -o /tmp/newprod/new_main.jpg \"https://live.staticflickr.com/65535/55349307379_f7414ecf1b_c.jpg\")",
+      "Bash(zsh -lic 'echo $PATH')",
+      "Bash(awk -F',' 'tolower\\($4\\) ~ /팀홀튼|팀 홀튼|tim hortons/ {print $2\" | \"$4\" | 판매가:\"$11}' guide/Product_20260621_091533.csv)",
+      "Bash(curl -s -o garcia_main.jpg \"https://live.staticflickr.com/65535/55349307384_c4178a57f6_b.jpg\")",
+      "Bash(curl -s -o garcia_add.jpg \"https://live.staticflickr.com/65535/55349516565_d6d0934b44_b.jpg\")",
+      "Bash(curl -s -o keurig_main.jpg \"https://live.staticflickr.com/65535/55349249863_0d4f637dce_b.jpg\")",
+      "Bash(curl -s -o keurig_add.jpg \"https://live.staticflickr.com/65535/55348158947_e7ebd08a5c_b.jpg\")",
+      "Bash(bash /Volumes/External/claude/smartstore-investigate-new-item/scripts/ca_grocery_crawl_cron.sh)",
+      "mcp__chrome-devtools__new_page",
+      "mcp__chrome-devtools__take_snapshot",
+      "Bash(xxd \"/Volumes/External/Downloads/optionCombination_20260622_124958.xls\")",
+      "Bash(pip install *)",
+      "mcp__chrome-devtools__evaluate_script",
+      "Bash(git -C /Volumes/External/claude/smartstore-addnew status --short)",
+      "Bash(bash scripts/sync_mobile_output.sh)",
+      "Bash(xargs cat)",
+      "Bash(grep -a -o '.\\\\{0,40\\\\}일반스낵.\\\\{0,20\\\\}' \"guide/일괄등록 guide/category_20260606_023944.xls\")"
     ]
   }
 }
