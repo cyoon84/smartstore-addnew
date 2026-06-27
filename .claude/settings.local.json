@@ -136,7 +136,24 @@
       "Bash(git -C /Volumes/External/claude/smartstore-addnew status --short)",
       "Bash(bash scripts/sync_mobile_output.sh)",
       "Bash(xargs cat)",
-      "Bash(grep -a -o '.\\\\{0,40\\\\}일반스낵.\\\\{0,20\\\\}' \"guide/일괄등록 guide/category_20260606_023944.xls\")"
+      "Bash(grep -a -o '.\\\\{0,40\\\\}일반스낵.\\\\{0,20\\\\}' \"guide/일괄등록 guide/category_20260606_023944.xls\")",
+      "Bash(curl -s -o newprod_rep.jpg \"https://live.staticflickr.com/65535/55356320432_f857ec099a_b.jpg\")",
+      "Bash(curl -s -o newprod_add.jpg \"https://live.staticflickr.com/65535/55357464594_8097675d47_b.jpg\")",
+      "Bash(mkdir -p /Volumes/External/claude/smartstore-addnew/output/new-item/hershey_pokemon_special_edition_80ct)",
+      "Bash(cp /tmp/newprod_rep.jpg \"/Volumes/External/claude/smartstore-addnew/output/new-item/hershey_pokemon_special_edition_80ct/hershey_pokemon_special_edition_80ct_ref1.jpg\")",
+      "Bash(cp /tmp/newprod_add.jpg \"/Volumes/External/claude/smartstore-addnew/output/new-item/hershey_pokemon_special_edition_80ct/hershey_pokemon_special_edition_80ct_ref2.jpg\")",
+      "Bash(curl -s -o q1.jpg \"https://live.staticflickr.com/65535/55358821759_623be7c30f_b.jpg\")",
+      "Bash(curl -s -o q2.jpg \"https://live.staticflickr.com/65535/55358781483_ae4b33fcbb_b.jpg\")",
+      "Bash(cp /tmp/q1.jpg \"/Volumes/External/claude/smartstore-addnew/output/new-item/quaker_harvest_crunch/quaker_harvest_crunch_honey_nut_400g.jpg\")",
+      "Bash(cp /tmp/q2.jpg \"/Volumes/External/claude/smartstore-addnew/output/new-item/quaker_harvest_crunch/quaker_harvest_crunch_raisin_almond_510g.jpg\")",
+      "Bash(curl -s -o rc_rep.jpg \"https://live.staticflickr.com/65535/55359507225_b723a3f701_b.jpg\")",
+      "Bash(curl -s -o rc_add.jpg \"https://live.staticflickr.com/65535/55359507235_92c9a30eb2_b.jpg\")",
+      "Bash(mkdir -p /Volumes/External/claude/smartstore-addnew/output/new-item/tim_hortons_brew_over_ice_original_10ct)",
+      "Bash(cp /tmp/rc_rep.jpg \"/Volumes/External/claude/smartstore-addnew/output/new-item/tim_hortons_brew_over_ice_original_10ct/tim_hortons_brew_over_ice_original_10ct_ref1.jpg\")",
+      "Bash(cp /tmp/rc_add.jpg \"/Volumes/External/claude/smartstore-addnew/output/new-item/tim_hortons_brew_over_ice_original_10ct/tim_hortons_brew_over_ice_original_10ct_ref2.jpg\")",
+      "Bash(curl -s -o un_r0.jpg \"https://live.staticflickr.com/65535/55350779851_7642e6be81_c.jpg\")",
+      "Bash(curl -s -o un_r1.jpg \"https://live.staticflickr.com/65535/55349841947_ea6ef868ff_b.jpg\")",
+      "Bash(curl -s -o un_r2.jpg \"https://live.staticflickr.com/65535/55349841957_8c98d04d31_b.jpg\")"
     ]
   }
 }

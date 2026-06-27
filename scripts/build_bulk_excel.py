@@ -207,12 +207,18 @@ def resolve_shipping(pinfo):
         per_unit = sh.get("per_unit_krw")
         if per_unit in (None, ""):
             per_unit = sh.get("shipping_krw_per_unit")
-        # bundle_rule/policy/description 문자열에 'M개당' 묶음이 명시돼 있으면 그쪽 우선
-        r = parse_str(sh.get("policy") or sh.get("bundle_rule") or sh.get("description"))
+        # bundle_rule/policy/description/rule/note 문자열에 'M개당' 묶음이 명시돼 있으면 그쪽 우선
+        r = parse_str(sh.get("policy") or sh.get("bundle_rule") or sh.get("description")
+                      or sh.get("rule") or sh.get("note"))
         if r and r[2] not in (None, 1):
             return r
         if per_unit not in (None, ""):
             return ("수량별", int(per_unit), 1)
+        # {bundle_fee_krw + per_bundle_qty} 묶음 스키마 — bundle_fee 가 per_bundle_qty 개마다 부과
+        bf = sh.get("bundle_fee_krw")
+        pq = sh.get("per_bundle_qty")
+        if bf not in (None, "") and pq not in (None, ""):
+            return ("수량별", int(bf), int(pq))
         # {krw + per_units} 묶음 스키마 (rule:"bundle") — krw 가 per_units 개마다 부과
         krw = sh.get("krw")
         per_units = sh.get("per_units")
@@ -384,6 +390,9 @@ def write_excel(rows, out_path):
             ws.cell(row=r, column=col, value=val)
             if key == "origin_code":             # 앞자리 0 보존
                 ws.cell(row=r, column=col).number_format = "@"
+            if key == "add_image":               # 추가이미지 URL 여러 개 — 셀 내 줄바꿈 표시(엔터 구분)
+                from openpyxl.styles import Alignment
+                ws.cell(row=r, column=col).alignment = Alignment(wrapText=True, vertical="top")
 
     os.makedirs(os.path.dirname(out_path), exist_ok=True)
     wb.save(out_path)
@@ -407,9 +416,22 @@ def one_row(target, lookups):
     detail_path = os.path.join(folder, f"{slug}_detail.html")
     if not os.path.exists(pinfo_path):
         sys.exit(f"[!] product_info 없음: {pinfo_path}")
-    if not os.path.exists(detail_path):
-        sys.exit(f"[!] detail.html 없음: {detail_path}")
     pinfo = json.load(open(pinfo_path, encoding="utf-8"))
+    if not os.path.exists(detail_path):
+        # 공통(공유) 상세 — product_info.detail_html 참조로 해석 (그룹/옵션 SKU 가 한 상세 공유)
+        ref = pinfo.get("detail_html")
+        resolved = None
+        if ref:
+            cands = [os.path.join(folder, ref),
+                     os.path.join(NEW_ITEM, ref.replace("_detail.html", ""), ref)]
+            resolved = next((c for c in cands if os.path.exists(c)), None)
+            if not resolved:
+                import glob
+                hits = glob.glob(os.path.join(NEW_ITEM, "*", ref))
+                resolved = hits[0] if hits else None
+        if not resolved:
+            sys.exit(f"[!] detail.html 없음: {detail_path} (detail_html ref={ref})")
+        detail_path = resolved
     detail_html = open(detail_path, encoding="utf-8").read().strip()
     d, warn = build_data(pinfo, detail_html, *lookups)
     return slug, folder, d, warn
