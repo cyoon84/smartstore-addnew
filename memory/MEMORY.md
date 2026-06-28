@@ -1,3 +1,7 @@
+- [Pre-register self-verification checklist](feedback_pre_register_verification.md) — 등록 산출물 확정 전 직접 검증: ①옵션마다 대표이미지 열어 라벨확인(rep[0] 일괄 금지) ②브랜드=모브랜드/제조사=실제 제조사(라인명 금지, Unstopables→다우니/P&G) ③배송 "M개당 N" 환산 없이 그대로 ④카테고리 강제 전 세분류 확인 ⑤태그 입력화면 검증. 열어보면 아는 건 추측 말 것 (2026-06-26 반복실수)
+- [Senior copywriter mindset](feedback_senior_copywriting_mindset.md) — 상세페이지·SNS 카피는 초짜 아닌 시니어 마케터 마인드(후킹 먼저·고객심리·스캔가능·쉬운한글·전환설계·소재품질 책임·프로액티브). 단 §9 데이터 진실성 유지(사실만 매력적으로 프레이밍, 날조 금지)
+- [SNS bio link — Linktree](reference_sns_bio_link.md) — 인스타 프로필 바이오 링크=Linktree https://linktr.ee/finchmart_ca. 캡션 "프로필 링크" CTA가 이걸 가리킴. 캡션 URL은 클릭 안 됨→바이오/스토리 링크로 유도
+- [SNS MZ 라인업 모드 (croket) — 구현완료](project_sns_mz_croket_style.md) — scripts/build_sns_mz.py [그룹ID]: CSV 그룹→4:5 실사진 라인업 카드(마커헤드라인/형광펜·말풍선·로고·추천템·향추천가이드·CTA). MZ가 만들고 시니어가 공식페이지 팩트체크+가이드/CTA/캡션, 문제시 MZ 재작업. /sns-instagram mz 모드
 - [Apply code without asking](feedback_apply_without_asking.md) — 로컬 코드/파일/산출물 변경은 확인 묻지 말고 바로 적용·사후보고. 되돌리기 어렵거나 외부 전송(Slack·push·삭제)만 예외 확인
 - [Sub-agent model is Claude Code desktop only](feedback_subagent_env_split.md) — 서브에이전트는 Claude Code `/register-agents` 전용. 모바일 현장 dispatch 는 기존 Cowork 그대로, Cowork instructions 엔 안 심음
 - [SEO refresh daily automation](project_seo_refresh_automation.md) — 매일 17:00 launchd → /seo-refresh 헤드리스: 판매중 2개 SEO 감사·재생성·Slack. seo-auditor 에이전트 + seo_pick/slack_notify/seo_refresh_cron 스크립트
