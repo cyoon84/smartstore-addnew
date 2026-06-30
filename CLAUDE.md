@@ -10,12 +10,16 @@ Claude Code 에이전트로 운영하기 위한 프로젝트다. 이 `CLAUDE.md`
 
 ## 0. 무엇을 하는가
 
-사용자가 **사진/URL + 가격 정보**를 주면 한 SKU에 대해 다음 4종 산출물을 만든다:
+사용자가 **사진/URL + 가격 정보**를 주면 한 SKU에 대해 다음 **5종 산출물**을 만든다 (5번 빼먹기 금지):
 
 1. `<slug>_등록정보.md` — 네이버 등록용 전체 정보 (상품명·가격·태그·카테고리·배송)
 2. `<slug>_detail.html` — 네이버 에디터 붙여넣기용 베어 HTML fragment
 3. `<slug>_product_info.json` — 구조화 데이터 (가격 산식·검산 포함)
 4. (참고 이미지) `<slug>_*.jpg`
+5. **일괄등록 엑셀** — `python3 scripts/build_bulk_excel.py <slug…>` (§16). 1·2·3·4 만든 뒤 항상 생성.
+   **여러 SKU(용량/색상 변형 등)는 따로따로가 아니라 한 파일에 SKU당 한 행**으로
+   `--out output/new-item/_batch/<묶음>_bulk_upload.xlsx`. ("따로따로"는 상품 *등록*이 별개라는 뜻이지
+   일괄엑셀까지 쪼개라는 게 아니다.)
 
 URL 크롤 → 추출 → 가격 산정 → 렌더 파이프라인은 **`product-detail-page-ko` 스킬**이
 담당한다 (`.claude/skills/product-detail-page-ko/`). 쇼핑 URL 이 들어오면 이 스킬을 쓴다.
@@ -51,7 +55,11 @@ single 기본. 형식은 @docs/LEARNED_RULES.md §0-B, @memory/feedback_dispatch
 2. 가격 규칙 확정 → **가격은 반드시 `scripts/price_calc.py` 로 계산** (§4 참고). 손계산 금지.
 3. (URL 있으면) 스킬로 페이지 크롤·추출.
 4. 상품명·태그·카테고리·상세본문 작성 (§5~§7 규칙).
-5. 산출물 4종을 `output/` 에 평탄 저장 (§3).
+5. 산출물 1~4종을 `output/` 에 평탄 저장 (§3) → organize → **일괄등록 엑셀(5번째 산출물, §16) 생성**. 여러 SKU면 한 파일 배치.
+5-1. **일괄엑셀 검증 (업로드 전 필수).** 엑셀 생성 직후 **`bulk-excel-verifier` 에이전트**에 엑셀+슬러그를 넘겨
+   각 행이 product_info/등록정보와 일치하고 필수 필드(대표·추가이미지, **관부가세=포함**)가 들어갔는지 검증.
+   FAIL 나오면 그 슬러그를 listing-writer(콘텐츠 불일치) 또는 product_info 재생성(매핑·이미지·관부가세)으로 고친 뒤
+   엑셀 재생성→재검증. **PASS 받기 전에는 업로드용으로 내보내지 않는다.** (spawn 불가 환경이면 메인이 에이전트 파일을 플레이북으로 읽어 인라인 검증.)
 6. 완료 후 `등록정보.md` 전체를 Slack `#new-item` 채널에 전송 (@memory/feedback_slack_delivery.md).
 
 ---
