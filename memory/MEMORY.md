@@ -50,7 +50,9 @@
 - [Release market is not country of origin](feedback_origin_vs_release_market.md) — "캐나다 한정 출시"는 판매 시장, 제조국 아님. 페이지에 제조국 미명시면 원산지 캐나다로 단정 금지
 - [Granola spelling — Quaker uses 그라놀라](feedback_granola_spelling.md) — Quaker Harvest Crunch 등록 시 "그라놀라" 표기 (그래놀라 X). 다른 브랜드는 케이스별 확인
 - [Output location — workspace output/, flat naming](feedback_output_location.md) — 데스크톱·모바일 dispatch 둘 다 ~/smartstore-addnew/output/에 `<slug>_detail.html` 식 평탄 저장 (Downloads X, 중첩 폴더 X)
-- [detail.html — bare fragment format](feedback_detail_html_bare_fragment.md) — 데스크톱·모바일 동일하게 p/strong/br + 이모지 + img(외부 호스팅 URL은 네이버 에디터 생존, 2026-06-12 확인) 사용, div/style/script/table/article 금지 (네이버 에디터 붙여넣기용)
+- [detail.html — bare fragment format](feedback_detail_html_bare_fragment.md) — p/strong/br + 이모지 + img(외부 호스팅 URL 생존, 2026-06-12). ⚠️ 2026-07-02 완화: div래퍼+inline style+h1/h2도 생존 → 스타일드 상세 가능([[feedback_detail_styled_deco_template]])
+- [detail.html — styled deco template](feedback_detail_styled_deco_template.md) — 네이버가 div/inline-style/h1/h2/말풍선(삼각형div) 유지 → inline CSS 스타일드 상세 가능. 브랜드 레드 팔레트+말풍선 헤더+색상별 대표색(블랙#222·비치볼블루 파랑 등), 본문19px 가운데정렬. 폰트선택 불가, style블록/flex/class는 X, 공지 안 붙임 (LEARNED §17)
+- [Store design guide + palette](reference_design_guide.md) — guide/디자인 가이드/ 위치. 브랜드 레드 #e0483f + 피치/크림/텍스트 팔레트, 공지 원본, 폰트 YgJalnan/NanumSquareRound(공지용·상세 미적용)
 - [Group detail — condense option/size text](feedback_group_detail_condensation.md) — 그룹상품 detail.html에서 옵션·사이즈 안내는 시각 카드 캡션 수준 한 줄로 응축 (사용자가 네이버 에디터에서 박스 사진·callout 등 시각 요소로 처리)
 - [Pre-sale regular price as cost](feedback_pre_sale_regular_price.md) — 세일가 식별되면(SAVE/정가 동시표시) 명시 없어도 세일전 정상가가 디폴트(2026-06-02 격상). 정상가/세일가 둘 다 기록 (LEARNED_RULES §12)
 - [Brand country ≠ made-in origin](feedback_brand_country_vs_made_in.md) — 브랜드 출신국·"Flavours from India" 맛 문구를 원산지로 오인 금지. 봉지 전면 MADE IN 배지/뒷면 라벨로 확정. 인도 브랜드 Kurkure도 캐나다 제조(0204006). 캐나다 제조면 "인도 직수입" 카피 금지, 인도과자는 genre로만
