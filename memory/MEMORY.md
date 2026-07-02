@@ -53,4 +53,5 @@
 - [detail.html — bare fragment format](feedback_detail_html_bare_fragment.md) — 데스크톱·모바일 동일하게 p/strong/br + 이모지 + img(외부 호스팅 URL은 네이버 에디터 생존, 2026-06-12 확인) 사용, div/style/script/table/article 금지 (네이버 에디터 붙여넣기용)
 - [Group detail — condense option/size text](feedback_group_detail_condensation.md) — 그룹상품 detail.html에서 옵션·사이즈 안내는 시각 카드 캡션 수준 한 줄로 응축 (사용자가 네이버 에디터에서 박스 사진·callout 등 시각 요소로 처리)
 - [Pre-sale regular price as cost](feedback_pre_sale_regular_price.md) — 세일가 식별되면(SAVE/정가 동시표시) 명시 없어도 세일전 정상가가 디폴트(2026-06-02 격상). 정상가/세일가 둘 다 기록 (LEARNED_RULES §12)
+- [Brand country ≠ made-in origin](feedback_brand_country_vs_made_in.md) — 브랜드 출신국·"Flavours from India" 맛 문구를 원산지로 오인 금지. 봉지 전면 MADE IN 배지/뒷면 라벨로 확정. 인도 브랜드 Kurkure도 캐나다 제조(0204006). 캐나다 제조면 "인도 직수입" 카피 금지, 인도과자는 genre로만
 - [Bulk-upload Excel — 5th artifact](feedback_bulk_upload_excel.md) — 등록 4종 뒤 네이버 일괄등록 엑셀도 build_bulk_excel.py 로 생성(메인 소유). 원산지 텍스트 0보존(캐나다 0204006)·배송방법 U+201A 구분자·상세설명=detail.html. 해외사업자라 영양제는 기타건강보조식품(50002615) 고정. 배송비는 resolve_shipping 으로 product_info 에서 SKU별 자동 도출(CONFIG 6개당 15,000 은 fallback, 일괄로 덮지 말 것). 대표이미지는 호스팅 URL 있으면 bulk.rep_image 로 자동 입력 (LEARNED_RULES §16)
