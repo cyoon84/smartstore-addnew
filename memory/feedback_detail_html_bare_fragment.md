@@ -16,6 +16,8 @@ metadata:
 - 속성(class/style/id) 일체 없음. 인라인 스타일 X (단 `<img>`의 `src`/`alt`는 허용)
 - 그리드/테이블/카드 레이아웃 시도하지 않음 — 네이버에서 다 제거됨
 
+> **🔑🔑 UPDATE (2026-07-02 확인) — `<div>` 래퍼 + inline CSS + `<h1>/<h2>` 가 네이버 에디터에서 생존:** finchmart_ca 에서 사용자가 직접 붙여넣어 확인 — 바깥 `<div style="font-size:19px;line-height:1.75;color:#222;text-align:center">` 래퍼로 폰트/정렬을 상속시키고, 제품 타이틀 `<h1 style="font-size:24px;font-weight:700">`·부제 `<h2 style="font-size:16px;color:#888">` 로 계층을 주고, `<p style="…">`/`<img style="max-width:100%">` inline CSS 를 쓴 상세가 **그대로 유지됨**. 즉 아래 "div/style/h1~h6 금지"는 **더 이상 절대규칙 아님** — 스타일드 상세가 가능. 룰루레몬 백투라이프 물병(18oz·24oz) 15개 SKU 를 이 포맷(래퍼 div 19px 가운데정렬 + h1/h2)으로 확정. **적용 지침:** 앞으로 detail.html 은 (a) 안전한 베어 fragment(구버전 안전판) 또는 (b) **inline-CSS 스타일드**(래퍼 div + font-size/text-align + h1/h2) 둘 다 가능. 사용자가 폰트크기·정렬·헤딩 등 스타일을 요청하면 (b)로 간다. 단 `<style>` 블록·외부 CSS·class/id 는 여전히 미검증이니 **모든 스타일은 inline `style=` 속성으로만**. (data:/로컬 img src 도 여전히 미검증 — 외부 호스팅 URL만.)
+
 > **🔑 `<img>` 태그는 외부 호스팅 URL이면 네이버 에디터에서 생존 (2026-06-12 확인):** 그동안 `<img>`를 금지로 봤으나, `<img src="https://live.staticflickr.com/…_c.jpg">`처럼 **외부 호스팅 직링크**를 넣어 HTML 붙여넣기 하면 네이버 스마트에디터에서 **이미지가 그대로 표시됨**(카페윌리엄 케이스, 사용자 "성공" 확인). 호스팅 이미지 URL이 있으면 detail.html 본문 적절한 위치(보통 헤드라인+영문부제 아래 히어로)에 `<p><img src="URL" alt="상품명"></p>`로 직접 넣어도 된다. `<style>`/`<table>`/`<div>` 류는 여전히 제거되니 금지 유지. (data:/로컬 경로 src는 미검증 — 외부 호스팅 URL만 확인.)
 
 ## 섹션 순서
