@@ -19,3 +19,5 @@ metadata:
 **활용 예:** §0-A 는 이제 `search_shop` 로 자동화 — 국내 최저가·룰루레몬코리아 공식가·색상 라인업 차이(한국 Black만)까지 잡아 "접기→니치로 살리기" 전환. [[feedback_lululemon_relist_playbook]] · [[feedback_domestic_price_check]]
 
 **설정:** PlayMCP 호스팅(원격 HTTP MCP, 사용자 카카오 로그인+토큰). 자체 호스팅 대안=`@isnow890/naver-search-mcp`(npx, `NAVER_CLIENT_ID`/`NAVER_CLIENT_SECRET`).
+
+**🔑 한계 2 — `search_shop`은 상품가(lprice)만 주고 배송비는 안 준다 (2026-07-04):** 직구셀러가 §0-D 꼼수(상품가↓+배송↑)를 쓰면 MCP엔 낮은 상품가만 잡혀 **실제 총액을 놓친다**. 예: 바이바잉바이 lprice ₩60,500이지만 실제 배송 ₩39,900 → 총액 ₩100,400. → **§0-A 시세비교는 lprice만 믿지 말고, 유력 경쟁 리스팅은 실제 배송비를 확인(사용자 스크린샷/직접)해 총액으로 비교.** 특히 직구셀러는 숨은 고배송 가정. [[feedback_demand_and_shipping_tactic]]
