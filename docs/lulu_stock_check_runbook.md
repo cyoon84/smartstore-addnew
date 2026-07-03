@@ -42,3 +42,11 @@
 
 ## 🔑 파이널세일 = 매일 체크 (2026-07-04)
 config 의 monitor 에 `check_frequency`: 정가 SKU=`monthly` / **FINAL SALE 색상 포함 SKU=`daily`**. 파이널세일은 재고 소진 시 즉시 사라져(재입고 없음) 팔던 옵션이 갑자기 품절될 수 있으니 매일 확인. daily 대상만 추려 매일, 전체는 월 1회.
+
+
+## 🚀 헤드리스 자동화 — insane-search engine (2026-07-04)
+룰루레몬 Akamai 봇월을 **insane-search 플러그인 engine**(로컬 Playwright real-Chrome)이 뚫어 raw HTML→ProductGroup JSON-LD 를 헤드리스로 회수. **실브라우저(claude-in-chrome) 세션 불필요.**
+- 수집: `python3 scripts/lulu_stock_fetch.py --config <cfg> [--frequency daily|monthly] --out <stock.json>`
+- 대조: `python3 scripts/lulu_stock_check.py --config <cfg> --stock <stock.json> [--frequency ...] --slack`
+- 전제(1회 셋업): insane-search 플러그인 설치 + `engine/templates` 에 `npm install` & Chrome(시스템 Chrome 채널) 사용. 검증됨(2026-07-04 24oz 샤인 파이널세일 18색 정상 파싱).
+- 폴백: lulu_stock_fetch 가 "파싱 실패"를 내면 그 URL만 claude-in-chrome 실브라우저로 수집(위 절차). 스케줄 태스크(daily/monthly) 프롬프트도 headless-first + 폴백으로 갱신됨.
