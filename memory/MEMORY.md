@@ -30,6 +30,7 @@
 - [Percent margin pricing](feedback_percent_margin.md) — % 마진: "수수료 감안 N%" = 판매가 = 원가KRW ÷ (0.934 − N/100), gross-up 별도 적용 X
 - [Pre-workflow domestic price check](feedback_domestic_price_check.md) — 산출물 만들기 전에 쿠팡·네이버 검색으로 국내 시세 확인하고 가격 경쟁력 보고, GO 받으면 진행
 - [Skip §0-A when "not sold in Korea"](feedback_skip_domestic_check_not_in_korea.md) — 사용자가 "한국에 안 판다/국내 미출시" 명시 시 §0-A 국내 시세 확인 스킵
+- [§0-A domestic price verify limits](feedback_domestic_price_verify_limits.md) — market-researcher/검색 결과는 stale·사장 리스팅 포함 가능. 한국 커머스(네이버쇼핑·쿠팡·11번가)는 Chrome MCP 차단+JS렌더로 실시간 검증 불가. "가격으로 안 됨" 단정 전 링크 생존 의심, 사용자가 죽었다면 즉시 철회·완화
 - [Source store affects price comparison](feedback_source_store_price_comparison.md) — 같은 그룹/라인업 형제라도 매입처(코스트코 vs 월마트) 다르면 원가 baseline 달라 판매가 직접 비교 불가. 매입처 다른 형제보다 비싸도 "과하다" 자동 판정 X, 원가(손익분기) 기준 책정
 - [Target price-match pricing pattern](feedback_target_price_match.md) — "가격 N$로 맞춰" 명시 시 cost-plus 스킵, N CAD를 목표 판매가(pre-fee)로 사용
 - [Shipping per-unit, no bundle rule](feedback_shipping_per_unit_no_bundle.md) — "배송비 N원 (몇 개당 그런 거 없이)"=수량당 단순곱셈(수량별,AP=1). vs "flat/균일 N원(개당 없이)"=수량 무관 유료(AP 공란) — 정반대 주의 (2026-06-20 트위즐러). "M개당 N원"은 액면 그대로 수량별 fee=N·AP=M — "=개당 X원" 분담 환산으로 재해석 금지(2026-06-23 자미에슨)
@@ -51,9 +52,12 @@
 - [Granola spelling — Quaker uses 그라놀라](feedback_granola_spelling.md) — Quaker Harvest Crunch 등록 시 "그라놀라" 표기 (그래놀라 X). 다른 브랜드는 케이스별 확인
 - [Output location — workspace output/, flat naming](feedback_output_location.md) — 데스크톱·모바일 dispatch 둘 다 ~/smartstore-addnew/output/에 `<slug>_detail.html` 식 평탄 저장 (Downloads X, 중첩 폴더 X)
 - [detail.html — bare fragment format](feedback_detail_html_bare_fragment.md) — p/strong/br + 이모지 + img(외부 호스팅 URL 생존, 2026-06-12). ⚠️ 2026-07-02 완화: div래퍼+inline style+h1/h2도 생존 → 스타일드 상세 가능([[feedback_detail_styled_deco_template]])
-- [detail.html — styled deco template](feedback_detail_styled_deco_template.md) — 네이버가 div/inline-style/h1/h2/말풍선(삼각형div) 유지 → inline CSS 스타일드 상세 가능. 브랜드 레드 팔레트+말풍선 헤더+색상별 대표색(블랙#222·비치볼블루 파랑 등), 본문19px 가운데정렬. 폰트선택 불가, style블록/flex/class는 X, 공지 안 붙임 (LEARNED §17)
+- [detail.html — styled deco template](feedback_detail_styled_deco_template.md) — 네이버가 div/inline-style/h1/h2/말풍선(삼각형div) 유지 → inline CSS 스타일드 상세. 브랜드 레드 팔레트+말풍선 헤더+색상별 대표색, 본문19px 가운데정렬. 폰트선택 불가, style블록/flex/class X, 공지 안 붙임. **🔑 2026-07-03 표준 refine 프레임 확정("앞으로 이걸로"): 공지식 2겹 프레임(피치밴드#fff7f4+흰라운드카드)+아이브로우 pill+핵심포인트2줄행+번호뱃지, 국가카피=캐나다기준(미국인기 금지). 레퍼런스=post_honey_bunches…detail.html** (LEARNED §17)
 - [Store design guide + palette](reference_design_guide.md) — guide/디자인 가이드/ 위치. 브랜드 레드 #e0483f + 피치/크림/텍스트 팔레트, 공지 원본, 폰트 YgJalnan/NanumSquareRound(공지용·상세 미적용)
+- [Lululemon relist playbook](feedback_lululemon_relist_playbook.md) — 룰루레몬 재등록 반복 워크플로: 실브라우저 크롤(Akamai 우회)·ProductGroup JSON-LD(offers 배열/객체)·색상별 단일→그룹·스타일드 데코·블랙/화이트 킵·OOS 제외·베트남 0200014·재고 모니터 추가. lulu_stock_check.py --fetch-help
+- [Naver Search MCP](reference_naver_search_mcp.md) — PlayMCP/isnow890 네이버 검색 MCP 연동(2026-07-03). search_shop=§0-A 국내시세 자동화. ⚠️ search_shop total(등록상품수)≠태그 입력화면 검색량 — 죽은태그/중복 거르기용, 검색량·표기갈림(헤드밴드vs헤어밴드)은 입력화면 확인
 - [Group detail — condense option/size text](feedback_group_detail_condensation.md) — 그룹상품 detail.html에서 옵션·사이즈 안내는 시각 카드 캡션 수준 한 줄로 응축 (사용자가 네이버 에디터에서 박스 사진·callout 등 시각 요소로 처리)
-- [Pre-sale regular price as cost](feedback_pre_sale_regular_price.md) — 세일가 식별되면(SAVE/정가 동시표시) 명시 없어도 세일전 정상가가 디폴트(2026-06-02 격상). 정상가/세일가 둘 다 기록 (LEARNED_RULES §12)
+- [Pre-sale regular price as cost](feedback_pre_sale_regular_price.md) — 세일가 식별되면(SAVE/정가 동시표시) 명시 없어도 세일전 정상가가 디폴트(2026-06-02 격상). 정상가/세일가 둘 다 기록. 🔑 예외: **Final Sale은 세일가에서 마진 계산**(영구 클리어런스, 2026-07-04 §12-1) (LEARNED_RULES §12·§12-1)
+- [Demand inflow ≠ price + shipping search tactic](feedback_demand_and_shipping_tactic.md) — §0-A 시세경쟁력≠유입수요: 검색유입 없는 카테고리(테니스 등)는 좋은 마진이어도 접기. 경쟁사 과한 배송비(₩79,000)는 실비 아닌 네이버 검색노출 꼼수(상품가 정렬)라 블라인드 카피 금지 (LEARNED_RULES §0-D)
 - [Brand country ≠ made-in origin](feedback_brand_country_vs_made_in.md) — 브랜드 출신국·"Flavours from India" 맛 문구를 원산지로 오인 금지. 봉지 전면 MADE IN 배지/뒷면 라벨로 확정. 인도 브랜드 Kurkure도 캐나다 제조(0204006). 캐나다 제조면 "인도 직수입" 카피 금지, 인도과자는 genre로만
 - [Bulk-upload Excel — 5th artifact](feedback_bulk_upload_excel.md) — 등록 4종 뒤 네이버 일괄등록 엑셀도 build_bulk_excel.py 로 생성(메인 소유). 원산지 텍스트 0보존(캐나다 0204006)·배송방법 U+201A 구분자·상세설명=detail.html. 해외사업자라 영양제는 기타건강보조식품(50002615) 고정. 배송비는 resolve_shipping 으로 product_info 에서 SKU별 자동 도출(CONFIG 6개당 15,000 은 fallback, 일괄로 덮지 말 것). 대표이미지는 호스팅 URL 있으면 bulk.rep_image 로 자동 입력 (LEARNED_RULES §16)

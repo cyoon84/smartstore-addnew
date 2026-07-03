@@ -23,3 +23,9 @@ metadata:
 **색상명 = 대표색 (레드로 색상명 강조 X — "블랙인데 레드" 아이러니):** 블랙#222 · 화이트#9a9a9a · 아이비그로브#4a7c59 · 로터스라벤더#8a7cc0 · 체리엠버#c0392b · 비치볼블루#2f80d0 · 핑크류#e75f8a~#d96a8a.
 
 **팔레트 출처:** [[reference_design_guide]] (guide/디자인 가이드/). **공지사항은 상세에 붙이지 않음**(사용자 2026-07-02).
+
+**🔑 표준 refine 프레임 확정 (2026-07-03, "앞으로 이걸로 가는거다") — 전 상세 기본:** 레퍼런스 = `output/new-item/post_honey_bunches_of_oats_almonds_1_4kg/*_detail.html`.
+- **2겹 프레임(공지와 동일):** 외곽 피치밴드 `background:#fff7f4;padding:32px;border-radius:28px;box-shadow:0 1px 3px rgba(0,0,0,.08)` + 안쪽 흰 라운드카드 `background:#fff;border-radius:24px;padding:46px 34px 42px;box-shadow:0 6px 20px rgba(209,47,42,.06)`. 하드 레드 실선 ❌, 은은한 피치 프레임 ✅.
+- 아이브로우 피치 pill(제목 위) + 핵심포인트 2줄행(키워드 볼드↵설명, `border-bottom:#f3d3cd` 구분선) + 이런점이 번호뱃지(레드 원) + 이미지 `border-radius:16px`+그림자 + 말풍선 라벨 그림자.
+- **국가 카피 = 캐나다 기준:** 원산지 필드가 미국이어도 상세 아이브로우/카피는 "캐나다 직수입"(소싱), "미국 인기" 류 금지(핀치마트=캐나다 브랜드, 사용자 2026-07-03).
+- **글씨 크기 = 공지사항급(2026-07-03 "다 키워 공지랑 같게"):** 카드 본문 base **26px**·h1 **40px**·h2 20px·아이브로우 21px·말풍선라벨 26px·핵심키워드25/설명22·리스트24·번호뱃지 31px원·용량pill 24·알레르기 19. 구 19px 본문은 반려. 상세 세부·전체 CSS는 LEARNED_RULES §17.
