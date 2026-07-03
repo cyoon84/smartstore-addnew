@@ -96,6 +96,7 @@ def main():
     ap.add_argument("--stock")
     ap.add_argument("--slack", action="store_true")
     ap.add_argument("--out")
+    ap.add_argument("--frequency", help="monitor 필터: daily / monthly (check_frequency 기준). 생략 시 전체")
     ap.add_argument("--fetch-help", action="store_true")
     a = ap.parse_args()
     if a.fetch_help:
@@ -108,9 +109,13 @@ def main():
     stock = load(a.stock)
     today = datetime.date.today().isoformat()
 
-    report = [f"# 룰루레몬 공홈 재고 ↔ 스마트스토어 옵션 점검 ({today})", ""]
+    monitors = cfg.get("monitors", [])
+    if a.frequency:
+        monitors = [m for m in monitors if (m.get("check_frequency") or "monthly") == a.frequency]
+    freq_label = f" [{a.frequency}]" if a.frequency else ""
+    report = [f"# 룰루레몬 공홈 재고 ↔ 스마트스토어 옵션 점검{freq_label} ({today})", ""]
     any_issue = False
-    for m in cfg.get("monitors", []):
+    for m in monitors:
         variants = stock.get(m.get("id")) or stock.get(m.get("lululemon_url")) or []
         issue, lines = compare(m, variants)
         any_issue = any_issue or issue
