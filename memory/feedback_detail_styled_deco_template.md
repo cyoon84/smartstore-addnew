@@ -9,6 +9,12 @@ metadata:
 
 **Why:** 룰루레몬 백투라이프 물병 상세를 꾸미는 과정에서, div/style/h1/h2/box-shadow/border-radius/삼각형꼬리가 전부 네이버에서 살아남는 걸 확인. 브랜드 톤(레드)으로 통일한 스타일드 상세가 베어 fragment보다 전환에 유리.
 
+**🔑 커머스 API 공식 필터로 재확인 (2026-07-05, discussions/3442):** 일괄등록/API 상세설명은 **전역 영향 태그만 차단 — `HTML·META·SCRIPT·STYLE(블록)·BODY·HEAD`.** 허용 태그 공식 목록은 없고 "보안 위험 or 전역 UI 변동" 요소만 제거. 우리 상세는 `div·span·inline style=·h1·h2·img·p·strong·br`만 → 차단 0 → **에디터 붙여넣기(§17)뿐 아니라 일괄등록 API 업로드도 안전.** 차단 "STYLE"=`<style>` 블록 태그, inline `style=` 속성은 별개(전역 영향 없음).
+
+**🔑 매번 `word-break:keep-all` 로 단어 중간 끊김 방지 (2026-07-05 표준 규칙):** 한글은 기본 `word-break`가 글자 단위라 데스크탑에서 **단어가 중간에 끊긴다**. 안쪽 카드 div style 에 **`word-break:keep-all`** 을 넣으면(자식 텍스트 상속) 어절 단위로만 줄바꿈 → 전 스타일드 상세에 항상 포함. 데스크탑·모바일 둘 다 렌더 테스트로 확인(모바일 375px 에서 860px 프레임은 max-width 로 축소, 이미지 max-width:100%, 콘텐츠박스 max-width:640px 축소 → 반응형 OK).
+
+**🔑 가운데정렬 인트로 문단은 균형 `<br>` 로 다듬기 (2026-07-05 르끌레르):** 긴 문장을 큰 폰트(26px)+가운데정렬로 그냥 흘리면 자연 줄바꿈이 들쭉날쭉해 **spacing 이 거슬린다**. 인트로는 **문장마다 비슷한 길이의 2줄로 수동 `<br>`** + **문장 사이 빈 줄**(추가 `<br>` 또는 margin)로 끊고, 필요하면 인트로만 폰트 23px·line-height 1.5 로 살짝 타이트하게. (사용자가 직접 이렇게 다듬어 확정.)
+
 **How to apply:**
 - **모든 스타일은 inline `style=` 속성으로만.** `<style>`블록·외부CSS·class/id·`display:flex`(미검증)·`::after`(불가)는 X. 말풍선 꼬리는 `<div style="width:0;height:0;border-left/right:9px solid transparent;border-top:11px solid #e0483f">` 삼각형으로.
 - **폰트 선택 불가** — 상세는 font-family 못 고름(가이드 폰트 미적용). 색·레이아웃만.

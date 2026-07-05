@@ -91,6 +91,16 @@ FIELD = {
     "exchange_fee": "교환배송비",
     "as_phone":     "A/S 전화번호",
     "as_guide":     "A/S 안내",
+    # 상품정보제공고시 (기타 재화) — 개행 제거 후 매칭되므로 개행 없이 기재
+    "gosi_name":    "상품정보제공고시품명",
+    "gosi_model":   "상품정보제공고시모델명",
+    "gosi_maker":   "상품정보제공고시제조자",
+    # 옵션(단일상품+옵션 = 조합형/단독형)
+    "option_type":  "옵션형태",
+    "option_name":  "옵션명",
+    "option_value": "옵션값",
+    "option_price": "옵션가",
+    "option_stock": "옵션 재고수량",
 }
 
 
@@ -250,6 +260,27 @@ def resolve_shipping(pinfo):
     return (None, None, None)
 
 
+def clean_gosi_model(m, limit=50):
+    """상품정보제공고시 모델명 정규화. 네이버 제약:
+    ① 50자 제한 ② 등록불가 특수문자 \\ * ? " < > 금지.
+    색상 접미(' - Color') 제거 → 금지문자 제거 → 공백 정리 →
+    그래도 50자 넘치면 브랜드 접두(lululemon 등) 제거 → 최후 50자 컷."""
+    if not m:
+        return m
+    base = str(m).split(" - ")[0].strip()          # 색상 접미 제거
+    for ch in '\\*?"<>':                            # 네이버 등록불가 특수문자 제거
+        base = base.replace(ch, "")
+    while "  " in base:                             # 특수문자 제거로 생긴 이중 공백 정리
+        base = base.replace("  ", " ")
+    base = base.strip()
+    if len(base) >= limit:                         # 50자 이상이면(에러 문구가 '50자보다 작게'=strictly<50) 브랜드 접두 제거
+        for pre in ("lululemon ", "Lululemon ", "LULULEMON "):
+            if base.startswith(pre):
+                base = base[len(pre):].strip()
+                break
+    return base[:limit - 1].strip()                # 안전하게 49자 이하 보장
+
+
 def build_data(pinfo, detail_html, cat_rows, deliv_rows):
     bulk = pinfo.get("bulk", {})
     warn = []
@@ -270,7 +301,7 @@ def build_data(pinfo, detail_html, cat_rows, deliv_rows):
     # source-launch 스키마(title_ko·sell_krw·brand) 둘 다 읽는다.
     brand_ko = pinfo.get("brand_ko") or pinfo.get("brand")
     d = {}
-    d["title"] = pick("title", pinfo.get("product_name_ko"), pinfo.get("title_ko"))
+    d["title"] = pick("title", pinfo.get("product_name_ko"), pinfo.get("title_ko"), pinfo.get("group_name_ko"))
     # 판매가: pricing dict 내부 또는 최상위 키(스키마 변형: sell_price_krw·selling_price_krw·sell_krw)
     # 또는 calculation 중첩 블록(calculation.sell_price_krw / step4_sell_krw_raw) 모두 탐색
     calc = pinfo.get("calculation") if isinstance(pinfo.get("calculation"), dict) else {}
@@ -311,6 +342,26 @@ def build_data(pinfo, detail_html, cat_rows, deliv_rows):
     d["exchange_fee"] = pick("exchange_fee")     # 스토어 공통 50000
     d["as_phone"] = pick("as_phone")             # A/S 전화번호 (스토어 공통)
     d["as_guide"] = pick("as_guide")             # A/S 안내 (스토어 공통)
+    # 상품정보제공고시 — 품명=한글 상품명, 모델명=영문 공식 제품명, 제조자=브랜드
+    d["gosi_name"] = pick("gosi_name", d.get("title"))
+    d["gosi_model"] = clean_gosi_model(
+        pick("gosi_model", pinfo.get("model_name"), pinfo.get("model_name_en"), pinfo.get("model_name_ko")))
+    d["gosi_maker"] = pick("gosi_maker", brand_ko)
+
+    # 옵션 — 단일상품에 옵션 여럿(options[]) 있으면 조합형으로 채움. 옵션값=color_ko(콤마구분),
+    # 옵션가 전부 0(균일가), 옵션재고 전부 main 재고. (없으면 옵션칸 비움 = 단일무옵션)
+    opts = pinfo.get("options")
+    if isinstance(opts, list) and len(opts) >= 2:
+        vals = [str(o.get("color_ko") or o.get("color_en") or o.get("option_label") or "").strip()
+                for o in opts]
+        vals = [v for v in vals if v]
+        if vals:
+            stock = str(d.get("stock") or CONFIG.get("stock") or 999)
+            d["option_type"] = pick("option_type") or "조합형"
+            d["option_name"] = pick("option_name") or "색상"
+            d["option_value"] = ",".join(vals)
+            d["option_price"] = ",".join(["0"] * len(vals))
+            d["option_stock"] = ",".join([stock] * len(vals))
 
     # 카테고리코드 — bulk 우선 / 영양제는 해외사업자 제약상 기타건강보조식품 강제 / 그 외 경로 자동해석
     cat_candidates = category_candidates(pinfo)   # 스키마 변형 전반에서 경로 수집
