@@ -270,7 +270,14 @@
       "Bash(cp /tmp/leclerc_img/a1.jpg  output/seo_refresh/leclerc_trio_images/leclerc_trio_추가1.jpg)",
       "Bash(cp /tmp/leclerc_img/a2.jpg  output/seo_refresh/leclerc_trio_images/leclerc_trio_추가2.jpg)",
       "Bash(echo \"exit:$? size:$\\(wc -c < /tmp/flickr_leclerc.html\\)\")",
-      "Bash(grep -n \"^## 17\\\\.\\\\|^## 메모$\" docs/LEARNED_RULES.md)"
+      "Bash(grep -n \"^## 17\\\\.\\\\|^## 메모$\" docs/LEARNED_RULES.md)",
+      "mcp__2f2b591b-2637-4b03-8fdf-5b6a5e44d304__NaverSearch-datalab_search",
+      "mcp__2f2b591b-2637-4b03-8fdf-5b6a5e44d304__NaverSearch-search_blog",
+      "mcp__2f2b591b-2637-4b03-8fdf-5b6a5e44d304__NaverSearch-search_cafearticle",
+      "Bash(curl -s -o /dev/null -w \"%{http_code} %{content_type}\\\\n\" --max-time 15 \"https://live.staticflickr.com/65535/55375501543_3d2801fd37_b.jpg\")",
+      "Bash(curl -s -o attitude_473_src.jpg \"https://m.media-amazon.com/images/I/61SHXXs1gwL._AC_SL1500_.jpg\")",
+      "Bash(ls -la attitude_kids_473_square.jpg)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code} %{content_type}\\\\n\" -I \"https://live.staticflickr.com/65535/55374519602_c25c01e323_b.jpg\")"
     ]
   }
 }
