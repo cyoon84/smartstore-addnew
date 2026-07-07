@@ -277,7 +277,20 @@
       "Bash(curl -s -o /dev/null -w \"%{http_code} %{content_type}\\\\n\" --max-time 15 \"https://live.staticflickr.com/65535/55375501543_3d2801fd37_b.jpg\")",
       "Bash(curl -s -o attitude_473_src.jpg \"https://m.media-amazon.com/images/I/61SHXXs1gwL._AC_SL1500_.jpg\")",
       "Bash(ls -la attitude_kids_473_square.jpg)",
-      "Bash(curl -s -o /dev/null -w \"%{http_code} %{content_type}\\\\n\" -I \"https://live.staticflickr.com/65535/55374519602_c25c01e323_b.jpg\")"
+      "Bash(curl -s -o /dev/null -w \"%{http_code} %{content_type}\\\\n\" -I \"https://live.staticflickr.com/65535/55374519602_c25c01e323_b.jpg\")",
+      "Bash(grep -rl \"9962152116\" /Volumes/External/claude/ 2>/dev/null | head -20)",
+      "Bash(grep -o \"[0-9]\\\\{6,\\\\}\")",
+      "Bash(iconv -f UTF-8 -t UTF-8)",
+      "Bash(curl -sL --max-time 30 -A \"Mozilla/5.0 \\(Macintosh; Intel Mac OS X 10_15_7\\) AppleWebKit/537.36 \\(KHTML, like Gecko\\) Chrome/120.0 Safari/537.36\" \"https://www.flickr.com/photos/204695384@N06/albums/72177720334544595\" -o yt_album.html -w \"HTTP %{http_code} size=%{size_download}\\\\n\")",
+      "Bash(grep -oE '\"id\":\"[0-9]{10,}\"' yt_album.html)",
+      "Bash(curl -s -o yt1.jpg \"https://live.staticflickr.com/65535/55376812137_5c2ce1f38b_b.jpg\")",
+      "Bash(curl -s -o yt2.jpg \"https://live.staticflickr.com/65535/55376812147_1ea8ed58bd_b.jpg\")",
+      "Bash(curl -s -o yt3.jpg \"https://live.staticflickr.com/65535/55378155155_5a489f877d_b.jpg\")",
+      "Bash(git restore *)",
+      "Bash(xargs -n1 basename)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code} %{content_type}\\\\n\" --max-time 15 \"https://digital.loblaws.ca/PCX/21723947_EA/en/1/81452101215_enfr_front_centre_marketing_A_1_GS1_Ecommerce_800.png\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code} %{content_type}\\\\n\" --max-time 15 \"https://images.ctfassets.net/9ycpqnc6ohsr/20gP6IJXne6gWEUKKaYkMQ/0d5c5544912cd4ebfa7b13eeccbc0f57/Downy-Wrinkle-Releaser-Plus-4_2x.jpg\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code} %{content_type}\\\\n\" --max-time 15 \"https://images.ctfassets.net/9ycpqnc6ohsr/7mZ7hwMQyAIosaOGIke4YW/3890f5b363044a61b8631e71f06a99b2/Downy-Wrinkle-Releaser-Plus-3_2x.jpg\")"
     ]
   }
 }
