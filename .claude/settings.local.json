@@ -290,7 +290,8 @@
       "Bash(xargs -n1 basename)",
       "Bash(curl -s -o /dev/null -w \"%{http_code} %{content_type}\\\\n\" --max-time 15 \"https://digital.loblaws.ca/PCX/21723947_EA/en/1/81452101215_enfr_front_centre_marketing_A_1_GS1_Ecommerce_800.png\")",
       "Bash(curl -s -o /dev/null -w \"%{http_code} %{content_type}\\\\n\" --max-time 15 \"https://images.ctfassets.net/9ycpqnc6ohsr/20gP6IJXne6gWEUKKaYkMQ/0d5c5544912cd4ebfa7b13eeccbc0f57/Downy-Wrinkle-Releaser-Plus-4_2x.jpg\")",
-      "Bash(curl -s -o /dev/null -w \"%{http_code} %{content_type}\\\\n\" --max-time 15 \"https://images.ctfassets.net/9ycpqnc6ohsr/7mZ7hwMQyAIosaOGIke4YW/3890f5b363044a61b8631e71f06a99b2/Downy-Wrinkle-Releaser-Plus-3_2x.jpg\")"
+      "Bash(curl -s -o /dev/null -w \"%{http_code} %{content_type}\\\\n\" --max-time 15 \"https://images.ctfassets.net/9ycpqnc6ohsr/7mZ7hwMQyAIosaOGIke4YW/3890f5b363044a61b8631e71f06a99b2/Downy-Wrinkle-Releaser-Plus-3_2x.jpg\")",
+      "Bash(echo \"PLA 모델명 길이: $\\(python3 -c \"print\\(len\\('Starbucks Pink Vibes Strawberry Cold Cup 24oz'\\)\\)\"\\)자 \\(49 미만 OK\\)\")"
     ]
   }
 }
