@@ -15,4 +15,6 @@ metadata:
 
 **의미:** `원가(현지)`=매대/리스트 세전(CAD). `사입단가(₩)`=실 취득 landed 단가(세금포함·환율반영). 스토어 노출재고는 실재고와 무관 → 미기입.
 
-**How to apply:** 사용자가 "사입한 제품 관리 리스트", "재고 리스트", 영수증+"사입" 주면 이 도구로 행 추가. 코스트코 원가 리베이트([[feedback_costco_price_adjustment]])·글리치/기프트카드/프로모 실원가 계산은 LEARNED_RULES §19. 일회성 windfall(글리치)은 원가에 baking 말고 메모 플래그, 재입고 원가는 매장가 기준.
+**담당 에이전트:** `inventory-manager`(.claude/agents, **Sonnet**) — 메인이 영수증을 OCR·파싱해 넘기면 이 에이전트가 실사입원가·배송마진 계산 + 시트 갱신 + 플래그 반환. 애매한 원가(글리치·기프트카드 배분 등)는 임의 확정 말고 메인에 플래그. (카피·전략은 Opus, 기계적 워크호스는 Sonnet 정책과 동일 — [[feedback_shipping_fee_margin]])
+
+**How to apply:** 사용자가 "사입한 제품 관리 리스트", "재고 리스트", 영수증+"사입" 주면 → 메인이 이미지/데이터 파싱 후 `inventory-manager` 에이전트에 위임(또는 spawn 불가 환경이면 메인이 이 도구로 직접). 코스트코 원가 리베이트([[feedback_costco_price_adjustment]])·글리치/기프트카드/프로모 실원가 계산은 LEARNED_RULES §19. 일회성 windfall(글리치)은 원가에 baking 말고 메모 플래그, 재입고 원가는 매장가 기준.
