@@ -66,6 +66,7 @@ def compute(header, data):
     c_sgrp  = col(header, "배송비 묶음번호")
     c_sfee  = col(header, "배송비 합계")
     c_bd    = col(header, "정산예정금액")
+    c_oid   = col(header, "상품주문번호")
     bd_sum = 0
     per_recip = defaultdict(lambda: {"bd": 0, "ship": 0})
     ship_by_group = OrderedDict()
@@ -79,7 +80,8 @@ def compute(header, data):
         if g not in ship_by_group:
             ship_by_group[g] = (r[c_sfee] or 0, recip)
         items.append({"recip": recip, "pno": str(r[c_pno]) if r[c_pno] else "",
-                      "name": r[c_name], "qty": r[c_qty] or 1})
+                      "name": r[c_name], "qty": r[c_qty] or 1,
+                      "oid": str(r[c_oid]) if c_oid is not None and r[c_oid] else ""})
     for g, (fee, recip) in ship_by_group.items():
         per_recip[recip]["ship"] += fee
     ship_total = sum(f for f, _ in ship_by_group.values())
@@ -89,25 +91,39 @@ def compute(header, data):
             "items": items, "ship_by_group": ship_by_group}
 
 
-def update_inventory(inv_path, items):
+def _processed_file(date):
+    return os.path.join(SETTLE_DIR, f"정산_{date}_processed.json")
+
+
+def update_inventory(inv_path, items, date):
+    """재고 판매수량 반영. 상품주문번호로 dedup — 이미 처리한 주문은 건너뜀(추가주문 파일 재실행 안전)."""
     from openpyxl import load_workbook
     if not os.path.exists(inv_path):
-        return "재고파일 없음"
+        return "재고파일 없음", 0
+    pf = _processed_file(date)
+    processed = set(json.load(open(pf, encoding="utf-8"))) if os.path.exists(pf) else set()
     wb = load_workbook(inv_path); ws = wb.active
     hdr = [c.value for c in ws[1]]; cix = {h: i + 1 for i, h in enumerate(hdr)}
     scol = cix["슬러그"]
     row_of = {str(ws.cell(rr, scol).value): rr for rr in range(2, ws.max_row + 1)
               if ws.cell(rr, scol).value is not None}
-    updated = []
+    updated = []; skipped = 0
     for it in items:
+        if it["oid"] and it["oid"] in processed:
+            skipped += 1
+            continue
         rr = row_of.get(it["pno"])
         if rr:
             cur = ws.cell(rr, cix["판매수량"]).value or 0
             ws.cell(rr, cix["판매수량"]).value = int(cur) + int(it["qty"])
             updated.append((it["name"], it["qty"]))
+        if it["oid"]:
+            processed.add(it["oid"])   # 매칭 여부 무관 — 처리한 주문으로 기록(재실행 이중가산 방지)
     if updated:
         wb.save(inv_path)
-    return updated
+    os.makedirs(SETTLE_DIR, exist_ok=True)
+    json.dump(sorted(processed), open(pf, "w", encoding="utf-8"), ensure_ascii=False)
+    return updated, skipped
 
 
 def cogs_file(date):
@@ -198,11 +214,12 @@ def main():
         print(f"  순이익 = {s['revenue']:,} − {cogs_total:,} − {args.shipping_cost:,} = ₩{s['revenue']-cogs_total-args.shipping_cost:,}")
 
     if args.update_inventory:
-        up = update_inventory(args.update_inventory, s["items"])
-        if isinstance(up, list):
-            print(f"  재고 반영: {len(up)}건 " + (", ".join(f"{n}×{q}" for n, q in up) if up else "(매칭 없음)"))
+        up = update_inventory(args.update_inventory, s["items"], date)
+        if isinstance(up[0], list):
+            u, sk = up
+            print(f"  재고 반영: {len(u)}건 판매↑ " + (", ".join(f"{n}×{q}" for n, q in u) if u else "(매칭 없음)") + (f" · 기처리 {sk}건 스킵" if sk else ""))
         else:
-            print(f"  재고 반영 스킵: {up}")
+            print(f"  재고 반영 스킵: {up[0]}")
 
     os.makedirs(SETTLE_DIR, exist_ok=True)
     out = os.path.join(SETTLE_DIR, f"정산_{date}.md")
