@@ -18,6 +18,20 @@ LOG = os.path.join(SEO_DIR, "seo_refresh_log.csv")
 STORE_ID = "finchmart_ca"
 
 
+def _sales_csvs(guide_dir):
+    """guide 판매목록 CSV — Product_*.csv + 스마트스토어상품_*.csv 둘 다, 파일명 날짜(YYYYMMDD_HHMMSS)순(오래된→최신). macOS 한글파일명 NFD/NFC 이슈 회피 위해 *.csv 글롭 후 NFC 정규화로 필터. (네이버 내보내기 이름 변경 2026-07-08 대응.)"""
+    import re as _re, glob as _glob, os as _os, unicodedata as _ud
+    out = []
+    for p in _glob.glob(_os.path.join(guide_dir, "*.csv")):
+        b = _ud.normalize("NFC", _os.path.basename(p))
+        if b.startswith("Product_") or b.startswith("스마트스토어상품_"):
+            out.append(p)
+    def _k(p):
+        m = _re.search(r"\d{8}_\d{6}", _os.path.basename(p))
+        return m.group(0) if m else _os.path.basename(p)
+    return sorted(out, key=_k)
+
+
 def _selling_count(p):
     try:
         with open(p, encoding="utf-8-sig") as f:
@@ -27,7 +41,7 @@ def _selling_count(p):
 
 
 def latest_csv():
-    files = sorted(glob.glob(os.path.join(GUIDE, "Product_*.csv")))
+    files = _sales_csvs(GUIDE)
     if not files:
         sys.exit("guide/Product_*.csv 없음")
     # 부분 업로드(수정한 몇 개만 export) 방지 — 판매중 >= 50 인 '전체 목록'만 후보로,

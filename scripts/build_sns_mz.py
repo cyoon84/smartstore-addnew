@@ -30,9 +30,23 @@ OUTNAME,PARTLABEL,FEATURED=PARTS.get(PART,PARTS['1'])
 OUT=os.path.join(ROOT,"output","sns",OUTNAME); IMG=os.path.join(OUT,"imgs")
 os.makedirs(IMG,exist_ok=True)
 shutil.copy(os.path.join(ROOT,"guide","디자인 가이드","assets","logo-trim.png"),os.path.join(OUT,"logo.png"))
-f=sorted(glob.glob(os.path.join(ROOT,'guide','Product_2026*.csv')))[-1]
+f=_sales_csvs(os.path.join(ROOT,'guide'))[-1]
 rows=list(csv.reader(open(f,encoding='utf-8-sig')))
 G,NAME,IMGC=0,3,63
+def _sales_csvs(guide_dir):
+    """guide 판매목록 CSV — Product_*.csv + 스마트스토어상품_*.csv 둘 다, 파일명 날짜(YYYYMMDD_HHMMSS)순(오래된→최신). macOS 한글파일명 NFD/NFC 이슈 회피 위해 *.csv 글롭 후 NFC 정규화로 필터. (네이버 내보내기 이름 변경 2026-07-08 대응.)"""
+    import re as _re, glob as _glob, os as _os, unicodedata as _ud
+    out = []
+    for p in _glob.glob(_os.path.join(guide_dir, "*.csv")):
+        b = _ud.normalize("NFC", _os.path.basename(p))
+        if b.startswith("Product_") or b.startswith("스마트스토어상품_"):
+            out.append(p)
+    def _k(p):
+        m = _re.search(r"\d{8}_\d{6}", _os.path.basename(p))
+        return m.group(0) if m else _os.path.basename(p)
+    return sorted(out, key=_k)
+
+
 def grams(s):
     m=re.match(r'([\d.]+)\s*(kg|g)',s)
     return float(m.group(1))*(1000 if m.group(2)=='kg' else 1) if m else 0
