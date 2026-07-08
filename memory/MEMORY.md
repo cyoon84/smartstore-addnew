@@ -26,6 +26,7 @@
 - [Slack delivery of 등록정보](feedback_slack_delivery.md) — 등록 완료 후 등록정보.md 전체(형식 A)를 Slack #new-item 채널에 자동 전송
 - [Title spec label](feedback_title_spec_label.md) — 상품명 수치 사양은 단독 숫자 말고 라벨 결합 (23g → 단백질23g)
 - [Naver title SEO guide](feedback_naver_title_seo_guide.md) — 네이버 공식 SEO 가이드 기반 상품명 작성 규칙 (50자 내외/동의어 중복 금지/판매처명 금지 등)
+- [Group detail update on new option](feedback_group_detail_update_on_new_option.md) — 그룹상품에 새 맛/옵션(색상·용량) 추가할 때마다 그룹 통합 상세(detail.html) 라인업에 카드 반드시 추가. 옵션만 늘리면 판매는 되나 상세 자동갱신 안 됨→불일치. 옵션추가=상세갱신 세트로. 도리토스 4맛 그룹서 사용자 지시 (2026-07-08, LEARNED §13-1)
 - [Naver group product names and options editable](feedback_naver_group_lock.md) — 그룹명(상품명)도 기존 옵션도 사후 수정 가능. 새 옵션 추가 가능, 그룹명이 새 옵션과 안 맞으면 일반화 수정 (2026-06-21 정정 — 이전 "옵션 잠김"은 오류)
 - [Group product per-option shipping](feedback_group_shipping_per_option.md) — 네이버 그룹상품은 옵션(제품)별로 배송비 다르게 설정 가능. 묶음/개당/금액 차등 OK, 별도 분리 권고 X
 - [Smart Store ID: finchmart_ca](reference_smartstore_id.md) — 사용자 네이버 스마트스토어 ID와 상품 URL 패턴
