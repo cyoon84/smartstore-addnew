@@ -172,7 +172,7 @@ def render_md(date, s, cogs_comps, cogs_total, ship_cost):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("orders_xlsx")
+    ap.add_argument("orders_xlsx", nargs="+", help="발주발송 엑셀(여러 개 가능 — 상품주문번호로 union dedup)")
     ap.add_argument("--password", default="1111")
     ap.add_argument("--update-inventory", metavar="재고.xlsx")
     ap.add_argument("--add-cogs", action="append", default=[], metavar="라벨=금액",
@@ -182,13 +182,25 @@ def main():
     ap.add_argument("--date")
     args = ap.parse_args()
 
-    header, data = load_orders(args.orders_xlsx, args.password)
+    header, data, _seen = None, [], set()
+    for _fp in args.orders_xlsx:
+        _h, _d = load_orders(_fp, args.password)
+        if header is None:
+            header = _h
+        _oi = col(_h, "상품주문번호")
+        for _r in _d:
+            _oid = str(_r[_oi]) if _oi is not None and _oi < len(_r) and _r[_oi] else None
+            if _oid and _oid in _seen:
+                continue
+            if _oid:
+                _seen.add(_oid)
+            data.append(_r)
     s = compute(header, data)
 
     date = args.date
     if not date:
         import re
-        m = re.search(r"(\d{8})", os.path.basename(args.orders_xlsx))
+        m = re.search(r"(\d{8})", os.path.basename(args.orders_xlsx[-1]))
         date = f"{m.group(1)[:4]}-{m.group(1)[4:6]}-{m.group(1)[6:8]}" if m else "unknown"
 
     # 물건값 구성요소 누적
