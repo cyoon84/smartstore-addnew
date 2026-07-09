@@ -28,3 +28,5 @@ metadata:
 - **대표이미지(W) = 호스팅 URL 있으면 자동 입력 (2026-06-12):** 사용자가 Flickr 등에 올려 URL 주면 `bulk.rep_image`(또는 `images.rep_image_url`)에 넣어 자동 채움. URL 없을 때만 네이버 직접 업로드 수동 단계(블로커 아님). 매대 진열컷이면 깔끔한 제품컷 권장 1줄 안내하되 일단 채움. 반품/교환·A/S 는 CONFIG 로 자동.
 
 [[feedback_naver_category_snack]] [[feedback_naver_category_toplevel_lock]] [[feedback_output_location]]
+
+**🔑 완구/어린이제품 KC 인증 (2026-07-08):** 일괄엑셀 템플릿엔 어린이제품 KC 안전인증 필드 없음 → 완구/유아/블록/레고/인형/키즈/출산·육아 카테고리는 업로드 후 네이버가 자동 판매중지. 네이버 UI에서 '어린이제품 인증 = 인증대상 아님'(해외직수입 기준) 설정해야 풀림. build_bulk_excel 가 완구 카테고리 감지 시 경고 출력. (레고 메시 43015 케이스)

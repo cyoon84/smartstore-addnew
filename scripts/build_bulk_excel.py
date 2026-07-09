@@ -514,6 +514,18 @@ def main():
               f"배송 {d.get('delivery_code')}/{d.get('shipping_type')} {d.get('shipping_fee')}")
         for w in warn:
             print(f"    ⚠️ {w}")
+        # 완구/어린이제품 → 어린이제품 KC 인증 (일괄엑셀 템플릿에 필드 없음, 업로드 후 네이버 UI 설정 필수)
+        _cat = ""
+        _pj = glob.glob(os.path.join(_folder, "*product_info.json"))
+        if _pj:
+            try:
+                _pd = json.load(open(_pj[0], encoding="utf-8"))
+                _cat = str(_pd.get("category_proposed") or _pd.get("naver_category") or "")
+            except Exception:
+                _cat = ""
+        if any(k in _cat for k in ("완구", "유아", "어린이", "블록", "레고", "인형", "키즈", "출산/육아")):
+            print("    🧸 완구/어린이제품 — 업로드 후 네이버에서 '어린이제품 인증 = 인증대상 아님' 설정 필수 "
+                  "(일괄엑셀엔 인증 필드 없음 → 미설정 시 자동 판매중지)")
     missing_rep = [slug for slug, _f, d, _w in results if not d.get("rep_image")]
     if missing_rep:
         print("\n📌 사용자 직접 처리: 대표이미지(W) — 네이버에서 직접 업로드 "
