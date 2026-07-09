@@ -23,6 +23,20 @@ from collections import defaultdict, OrderedDict
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SETTLE_DIR = os.path.join(ROOT, "output", "settlement")
 SHIP_FEE_RATE = 0.0363   # 배송비 네이버 수수료(Npay만) — 제품가 6.6%와 다름 (§7-2)
+SHIP_WEEKDAYS = (1, 4)   # 출고일 = 화(1)/금(4). 주문 export 날짜 → 그 날 포함 다음 출고일.
+
+
+def ship_day(export_date_str):
+    """export 날짜(YYYY-MM-DD) → 그 날 포함 다음 출고일(화/금) YYYY-MM-DD. 매 화/금 출고 기준 정산 키."""
+    import datetime
+    y, m, d = map(int, export_date_str.split("-"))
+    dt = datetime.date(y, m, d)
+    for i in range(7):
+        c = dt + datetime.timedelta(days=i)
+        if c.weekday() in SHIP_WEEKDAYS:
+            return c.isoformat()
+    return export_date_str
+
 
 
 def load_orders(path, password):
@@ -201,7 +215,8 @@ def main():
     if not date:
         import re
         m = re.search(r"(\d{8})", os.path.basename(args.orders_xlsx[-1]))
-        date = f"{m.group(1)[:4]}-{m.group(1)[4:6]}-{m.group(1)[6:8]}" if m else "unknown"
+        _exp = f"{m.group(1)[:4]}-{m.group(1)[4:6]}-{m.group(1)[6:8]}" if m else "unknown"
+        date = ship_day(_exp) if _exp != "unknown" else _exp   # export날짜 → 다음 출고일(화/금)
 
     # 물건값 구성요소 누적
     comps = load_cogs(date)
