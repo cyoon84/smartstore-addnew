@@ -316,7 +316,13 @@
       "mcp__claude-in-chrome__tabs_context_mcp",
       "mcp__claude-in-chrome__read_network_requests",
       "mcp__claude-in-chrome__find",
-      "mcp__chrome-devtools__list_pages"
+      "mcp__chrome-devtools__list_pages",
+      "Bash(ls -la \"/Volumes/External/Downloads/스마트스토어_선택주문발주발송관리_20260710_1105.xlsx\" && ls scripts/order_settlement.py)",
+      "mcp__e6c00a26-9593-4015-b37b-139101f7ca6c__find-projects",
+      "Bash(ln -s /Volumes/External/claude/smartstore-automate ~/smartstore-project)",
+      "mcp__9e5fe0a6-8659-45ac-bfe2-dcb7d7d607f2__slack_search_users",
+      "mcp__claude-in-chrome__tabs_close_mcp",
+      "Bash(awk '/^### 7-2/{f=1} f&&/^## 8\\\\./{print NR\": \"$0; exit} f&&/eff\\);?$/{}' docs/LEARNED_RULES.md)"
     ]
   }
 }

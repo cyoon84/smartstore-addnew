@@ -1,3 +1,4 @@
+- [정산 순이익 확정 시 Slack DM](feedback_settlement_slack_dm.md) — 한미 공식(실) 배송비 기록해 순이익 확정되는 순간 정산 요약(매출·COGS·실배송비·순이익)을 Chul(U0B1TFC186Q)+김아름(U0B696MML21) 각 DM으로. 추정 잠정단계에선 안 보냄(파일기록만), 손익이라 팀채널 X (2026-07-10)
 - [코스트코 한정품 재고체크(실브라우저 스케줄)](feedback_costco_stock_check.md) — 코스트코.ca=Akamai 봇차단→Claude for Chrome 실브라우저만 통과(headless 403). 매장별 재고=로그인 없이 "Check Nearby Warehouses" 패널 In Stock 텍스트 읽기(수량·API 불필요). 자동화=scheduled-task 매일 Slack #new-item(launchd 불가, 앱 열림+Chrome 연결 필요, 첫 Run now로 권한승인). 참고 API: warehouses.json/inventorylevels batch/v2(client-identifier, item번호 앞자리0 01957788), 매장별은 batch로 안됨(graphql/브라우저). 발작 캐나다스컵 케이스 (2026-07-09, LEARNED §22)
 - [발작커피 브랜드·블렌드 레퍼런스](reference_balzac_coffee.md) — 발작=온타리오 스페셜티(1993카트→1996스트랫퍼드→16매장, "전국마트" 과장금지). 블렌드5종 로스트/노트/taste(산단바디5점)/용량/소싱가: 파머스(미디엄·유기농공정무역 3/4/3)·발작스(미디엄 2/4/3)·다크어페어(다크 0/3/5)·디카페인(2/4/4 공홈전용)·캐나다스컵(미디엄 2/3/3 코스트코한정 item1957788). 340g전부₩22,000, 파머스907g₩27,900, 디카907g₩62,900/2.27kg₩138,000. 그룹"발작 스페셜티 원두커피" 로스팅포인트×용량×수량 (2026-07-09)
 - [상표권 신고 대응+이미지 저작권](feedback_trademark_report_response.md) — 병행수입도 상표권자 오인신고 시 판매중지 가능. 정품증빙(영수증·매장사진) 사입건별 보관, 실사진만 사용(이미 준수). 판매실적기반 등록한도설은 비공식 소스라 반영보류 (2026-07-09, LEARNED §21)
@@ -39,7 +40,7 @@
 - [Title source tag rules — no "정품", store name only for store-exclusive SKU](feedback_title_source_tag.md) — 상품명 끝 출처: 매장 한정 SKU만 "캐나다 코스트코" 식, 일반 유통은 "캐나다"만, "정품"은 항상 제외. NB+소매사이즈는 디폴트 일반 유통 (사용자 "코스트코 라인" 발언만으로 매장 한정 자동 가정 X)
 - [Source tag in title — no repeat in detail body](feedback_no_source_repeat.md) — 상품명에 들어간 출처/매장 태그는 상세페이지 본문에서 반복하지 않고 제품 자체 매력 중심으로 작성
 - [Naver tag policy — no category/brand/seller names](feedback_naver_tags.md) — 태그에 카테고리·브랜드·판매처명 사용 금지. 트렌드/USP·재료·변형·시나리오·타겟·사양·원산지로 10개 구성
-- [Free shipping + absorbed shipping cost in price](feedback_free_shipping_absorb.md) — "무료배송 + N$ 흡수" 패턴: 배송비를 상품가에 얹고 네이버에는 무료배송으로 등록 (수수료 gross-up 그대로 적용)
+- [Free shipping + absorbed shipping cost in price](feedback_free_shipping_absorb.md) — "무료배송 + N$ 흡수" 패턴: 배송비를 상품가에 얹고 네이버에는 무료배송으로 등록 (수수료 gross-up 그대로 적용). 🔑 손익 판단 시 무배(흡수) 주문을 "배송 적자/아까움"으로 따로 빼지 말 것 — 흡수분이 이미 매출에 있어 순이익=매출−COGS−실배송비가 자동 상계 (2026-07-10, LEARNED §7-3)
 - [HST-included cost — skip HST gross-up](feedback_hst_included_cost.md) — 사용자가 "원가 HST 포함"이라 명시하면 HST 가산 스킵, 마진+수수료 gross-up만 적용
 - [Price pattern dispatch table](feedback_price_patterns.md) — HST 가산/포함 + 배송비(개당/무배흡수) 짧은 입력 → 정확한 산식 분류 마스터 테이블
 - [Percent margin pricing](feedback_percent_margin.md) — % 마진: "수수료 감안 N%" = 판매가 = 원가KRW ÷ (0.934 − N/100), gross-up 별도 적용 X
