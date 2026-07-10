@@ -291,7 +291,31 @@
       "Bash(curl -s -o /dev/null -w \"%{http_code} %{content_type}\\\\n\" --max-time 15 \"https://digital.loblaws.ca/PCX/21723947_EA/en/1/81452101215_enfr_front_centre_marketing_A_1_GS1_Ecommerce_800.png\")",
       "Bash(curl -s -o /dev/null -w \"%{http_code} %{content_type}\\\\n\" --max-time 15 \"https://images.ctfassets.net/9ycpqnc6ohsr/20gP6IJXne6gWEUKKaYkMQ/0d5c5544912cd4ebfa7b13eeccbc0f57/Downy-Wrinkle-Releaser-Plus-4_2x.jpg\")",
       "Bash(curl -s -o /dev/null -w \"%{http_code} %{content_type}\\\\n\" --max-time 15 \"https://images.ctfassets.net/9ycpqnc6ohsr/7mZ7hwMQyAIosaOGIke4YW/3890f5b363044a61b8631e71f06a99b2/Downy-Wrinkle-Releaser-Plus-3_2x.jpg\")",
-      "Bash(echo \"PLA 모델명 길이: $\\(python3 -c \"print\\(len\\('Starbucks Pink Vibes Strawberry Cold Cup 24oz'\\)\\)\"\\)자 \\(49 미만 OK\\)\")"
+      "Bash(echo \"PLA 모델명 길이: $\\(python3 -c \"print\\(len\\('Starbucks Pink Vibes Strawberry Cold Cup 24oz'\\)\\)\"\\)자 \\(49 미만 OK\\)\")",
+      "Bash(grep -n \"^## 메모$\\\\|^## 18\\\\.\\\\|^이 파일은 작업\" docs/LEARNED_RULES.md)",
+      "Bash(awk '/^---/{c++; print; if\\(c==2\\) exit; next} c==1{print}' .claude/agents/bulk-excel-verifier.md)",
+      "Bash(awk '/^---/{c++; print; if\\(c==2\\) exit; next} c==1{print}' .claude/agents/listing-writer.md)",
+      "Bash(curl -sL -A 'Mozilla/5.0 \\(Macintosh; Intel Mac OS X 10_15_7\\) AppleWebKit/537.36 \\(KHTML, like Gecko\\) Chrome/120 Safari/537.36' https://www.flickr.com/photos/204695384@N06/albums/72177720334545679/ -o album.html)",
+      "Bash(grep -oE '\"title\":\"[^\"]{3,60}\"' album.html)",
+      "Bash(grep -oE '\"title\":\"[^\"]{1,80}\"' album.html)",
+      "Bash(cp __TRACKED_VAR__/doritos_1.jpg output/new-item/doritos_ketchup_235g/doritos_ketchup_235g_ref.jpg)",
+      "Bash(cp __TRACKED_VAR__/doritos_2.jpg output/new-item/doritos_spicy_korean_bbq_235g/doritos_spicy_korean_bbq_235g_ref.jpg)",
+      "Bash(cp __TRACKED_VAR__/doritos_3.jpg output/new-item/doritos_jalapeno_cheddar_235g/doritos_jalapeno_cheddar_235g_ref.jpg)",
+      "Bash(cp __TRACKED_VAR__/doritos_4.jpg output/new-item/doritos_flamin_hot_nacho_235g/doritos_flamin_hot_nacho_235g_ref.jpg)",
+      "Bash(grep -n \"^## 메모$\" docs/LEARNED_RULES.md)",
+      "Bash(cp __TRACKED_VAR__/lego_1.jpg __TRACKED_VAR__/lego_messi_43015_ref_front.jpg)",
+      "Bash(cp __TRACKED_VAR__/lego_3.jpg __TRACKED_VAR__/lego_messi_43015_ref_back.jpg)",
+      "Bash(cp __TRACKED_VAR__/lego_2.jpg __TRACKED_VAR__/lego_messi_43015_ref_side.jpg)",
+      "Bash(curl -sL -A 'Mozilla/5.0 \\(Macintosh; Intel Mac OS X 10_15_7\\) AppleWebKit/537.36 Chrome/120 Safari/537.36' https://balzacs.com/products/swiss-water-decaf.json)",
+      "Bash(grep -vE \"^$\")",
+      "mcp__e6c00a26-9593-4015-b37b-139101f7ca6c__find-completed-tasks",
+      "mcp__e6c00a26-9593-4015-b37b-139101f7ca6c__add-tasks",
+      "mcp__e6c00a26-9593-4015-b37b-139101f7ca6c__find-tasks",
+      "mcp__e6c00a26-9593-4015-b37b-139101f7ca6c__update-tasks",
+      "mcp__chrome-devtools__list_network_requests",
+      "mcp__claude-in-chrome__tabs_context_mcp",
+      "mcp__claude-in-chrome__read_network_requests",
+      "mcp__claude-in-chrome__find"
     ]
   }
 }

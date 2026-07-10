@@ -1325,6 +1325,24 @@ python3 scripts/build_inventory_list.py --all                                   
 
 ---
 
+## 22. 코스트코 한정품 재고 체크 — 실브라우저(Claude for Chrome) 스케줄 작업 (2026-07-09)
+
+코스트코(.ca) 한정/리미티드 제품(예: 발작 캐나다스컵 907g, item 1957788)의 재고를 매일 자동 추적하는 워크플로. **"아직 살 수 있나 / 어느 GTA 매장에 있나"**를 놓치면 사입 타이밍을 놓치므로 데일리 체크.
+
+**🔑 코스트코.ca = Akamai 봇차단 → 실브라우저만 통과:** headless/curl/curl_cffi/insane-search engine 은 제품 페이지가 **403/흰 화면**. **Claude for Chrome(claude-in-chrome MCP)** 실브라우저만 통과한다. (engine 이 첫 로드는 뚫기도 하나, 매장별 재고 패널은 클릭이 필요해 headless 로는 못 읽음. chrome-devtools MCP 도 isolatedContext 는 봇 탐지돼 403.)
+
+**🔑 매장별 재고 = 로그인 없이(incognito) 페이지에서 읽기:** 제품 페이지 "How To Get It" 의 창고명 링크 클릭 → **"Check Nearby Warehouses" 패널**이 열리며 "매장이름 (X km) → In Stock at Warehouse" 로 GTA 근처 매장이 뜬다("In Stock at Nearby Warehouses" 필터에 뜨는 = 재고 있는 매장). 패널 스크롤로 전체 확인. **수량·API 불필요, 보이는 In Stock 텍스트만.** ⚠️ 네트워크/쿠키/토큰/URL 쿼리스트링은 절대 출력 금지(콘텐츠 필터 차단) — 보이는 매장명·In Stock·가격만.
+
+**🔑 자동화 = `mcp__scheduled-tasks__create_scheduled_task` (launchd 크론 불가):** 실브라우저를 launchd 로 못 몬다. scheduled-task 는 **"앱이 열려 있을 때" 실행**되고 Chrome 연결 필요 → 매일(예 `0 8 * * *`) Claude for Chrome 로 페이지 열고 패널 읽어 **Slack #new-item(C0B5F379DSB)** 에 보고(품절/단종=🚨, 차단·미연결=수동확인). **첫 실행은 사용자가 "Run now"** 눌러 브라우저·Slack 도구 권한을 미리 승인(안 하면 매 실행 팝업으로 멈춤). 프롬프트에 "흰화면이면 5초 wait 후 최대 2회 재시도"(반복 재로드는 Akamai 봇플래그 유발). 로그인/자격증명 입력은 안전규칙상 금지.
+
+**참고 — 헤드리스로 되는 코스트코 API (온라인/상장 재고용, 매장별은 X):**
+- 창고 목록: `GET ecom-api.costco.com/core/warehouse-locator/v1/warehouses.json?latitude=&longitude=&limit=50` (header `client-identifier: 7c71124c-7bf1-44db-bc9d-498584cd66e5`). 토론토: Downsview 535·Thorncliffe Park 1316·Etobicoke 524·Scarborough 537/595·NW Toronto 1655·Vaughan.
+- 온라인 재고: `POST ecom-api.costco.com/ebusiness/inventory/v1/inventorylevels/availability/batch/v2` (header `client-identifier: 481b1aec-aa3b-454b-b81b-48187e28f205`, body `{"distributionCenters":["535",…],"itemNumbers":["01957788"]}`). ⚠️ **item번호 앞자리 0 포함**(`01957788`, URL 카탈로그ID 4000380401 아님 — 이미지URL `1957788-894__1` 에서 확인). programTypes 비면 창고전용(온라인재고 없음). **매장별은 이 batch 로 안 나옴**(pickup·비배치 v2 = 403) → graphql/브라우저 필요.
+
+> 케이스: 발작 캐나다스컵 907g($26.99) → 작업 `balzac-canadas-cup-costco-stock`, 매일 8:04 GTA 매장 In Stock Slack 보고. 테스트 시 첫 로드 성공(GTA 전부 In Stock)·반복 재로드는 Akamai 흰화면 → 하루 1회 단발이라 실운영은 덜 걸림. [[feedback_costco_stock_check]] · [[reference_balzac_coffee]]
+
+---
+
 ## 메모
 
 이 파일은 작업 중에 학습한 규칙을 사람이 읽기 좋게 모아둔 것. 자동 메모리(`MEMORY.md`)에도 같은 내용이 들어가 있어서 다음 대화에서도 자동 적용됨.
