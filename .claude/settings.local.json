@@ -322,7 +322,24 @@
       "Bash(ln -s /Volumes/External/claude/smartstore-automate ~/smartstore-project)",
       "mcp__9e5fe0a6-8659-45ac-bfe2-dcb7d7d607f2__slack_search_users",
       "mcp__claude-in-chrome__tabs_close_mcp",
-      "Bash(awk '/^### 7-2/{f=1} f&&/^## 8\\\\./{print NR\": \"$0; exit} f&&/eff\\);?$/{}' docs/LEARNED_RULES.md)"
+      "Bash(awk '/^### 7-2/{f=1} f&&/^## 8\\\\./{print NR\": \"$0; exit} f&&/eff\\);?$/{}' docs/LEARNED_RULES.md)",
+      "Bash(curl -s -o fk1_907550.jpg \"https://live.staticflickr.com/65535/55385907550_c3730ea954_b.jpg\")",
+      "Bash(curl -s -o fk2_501456.jpg \"https://live.staticflickr.com/65535/55385501456_214dc19b79_b.jpg\")",
+      "Bash(curl -s -o fk3_692469.jpg \"https://live.staticflickr.com/65535/55385692469_a81a59c89c_b.jpg\")",
+      "Bash(curl -sL -A \"Mozilla/5.0 \\(Macintosh; Intel Mac OS X 10_15_7\\) AppleWebKit/537.36 \\(KHTML, like Gecko\\) Chrome/122 Safari/537.36\" \"https://www.kraftheinz.com/en-CA/kraft-dinner/products/00068100907933-kd-cheesy-ramen-bowl\" -o kd_page.html)",
+      "Bash(curl -s -o off_front.png \"https://cdn.allotta.io/image/upload/v1782021647/dxp-images/brands/products/00068100907933-kd-cheesy-ramen-bowl/marketing-view-color-front_content-hub-13564561_fbb3518b7c60ee84cb71833439b3d472.png\")",
+      "Bash(curl -s -o off_c1.jpg \"https://cdn.allotta.io/image/upload/v1782021655/dxp-images/brands/products/00068100907933-kd-cheesy-ramen-bowl/enhanced-carousel-image-01_content-hub-13909440_de2a7d0b91204b8c2caeb2e991688a26.jpg\")",
+      "Bash(curl -s -o off_c2.jpg \"https://cdn.allotta.io/image/upload/v1782021653/dxp-images/brands/products/00068100907933-kd-cheesy-ramen-bowl/enhanced-carousel-image-02_content-hub-13909441_0e7181269c1e75ac31939632cf0cc14e.jpg\")",
+      "Bash(curl -s -o off_c3.jpg \"https://cdn.allotta.io/image/upload/v1782021654/dxp-images/brands/products/00068100907933-kd-cheesy-ramen-bowl/enhanced-carousel-image-03_content-hub-13909439_b007b281f4908a80c4a09c7cd55a0814.jpg\")",
+      "Skill(artifact-design)",
+      "Skill(artifact-design:*)",
+      "Bash(node shorts.mjs \"raw/kd_ramen\")",
+      "Bash(bin/ffmpeg -y -hide_banner -loglevel error -ss 1.5 -i output/kd_ramen.mp4 -frames:v 1 __TRACKED_VAR__/f_open.jpg)",
+      "Bash(bin/ffmpeg -y -hide_banner -loglevel error -ss 39.2 -i output/kd_ramen.mp4 -frames:v 1 __TRACKED_VAR__/f_cta.jpg)",
+      "Bash(bin/ffmpeg -y -hide_banner -loglevel error -ss 6.5 -i output/kd_ramen.mp4 -frames:v 1 __TRACKED_VAR__/g_brand.jpg)",
+      "Bash(bin/ffmpeg -y -hide_banner -loglevel error -ss 25.5 -i output/kd_ramen.mp4 -frames:v 1 __TRACKED_VAR__/g_cook.jpg)",
+      "Bash(file \"/Volumes/External/Downloads/스마트스토어_주문조회_20260710_2127.xlsx\")",
+      "Bash(awk '{print $9, $5}')"
     ]
   }
 }
