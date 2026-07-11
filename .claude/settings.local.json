@@ -339,7 +339,17 @@
       "Bash(bin/ffmpeg -y -hide_banner -loglevel error -ss 6.5 -i output/kd_ramen.mp4 -frames:v 1 __TRACKED_VAR__/g_brand.jpg)",
       "Bash(bin/ffmpeg -y -hide_banner -loglevel error -ss 25.5 -i output/kd_ramen.mp4 -frames:v 1 __TRACKED_VAR__/g_cook.jpg)",
       "Bash(file \"/Volumes/External/Downloads/스마트스토어_주문조회_20260710_2127.xlsx\")",
-      "Bash(awk '{print $9, $5}')"
+      "Bash(awk '{print $9, $5}')",
+      "mcp__2f2b591b-2637-4b03-8fdf-5b6a5e44d304__NaverSearch-datalab_shopping_keywords",
+      "mcp__2f2b591b-2637-4b03-8fdf-5b6a5e44d304__NaverSearch-get_current_korean_time",
+      "Bash(ls -la \"/Volumes/External/Downloads/스마트스토어_선택주문발주발송관리_20260711_0045.xlsx\")",
+      "mcp__e6c00a26-9593-4015-b37b-139101f7ca6c__delete-object",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" https://api.github.com/repos/cyoon84/smartstore-addnew)",
+      "Bash(curl -s https://api.github.com/users/cyoon84)",
+      "Bash(git worktree *)",
+      "mcp__b7f0ad49-6099-47cf-91b3-606355d881d1__create_draft",
+      "mcp__e505594b-d4cd-4c2e-93f3-30f1a37fb528__search_files",
+      "mcp__e505594b-d4cd-4c2e-93f3-30f1a37fb528__create_file"
     ]
   }
 }

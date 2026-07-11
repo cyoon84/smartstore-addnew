@@ -7,6 +7,10 @@ __pycache__/
 # 비밀 — Slack webhook URL
 scripts/.slack_webhook
 
+# 비밀 — QuickBooks OAuth 자격증명·토큰
+config/qbo_credentials.json
+config/qbo_tokens.json
+
 # guide/ 안 — 스토어 상품 export(민감/대용량)·가이드 PDF, github 제외 (폴더 구조만 유지)
 guide/*
 !guide/.gitkeep

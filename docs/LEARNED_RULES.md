@@ -1341,6 +1341,19 @@ python3 scripts/build_inventory_list.py --all                                   
 - **물건값(COGS):** 추가주문분 사면 영수증으로 `--add-cogs` 계속 누적.
 - **실배송비·순이익:** 그 출고일 주문이 다 확정된 뒤(추가주문 마감·한미 리포트) 최종 계산.
 
+### 20-1. 🔑 영수증 인입 = Google Drive 업로드, COGS 반영과 동시 처리 (2026-07-11)
+
+영수증(COGS `--add-cogs`)을 받을 때마다 **정산 반영과 Drive 보관을 같이** 한다 — 하나만 하고 끝내지 않는다.
+
+1. **정산 반영:** `order_settlement.py --add-cogs "라벨=금액"`으로 그 **출고일**(§20 기준 화/금) 정산에 누적.
+2. **Drive 보관:** 같은 영수증 파일을 Drive **`receipt-qb/<출고일>/`** 폴더(루트 `receipt-qb`, 2026-04부터 운영 중)에 업로드. **폴더명은 영수증을 받은 날짜가 아니라 그 정산이 속한 출고일**(예: 7/12(일)에 받은 영수증이 7/14 출고분이면 `receipt-qb/2026-07-14/`).
+
+둘 다 **Drive MCP `create_file`**(하위폴더 없으면 `mimeType: application/vnd.google-apps.folder`로 먼저 생성) + `order_settlement.py` 로 자동 처리 — 사용자가 이메일 전송 버튼을 누르는 등 수동 클릭 불필요.
+
+**왜 이 방식인가 (탈락한 대안):** QuickBooks Online 영수증 자동 인식(Receipts 탭)은 공식 API가 없어 ①이메일 포워딩(`finchmart_to@qbodocs.com`)을 검토했으나 Gmail MCP가 첨부 포함 **드래프트까지만** 만들 수 있고 전송은 사용자가 눌러야 해서 "완전 자동"이 아님 → 기각. ②Mail.app osascript 자동 전송도 시도했으나 사용자가 거절. **Google Drive 업로드는 완전 자동이라 채택.** (QuickBooks API(OAuth 연동) 자체는 만들어뒀고 샌드박스 검증까지 끝났으나 Production 키 심사(도메인 필요)가 남아 보류 상태 — [[project_qbo_receipt_upload]].)
+
+> 2026-07-11 학습 — 사용자 "정산 COGS+구글 드라이브 업로드 한번에 같이 해줘!". 다음 영수증(7/14 출고분, 김하나 주문)부터 적용 예정.
+
 ---
 
 ## 21. 상표권 신고 대응 + 브랜드 이미지 저작권 (2026-07-09, 등록정책 스터디)
