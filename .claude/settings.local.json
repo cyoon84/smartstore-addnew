@@ -358,7 +358,13 @@
       "mcp__e505594b-d4cd-4c2e-93f3-30f1a37fb528__copy_file",
       "mcp__claude-in-chrome__read_page",
       "mcp__claude-in-chrome__list_connected_browsers",
-      "mcp__claude-in-chrome__select_browser"
+      "mcp__claude-in-chrome__select_browser",
+      "mcp__e505594b-d4cd-4c2e-93f3-30f1a37fb528__get_file_metadata",
+      "mcp__e6c00a26-9593-4015-b37b-139101f7ca6c__complete-tasks",
+      "Bash(sips -Z 1200 -s format jpeg \"/Users/chulhee-macmini/Pictures/Photos Library.photoslibrary/resources/renders/2/299A4134-E304-459E-B3D7-C3A74B4A30FB_1_201_a.heic\" --out /private/tmp/claude-501/-Volumes-External-claude-smartstore-addnew/1d7b11af-0cb0-4ad3-88f3-dcd7f3185694/scratchpad/photo_preview.jpg)",
+      "Bash(sips -Z 800 -s formatOptions 60 /private/tmp/claude-501/-Volumes-External-claude-smartstore-addnew/1d7b11af-0cb0-4ad3-88f3-dcd7f3185694/scratchpad/photo_preview.jpg --out /private/tmp/claude-501/-Volumes-External-claude-smartstore-addnew/1d7b11af-0cb0-4ad3-88f3-dcd7f3185694/scratchpad/photo_small.jpg)",
+      "Bash(base64 -b 100 -i /private/tmp/claude-501/-Volumes-External-claude-smartstore-addnew/1d7b11af-0cb0-4ad3-88f3-dcd7f3185694/scratchpad/photo_small.jpg -o /private/tmp/claude-501/-Volumes-External-claude-smartstore-addnew/1d7b11af-0cb0-4ad3-88f3-dcd7f3185694/scratchpad/photo_small_lines.b64)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code} %{content_type}\\\\n\" --max-time 15 \"https://images.lululemon.com/is/image/lululemon/LM3FG2S_074135_4?wid=1000\")"
     ]
   }
 }

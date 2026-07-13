@@ -348,20 +348,34 @@ def build_data(pinfo, detail_html, cat_rows, deliv_rows):
         pick("gosi_model", pinfo.get("model_name"), pinfo.get("model_name_en"), pinfo.get("model_name_ko")))
     d["gosi_maker"] = pick("gosi_maker", brand_ko)
 
-    # 옵션 — 단일상품에 옵션 여럿(options[]) 있으면 조합형으로 채움. 옵션값=color_ko(콤마구분),
-    # 옵션가 전부 0(균일가), 옵션재고 전부 main 재고. (없으면 옵션칸 비움 = 단일무옵션)
+    # 옵션 — ① 진짜 2축(option_axes): 옵션명=축이름 줄바꿈(\n), 옵션값=축별 값(축은 \n, 값은 콤마).
+    #        옵션가·옵션재고는 네이버 규칙상 '첫번째 옵션값(1축) 기준' 콤마 리스트. (템플릿 예시: 컬러\n사이즈 / 빨강,노랑\nS,M,L / 0,100 / 10,20)
+    #        ② 결합 단일축(options[]): 아래 기존 로직.
+    ax = pinfo.get("option_axes")
     opts = pinfo.get("options")
-    if isinstance(opts, list) and len(opts) >= 2:
-        vals = [str(o.get("color_ko") or o.get("color_en") or o.get("option_label") or "").strip()
-                for o in opts]
-        vals = [v for v in vals if v]
-        if vals:
+    if isinstance(ax, dict) and ax.get("names") and ax.get("values"):
+        names = ax["names"]; values = ax["values"]
+        a1 = values[0] if values else []
+        stock_def = str(d.get("stock") or CONFIG.get("stock") or 999)
+        prices = ax.get("axis1_price") or [0] * len(a1)
+        stocks = ax.get("axis1_stock") or [stock_def] * len(a1)
+        d["option_type"] = pick("option_type") or "조합형"
+        d["option_name"] = "\n".join(str(n) for n in names)
+        d["option_value"] = "\n".join(",".join(str(v) for v in axis) for axis in values)
+        d["option_price"] = ",".join(str(int(p)) for p in prices)
+        d["option_stock"] = ",".join(str(s) for s in stocks)
+    elif isinstance(opts, list) and len(opts) >= 2:
+        pairs = [(str(o.get("color_ko") or o.get("color_en") or o.get("option_label") or "").strip(),
+                  int(o.get("option_add") or o.get("add") or o.get("option_price") or 0))
+                 for o in opts]
+        pairs = [(v, a) for v, a in pairs if v]
+        if pairs:
             stock = str(d.get("stock") or CONFIG.get("stock") or 999)
             d["option_type"] = pick("option_type") or "조합형"
             d["option_name"] = pick("option_name") or "색상"
-            d["option_value"] = ",".join(vals)
-            d["option_price"] = ",".join(["0"] * len(vals))
-            d["option_stock"] = ",".join([stock] * len(vals))
+            d["option_value"] = ",".join(v for v, a in pairs)
+            d["option_price"] = ",".join(str(a) for v, a in pairs)
+            d["option_stock"] = ",".join([stock] * len(pairs))
 
     # 카테고리코드 — bulk 우선 / 영양제는 해외사업자 제약상 기타건강보조식품 강제 / 그 외 경로 자동해석
     cat_candidates = category_candidates(pinfo)   # 스키마 변형 전반에서 경로 수집
