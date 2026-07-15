@@ -80,6 +80,14 @@ Loblaws / $6.29 / 0% / 15% / 2개당 15000 / single
 - **판단:** 검색 노출이 중요하면 **구조만 빌려**(상품가↓+배송↑) 총액·마진 지키게. 깔끔함 우선이면 실배송비(~₩25,000~30,000)+상품가에 마진. 어느 쪽이든 **경쟁사 배송비 숫자를 그대로 따라갈 필요 없음** — 총액과 마진, 노출 전략으로 판단.
 > 2026-07-04 라켓백 — 경쟁 캘거리셀러가 배송 ₩79,000. 사용자 "다른집 79000 한다고 따라할 필요있나?" → 실비 아님(검색꼼수)임을 확인, 중간값 ₩30,000으로 확정. [[feedback_domestic_price_check]]
 
+## 0-E. 🔑 비즈어드바이저 실시간 유입 검색어 = 태그 사전보다 강한 신호로 학습 (2026-07-15)
+
+§0-D의 "실제 유입 검색어"를 **비즈어드바이저 실시간 보고서**(`bizadvisor.naver.com/summary/realtime` → 마케팅분석 → "키워드별 유입수 Top 10")로 주기 관찰해 §10 태그 사전·§5 상품명 규칙에 반영한다. §10은 태그 입력화면의 **추정 검색량**이 근거지만, 비즈어드바이저는 **우리 스토어에 실제로 들어온 검색어**라 더 강한 검증 신호 — 반복 관찰되는 패턴은 우선 채택한다.
+
+**관찰 로그·방법:** [[project_bizadvisor_keyword_monitoring]]. 화면은 "최근 30분" 창이라 30~45분 간격 확인. computer-use(Chrome read 권한)로 스크린샷만 가능 — 클릭·스크롤 불가라 **사용자가 미리 검색어 섹션까지 스크롤해둬야** 매 스냅샷에 잡힌다.
+
+> 2026-07-15 밤 첫 관찰 — ①**"브라이언부스터"**: 다우니 언스토퍼블에 붙인 "청소왕 브라이언" 네이밍을 고객이 그대로 검색 → 캐릭터/닉네임형 상품명 접두가 실제 재검색을 유발한다는 실증. ②**"일본제bandaid"**: 기존 원산지 축(`캐나다직수입`·`캐나다산`·`미국산`)과 다른 신규 조합 `<원산지>+제+카테고리` — 일본산 SKU에 `일본제` 접두 태그 시도 가치. ③**"룰루레몬everywhere벨트백"**: 브랜드+라인명+카테고리 통짜 검색, 룰루레몬 벨트백류 상품명·태그 참고.
+
 ---
 
 
@@ -1494,13 +1502,15 @@ python3 scripts/build_inventory_list.py --all                                   
 
 **🔑 매장별 재고 = 로그인 없이(incognito) 페이지에서 읽기:** 제품 페이지 "How To Get It" 의 창고명 링크 클릭 → **"Check Nearby Warehouses" 패널**이 열리며 "매장이름 (X km) → In Stock at Warehouse" 로 GTA 근처 매장이 뜬다("In Stock at Nearby Warehouses" 필터에 뜨는 = 재고 있는 매장). 패널 스크롤로 전체 확인. **수량·API 불필요, 보이는 In Stock 텍스트만.** ⚠️ 네트워크/쿠키/토큰/URL 쿼리스트링은 절대 출력 금지(콘텐츠 필터 차단) — 보이는 매장명·In Stock·가격만.
 
+**🔑 특정 사입 지점(Downsview·Markham) 재고는 인근 패널만 믿지 말고 Find 박스로 직접 조회 (2026-07-15):** 내 기본 창고(Thorncliffe) 기준 "Check Nearby Warehouses" 패널은 매장을 **일부만** 보여주고, In Stock 필터를 꺼도 특정 매장을 **목록에서 누락**시킨다 → 실제 재고 있는 매장(Markham)을 "품절"로 오판할 수 있다. 핵심 사입 지점(Downsview·Markham) 판정은 반드시 패널의 **`City, State, or Zip`(Find) 박스에 지역명("Markham, ON"·"Downsview, ON") 입력 → Find** 로 그 지역 중심 재조회해서 각각 확인한다(예: Markham 8.27km **In Stock**, Downsview 2.91km Out). Thorncliffe 인근 목록에 안 뜬다고 품절로 단정 금지. (2026-07-15 하리보 해리포터: 인근 패널에 Markham 이 안 떠 "둘 다 품절" 오보 → 사용자 "Markham 재고 있는데?" 정정 → Find 로 Markham In Stock 확인. [[feedback_costco_stock_check]])
+
 **🔑 자동화 = `mcp__scheduled-tasks__create_scheduled_task` (launchd 크론 불가):** 실브라우저를 launchd 로 못 몬다. scheduled-task 는 **"앱이 열려 있을 때" 실행**되고 Chrome 연결 필요 → 매일(예 `0 8 * * *`) Claude for Chrome 로 페이지 열고 패널 읽어 **Slack #new-item(C0B5F379DSB)** 에 보고(품절/단종=🚨, 차단·미연결=수동확인). **첫 실행은 사용자가 "Run now"** 눌러 브라우저·Slack 도구 권한을 미리 승인(안 하면 매 실행 팝업으로 멈춤). 프롬프트에 "흰화면이면 5초 wait 후 최대 2회 재시도"(반복 재로드는 Akamai 봇플래그 유발). 로그인/자격증명 입력은 안전규칙상 금지.
 
 **참고 — 헤드리스로 되는 코스트코 API (온라인/상장 재고용, 매장별은 X):**
 - 창고 목록: `GET ecom-api.costco.com/core/warehouse-locator/v1/warehouses.json?latitude=&longitude=&limit=50` (header `client-identifier: 7c71124c-7bf1-44db-bc9d-498584cd66e5`). 토론토: Downsview 535·Thorncliffe Park 1316·Etobicoke 524·Scarborough 537/595·NW Toronto 1655·Vaughan.
 - 온라인 재고: `POST ecom-api.costco.com/ebusiness/inventory/v1/inventorylevels/availability/batch/v2` (header `client-identifier: 481b1aec-aa3b-454b-b81b-48187e28f205`, body `{"distributionCenters":["535",…],"itemNumbers":["01957788"]}`). ⚠️ **item번호 앞자리 0 포함**(`01957788`, URL 카탈로그ID 4000380401 아님 — 이미지URL `1957788-894__1` 에서 확인). programTypes 비면 창고전용(온라인재고 없음). **매장별은 이 batch 로 안 나옴**(pickup·비배치 v2 = 403) → graphql/브라우저 필요.
 
-> 케이스: 발작 캐나다스컵 907g($26.99) → 작업 `balzac-canadas-cup-costco-stock`, 매일 8:04 GTA 매장 In Stock Slack 보고. 테스트 시 첫 로드 성공(GTA 전부 In Stock)·반복 재로드는 Akamai 흰화면 → 하루 1회 단발이라 실운영은 덜 걸림. [[feedback_costco_stock_check]] · [[reference_balzac_coffee]]
+> 케이스: 발작 캐나다스컵 907g($26.99) → 작업 `balzac-canadas-cup-costco-stock`, 매일 8:04 GTA 매장 In Stock Slack 보고. **→ 2026-07-15 통합: 제품별 개별 작업 대신 `costco-stock-check` 단일 루틴(매일 08:00)이 발작·메이나드 퍼지피치·하리보 해리포터 3종을 한 브라우저 세션으로 순회 체크(통합 Slack 1건 + 제품별 Downsview/Markham 🚩RED FLAG). 새 코스트코 SKU 재고체크 추가 = 새 작업 만들지 말고 이 루틴 프롬프트의 제품 리스트에 줄 추가.** 테스트 시 첫 로드 성공(GTA 전부 In Stock)·반복 재로드는 Akamai 흰화면 → 하루 1회 단발이라 실운영은 덜 걸림. [[feedback_costco_stock_check]] · [[reference_balzac_coffee]]
 
 ---
 
