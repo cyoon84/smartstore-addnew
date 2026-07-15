@@ -22,7 +22,7 @@ metadata:
 9. **그룹명**(§13-1 색상 미포함) + 옵션명(색상만 or `<용량> <색상>`) + **태그**(물병/스포츠물병축 §10) + **카테고리**(텀블러 50004540 / 물병 50004567 / 보온·보냉병 50004578).
    - **🔑 멀티컬러는 "단일상품+옵션" 방식이 그룹병합보다 나을 수 있음 (2026-07-05 클리어보틀 32oz 9색):** 색상별 단일→그룹병합 대신 **한 상품ID에 9색 옵션(조합형)** + **9색 통합 상세 1장**. product_info `options[]` → build_bulk_excel 1행(상품명=그룹명 색상미포함, 옵션값=color_ko 콤마구분). 상세엔 옵션명 pill + 공식 풀네임 병기([[feedback_bulk_upload_excel]] 단일상품+옵션 절).
    - **🔑 색상명 = 창작 금지, 공식명 기준 (2026-07-05 32oz 클리어보틀):** 색상 라벨을 임의로 지어내지 말 것(피치핑크·라즈베리 등 ❌). 룰루레몬 멀티톤 컬러웨이(예 "Pink Pearl/Passionate/Lavender Frost")는 **① 옵션값 = 각 컬러웨이의 "고유 구분 단어"**(서로 안 겹치는 공식 단어 하나, 예 Lavender Frost·Foam Cloud·Washed Yellow…) — 풀네임 그대로 쓰면 `Pink Pearl` 이 9색 중 5개에 반복→그룹 합침 노출 시 **"반복 단어 다수" 태클**(§13-1). **② 상세페이지엔 공식 풀네임** 표기(고객이 공홈과 대조, 정보 손실 0). 옵션값 짧게(스타벅스 그룹 "…커피 Blonde Espresso, 10개입, 1개" 처럼)라 그룹명(색상 미포함)은 짧게 유지되고 단품 상품명도 45자 내. build_bulk_excel: product_info `color_ko`=고유단어(옵션값) / `color_en`=풀네임 / detail color_pill 이 en(풀네임) 표기.
-10. **재고 모니터 추가:** `output/new-item/lululemon_back_to_life_bottle_18oz/lulu_stock_monitor_config.json` 의 `monitors[]` 에 append(id·name·lululemon_url·registered_options[color_ko/en/style_color]) → 월간 점검(`lulu-stock-monthly-check`)이 자동 커버([[feedback_bulk_upload_excel]]).
+10. **재고 모니터 추가:** `output/new-item/lululemon_back_to_life_bottle_18oz/lulu_stock_monitor_config.json` 의 `monitors[]` 에 append(id·name·lululemon_url·registered_options[color_ko/en/style_color]). **정가 SKU → `check_frequency` 생략/`"monthly"`**(월간 점검 `lulu-stock-monthly-check` 가 자동 커버). **파이널세일 SKU → `check_frequency:"daily"`** 로 넣으면 통합 daily 루틴 `lulu-finalsale-stock-check` 가 자동 커버 — **새 스케줄 작업을 만들지 않는다**(2026-07-15 3개 개별 daily 태스크를 이 하나로 통합, §22-1). 신발류(사이즈별 재고, color 단위가 아님)만 예외 — `lulu-finalsale-stock-check` 프롬프트의 "파트 B" 에 같은 패턴으로 스텝 추가([[feedback_bulk_upload_excel]]).
 
 **의류(티셔츠 등) 확장 — 첫 케이스 2026-07-13 메탈 벤트 테크 반팔 셔츠 Cherry Ember:**
 - **파이널세일 의류 = 캐나다 세일가를 cost 로(§12-1).** cost=$54(FINAL SALE, 정가 $78), HST 13%(성인 의류). `pricing_mode:"final_sale_target_krw"`.
@@ -32,7 +32,7 @@ metadata:
 - **🔑 모델명 = 공식 JSON-LD name 그대로, URL 의 버전 접미(`3-MD`·"3.0") 붙이지 말 것** — 공식명에 없으면 근거없음(사용자 지적). `Metal Vent Tech Short-Sleeve Shirt Cherry Ember`.
 - **🔑 사이즈 가이드(바디 사이즈)를 상세에 넣는다:** lululemon.co.kr PDP 의 **"사이즈 가이드" 버튼 클릭 → "바디 사이즈" 표**(한국사이즈/US/가슴둘레cm). 우리 판매 사이즈만 발췌(M 가슴둘레 99cm·L 106.5cm·XL 114cm). detail.html 에 styled 표(text rows, §18 table 대신). **"◯◯ 외 사이즈는 한국 공홈 확인" 류 문구 금지** — 그 색상이 한국에 있는 걸로 오해(사용자 지적).
 - **배송비 파싱 주의:** `resolve_shipping` 은 pinfo **top-level** `shipping` 문자열을 읽음 → 개당 배송은 top-level `"shipping":"개당 10000원"` 넣어야 반영(bulk 안에만 넣으면 CONFIG 15,000 으로 덮임).
-- **재고 모니터 — 파이널세일은 매일(월간 아님):** scheduled-task(`0 9 * * *`) 실브라우저로 `#__NEXT_DATA__` 색상코드 SKU 재고 확인 → Slack #new-item. 첫 실행 "Run now" 로 브라우저·Slack 권한 승인 필요(§22). **정가(재고품) 라인은 재고 모니터 불필요**(재입고 정상).
+- **재고 모니터 — 파이널세일은 매일(월간 아님):** 처음엔 전용 scheduled-task(실브라우저 `#__NEXT_DATA__` 파싱)로 운영했으나 **2026-07-15 통합 daily 루틴 `lulu-finalsale-stock-check` 로 편입** — config `lulu_stock_monitor_config.json` 에 `check_frequency:"daily"` 항목 추가하면 헤드리스(insane-search engine) 파이프라인이 자동 커버(§22-1). 새 파이널세일 색상형 SKU는 config 에 줄 추가만, 신발류만 그 태스크의 "파트 B"에 별도 스텝. **정가(재고품) 라인은 재고 모니터 불필요**(재입고 정상).
 
 **정가(비세일) 다색 라인 — 2026-07-13 메탈 벤트 테크 정가 prod11710027(9색):**
 - **🔑 "한국 공홈 미취급 색상"으로 표기, "캐나다 전용" 금지(§9):** 우리가 확인한 건 "한국 공홈 라인업에 없음"뿐. **미국 등 타 지역 취급 가능성 → "캐나다 전용/캐나다에만"은 근거없음**(사용자 지적 2026-07-13). 카피·필드 전부 "한국 공홈에 없는 색상"·"한국 미출시 색상"으로. 공홈 색상 리스트(ProductGroup JSON-LD `hasVariant` color)와 캐나다 색상 대조해 미취급색 식별.

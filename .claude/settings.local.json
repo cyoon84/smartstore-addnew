@@ -375,7 +375,8 @@
       "Skill(update-config)",
       "Skill(update-config:*)",
       "Bash(echo \"EXIT: $?\")",
-      "mcp__claude-in-chrome__browser_batch"
+      "mcp__claude-in-chrome__browser_batch",
+      "Bash(pkill -f \"http.server 8791\")"
     ]
   }
 }
