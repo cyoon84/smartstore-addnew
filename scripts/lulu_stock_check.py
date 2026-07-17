@@ -45,34 +45,65 @@ def load(p):
 
 def compare(monitor, variants):
     """등록 옵션 ↔ 공홈 variants 대조. (issues, lines) 반환."""
-    # 공홈 재고 맵: style_color(뷰제거) → availability, + color_en → availability
-    live_by_style, live_by_color = {}, {}
-    for v in variants or []:
-        st = norm_style(v.get("style_color", ""))
-        av = (v.get("availability") or "").strip()
-        if st: live_by_style[st] = av
-        c = (v.get("color") or "").strip().lower()
-        if c: live_by_color[c] = av
+    # 공홈 재고를 style_color(뷰제거) 단위로 **집계**: 한 색상에 사이즈 변형이 여러 개라,
+    # 사이즈 중 하나라도 InStock 이면 그 색상은 "재고 있음"(any-InStock 롤업).
+    # (이전 버그: dict 덮어쓰기로 마지막 사이즈 재고상태만 남아 일부품절 색을 전체품절로 오판.)
+    def agg():
+        by_style, by_color = {}, {}
+        for v in variants or []:
+            av = (v.get("availability") or "").strip()
+            inst = av.lower() == "instock"
+            size = (v.get("size") or "").strip()
+            for key, bucket in ((norm_style(v.get("style_color", "")), by_style),
+                                ((v.get("color") or "").strip().lower(), by_color)):
+                if not key:
+                    continue
+                b = bucket.setdefault(key, {"in": [], "out": [], "any": False})
+                b["any"] = b["any"] or inst
+                (b["in"] if inst else b["out"]).append(size or "?")
+        return by_style, by_color
+    live_by_style, live_by_color = agg()
     reg = monitor.get("registered_options", [])
     reg_styles = {norm_style(o.get("style_color", "")) for o in reg if o.get("style_color")}
 
-    oos, gone, ok = [], [], []
+    def size_note(b):
+        if not b:
+            return ""
+        ins = [s for s in b["in"] if s != "?"]
+        outs = [s for s in b["out"] if s != "?"]
+        if not ins and not outs:
+            return ""
+        parts = []
+        if ins:
+            parts.append(f'재고 {len(ins)}: {", ".join(ins)}')
+        if outs:
+            parts.append(f'품절 {len(outs)}: {", ".join(outs)}')
+        return f' [사이즈 {" / ".join(parts)}]'
+
+    oos, partial, gone, ok = [], [], [], []
     for o in reg:
         st = norm_style(o.get("style_color", ""))
         ce = (o.get("color_en") or "").strip().lower()
-        av = live_by_style.get(st) or live_by_color.get(ce)
+        b = live_by_style.get(st) or live_by_color.get(ce)
         label = f'{o.get("color_ko","?")} ({o.get("color_en","?")})'
-        if av is None:
+        if b is None:
             gone.append(label)          # 공홈에서 사라짐 = 단종 가능
-        elif av.lower() != "instock":
-            oos.append(f'{label} → {av}')
+        elif not b["any"]:
+            oos.append(f'{label} → 전 사이즈 품절')   # 모든 사이즈 OOS
         else:
-            ok.append(label)
+            note = size_note(b)
+            # 사이즈 일부 품절이면 참고용 partial(이슈 아님 — 색상은 판매중)
+            if [s for s in b["out"] if s != "?"]:
+                partial.append(f'{label}{note}')
+            else:
+                ok.append(f'{label}{note}')
     # 공홈엔 InStock 인데 우리가 미등록인 신규 색
     new_colors = []
+    seen_new = set()
     for v in variants or []:
         st = norm_style(v.get("style_color", ""))
-        if (v.get("availability") or "").lower() == "instock" and st not in reg_styles:
+        if (v.get("availability") or "").lower() == "instock" and st not in reg_styles and st not in seen_new:
+            seen_new.add(st)
             new_colors.append(f'{v.get("color","?")} ({st}, ${v.get("price","?")})')
 
     issue = bool(oos or gone or new_colors)
@@ -87,7 +118,9 @@ def compare(monitor, variants):
         L.append(f'  ⚠️ 공홈 품절 — 등록중인데 재고 없음: {", ".join(oos)}')
     if new_colors:
         L.append(f'  ➕ 공홈 신규 재고(미등록) — 추가 기회: {", ".join(new_colors)}')
-    L.append(f'  ✅ 정상 매칭({len(ok)}): {", ".join(ok) if ok else "-"}')
+    if partial:
+        L.append(f'  🟡 일부 사이즈 품절(색상은 판매중): {" · ".join(partial)}')
+    L.append(f'  ✅ 정상 매칭({len(ok)}): {" · ".join(ok) if ok else "-"}')
     return issue, L
 
 def main():

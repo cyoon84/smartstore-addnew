@@ -376,7 +376,24 @@
       "Skill(update-config:*)",
       "Bash(echo \"EXIT: $?\")",
       "mcp__claude-in-chrome__browser_batch",
-      "Bash(pkill -f \"http.server 8791\")"
+      "Bash(pkill -f \"http.server 8791\")",
+      "Bash(sort -k9)",
+      "Bash(git reset *)",
+      "Bash(qlmanage -t -s 1600 -o /private/tmp/claude-501/-Volumes-External-claude-smartstore-addnew/1d7b11af-0cb0-4ad3-88f3-dcd7f3185694/scratchpad '/Volumes/External/Downloads/Gmail - Order Confirmation for ChulHee from Walmart.pdf')",
+      "mcp__b7f0ad49-6099-47cf-91b3-606355d881d1__search_threads",
+      "mcp__visualize__show_widget",
+      "Bash(cat ~/smartstore-project/.cowork-skills/conventions.md 2>/dev/null | head -100)",
+      "mcp__3de52f66-c5ee-495c-b311-bf00f0734d44__notion-fetch",
+      "mcp__3de52f66-c5ee-495c-b311-bf00f0734d44__notion-update-page",
+      "mcp__3de52f66-c5ee-495c-b311-bf00f0734d44__notion-create-attachment",
+      "mcp__3de52f66-c5ee-495c-b311-bf00f0734d44__notion-create-database",
+      "mcp__3de52f66-c5ee-495c-b311-bf00f0734d44__notion-create-pages",
+      "mcp__3de52f66-c5ee-495c-b311-bf00f0734d44__notion-create-view",
+      "mcp__3de52f66-c5ee-495c-b311-bf00f0734d44__notion-update-view",
+      "mcp__3de52f66-c5ee-495c-b311-bf00f0734d44__notion-update-data-source",
+      "mcp__3de52f66-c5ee-495c-b311-bf00f0734d44__notion-query-data-sources",
+      "Read(//Volumes/External/claude/smartstore-automate/output/한미택배/**)",
+      "Bash(rm \"/Users/chulhee-macmini/smartstore-project/output/한미택배/한미택배_업로드용_20260717.xlsx\" && echo \"deleted\")"
     ]
   }
 }

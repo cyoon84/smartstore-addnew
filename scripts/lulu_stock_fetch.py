@@ -46,6 +46,7 @@ def parse_variants(raw):
                 out.append({
                     "color": v.get("color"),
                     "sku": v.get("sku"),
+                    "size": v.get("size"),
                     "style_color": (v.get("image") or "").split("/lululemon/")[-1],
                     "price": o.get("price", ""),
                     "availability": (o.get("availability") or "").split("/")[-1],
