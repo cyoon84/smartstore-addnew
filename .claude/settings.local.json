@@ -393,7 +393,8 @@
       "mcp__3de52f66-c5ee-495c-b311-bf00f0734d44__notion-update-data-source",
       "mcp__3de52f66-c5ee-495c-b311-bf00f0734d44__notion-query-data-sources",
       "Read(//Volumes/External/claude/smartstore-automate/output/한미택배/**)",
-      "Bash(rm \"/Users/chulhee-macmini/smartstore-project/output/한미택배/한미택배_업로드용_20260717.xlsx\" && echo \"deleted\")"
+      "Bash(rm \"/Users/chulhee-macmini/smartstore-project/output/한미택배/한미택배_업로드용_20260717.xlsx\" && echo \"deleted\")",
+      "mcp__e505594b-d4cd-4c2e-93f3-30f1a37fb528__read_file_content"
     ]
   }
 }

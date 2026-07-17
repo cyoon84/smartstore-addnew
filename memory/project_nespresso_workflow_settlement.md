@@ -1,0 +1,35 @@
+---
+name: project_nespresso_workflow_settlement
+description: 네스프레소 버츄오 주문·재고·사입 워크플로 — 일반 상품과 별개(슬리브 단위·무세금·사입≠전량재고). 구글시트 Orders/Restock + 로컬 엑셀 사입목록 둘 다. 스킬 nespresso-order
+metadata:
+  type: project
+---
+
+**네스프레소 버츄오 캡슐은 일반 상품과 별개 워크플로** (2026-07-17 정립). 전용 스킬 `nespresso-order` + 구글시트 **"Nespresso Vertuo Order"** (id `17oZBziUsbT4GZ8nFuxju79ulsvQGx3prtHsUPcvRt6Q`, 탭 Stock/Orders/Restock, Orders gid=857980710).
+
+## 🔑 일반 상품과 다른 3가지
+1. **슬리브 단위 판매 (10개입=1슬리브), 캡슐별 아님.** 원가·재고·주문·사입 전부 슬리브. 영수증이 캡슐 수(Maple 20)여도 ÷10=슬리브(2). 원가/슬리브 = 캡슐단가×10 (Maple $1.55→$15.50).
+2. **무세금 (커피 0%), final sale.** 사입단가 = 슬리브 CAD×FX (세금 없음). $15.50×1083=₩16,786/슬리브.
+3. **사입 ≠ 전량 재고.** 한 영수증 품목이 사입(재고)/주문나감(즉시판매)/자가소비로 갈림 → 재고로 잡을 것만 재고관리에.
+
+## 사입 = 두 곳 동시
+사용자 지시(2026-07-17): "네스프레소 사입한거는 google drive랑 excel 사입목록이랑 두개 다 동시에 진행해줘." → ①구글 **Restock 탭** ②로컬 **`output/inventory/재고관리_<날짜>.xlsx`** (슬리브 단위 행, 무세금).
+
+## Orders 탭 (고객 주문 로그)
+- 컬럼 `주문자|주문번호|상품명|지역|수량`. 주문번호=스마트스토어 `주문번호`(상품주문번호 아님, 16자리 `'`텍스트).
+- 상품명·지역=드롭다운(정확 영문명 / Toronto·Calgary). **지역=캐나다 재고지역**(고객이 한국이어도 어느 도시 재고에서 나가나 — 사입 매장 기준, Sherway=Toronto).
+- **주문자 한글은 type 불가 → 클립보드 붙여넣기**(computer-use `write_clipboard`(clipboardWrite 권한 request) + claude-in-chrome `cmd+v`). TSV 블록(A~E 여러 행)을 A열 셀에서 한 번에 붙이면 빠름. 실제 로그인 Chrome(claude-in-chrome) 사용.
+
+## Todoist — 사야할=구매수량(주문−재고), 수취인별=배송전량
+네스프레소는 재고 일부 충당이라 두 수량 다름:
+- 홍지원 Maple 주문 3, 재고 2 → **사야할 제품들 = Maple 1**(구매분), **수취인별 = Maple 3**(배송전량).
+- White Choc 재고 0 → 주문3=구매3.
+- order-2task-todoist 그냥 돌리면 사야할에 주문수량 그대로 → 재고 있는 네스프레소는 구매수량으로 수동 조정. (§20-2 부모 검색·§20-9 옵션분리는 동일 적용.)
+
+## 정산
+네스프레소 주문도 그 출고일(화/금) 배치 정산(§20)에 포함. 원가 = 슬리브 landed(무세금)×수량.
+
+## 케이스 (2026-07-17)
+홍지원 주문(Maple 3·White Choc 발렌타인 3, 7/21 화 출고) + 이양빈 팀홀튼 칠리 2. 6/29 Nespresso Sherway 영수증(주문 204145017, $156.80 무세금) 분해: **Maple2+NOLA2=사입(재고)** / Yuzu2+Lavender3+NOLA1=주문 나감 / Intenso1+Melozio2=자가소비. Orders 탭 372~373행에 홍지원 추가, 로컬 엑셀에 Maple2+NOLA2 사입 반영, Todoist 7/21 배치 생성(사야할 White Choc3+Maple1+칠리2 / 수취인별 홍지원·이양빈). 사용자: "네스프레소는 한 sleeve로 팔지 캡슐별로 팔지않는다", "뭘 그렇게 어렵게 생각하냐"(주문 로그만 넣으면 되는 걸 과분석한 것 정정 — 재고·구매는 시트가 보여주고 사장님이 판단).
+
+스킬 `nespresso-order` · [[project_order_settlement]]
