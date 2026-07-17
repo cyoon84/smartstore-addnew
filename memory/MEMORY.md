@@ -1,3 +1,4 @@
+- [Todoist 수취인별 주문 서브태스크 옵션분리](feedback_todoist_recipient_subtask_split.md) — 🔑"수취인별 주문" 하위도 "사야할 제품들"과 동일하게 옵션마다 별도 서브태스크로 분리, 한 태스크에 몰아넣지 말 것. 박수현 Gerber 5옵션 케이스에서 한 줄에 몰아넣었다가 정정 (2026-07-17)
 - [정산 확정 → Notion 자동추가 트리거](feedback_settlement_notion_trigger.md) — "확정됐어" 한마디면 최신 확정 출고일 정산을 Notion "2026 7월부터 정산" 페이지에 바로 추가(재질문 없이). Slack DM과 별개, 둘 다 필요시 각각 수행 (2026-07-17)
 - [정산 확정 → Notion 추가 + 제품별 주문수 차트](feedback_settlement_notion_chart.md) — 🔑"확정됐어" 한마디면 최신 확정 정산을 Notion "2026 7월부터 정산"에 추가(되묻지 말고, Slack DM과 별개). `제품별 주문 데이터` DB 하나에 모든 달 누적(무료플랜=chart 1개 제한), 차트=주문수(count) 기준 금액 아님. 제품명 풀네임·옵션별 행분리·등록산출물 title_ko 사용, `개수`=주문 개수라 멀티팩 세트는 1(가격 ×2 오독 금지). Notion MCP DSL/inline 노하우 (2026-07-17, LEARNED §20-8)
 - [DoorDash 기프트카드 잔액 추적](feedback_doordash_giftcard_balance.md) — 🔑액면 $200을 $159.98에 할인구매(우버 기프트카드와 별개). output/inventory/기프트카드_잔액.md 에서 액면가 기준 차감 추적, "기프트카드"·"차감해" 언급 시 이 파일부터 확인. 이 카드 결제분은 정산 COGS ₩0. 정보 흘려서 사용자가 재설명해야 했던 실수 (2026-07-16)
