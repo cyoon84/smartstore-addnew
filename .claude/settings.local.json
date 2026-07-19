@@ -394,7 +394,23 @@
       "mcp__3de52f66-c5ee-495c-b311-bf00f0734d44__notion-query-data-sources",
       "Read(//Volumes/External/claude/smartstore-automate/output/한미택배/**)",
       "Bash(rm \"/Users/chulhee-macmini/smartstore-project/output/한미택배/한미택배_업로드용_20260717.xlsx\" && echo \"deleted\")",
-      "mcp__e505594b-d4cd-4c2e-93f3-30f1a37fb528__read_file_content"
+      "mcp__e505594b-d4cd-4c2e-93f3-30f1a37fb528__read_file_content",
+      "Bash(echo \"dummy receipt\" > /tmp/test_receipt.jpg && \\\\ *)",
+      "Bash(echo \"server pid $!\")",
+      "Bash(kill 32806)",
+      "Read(//Volumes/External/Downloads/**)",
+      "Bash([ -f \"$SRC\" ])",
+      "Bash(cp /Volumes/External/Downloads/2026-07-18_Hansin_Gamjatang.jpg /Volumes/External/claude/profit-expense-tracker/receipts/2026-07/2026-07-18_Hansin_Gamjatang.jpg)",
+      "mcp__b7f0ad49-6099-47cf-91b3-606355d881d1__get_thread",
+      "mcp__b7f0ad49-6099-47cf-91b3-606355d881d1__get_message",
+      "Bash(cd /Volumes/External/claude/profit-expense-tracker 2>/dev/null && pwd && ls -la receipts/ 2>/dev/null | head *)",
+      "Bash(jq -r .htmlBody __TRACKED_VAR__/mcp-b7f0ad49-6099-47cf-91b3-606355d881d1-get_message-1784427405053.txt)",
+      "Bash(jq -r .htmlBody __TRACKED_VAR__/mcp-b7f0ad49-6099-47cf-91b3-606355d881d1-get_message-1784427407620.txt)",
+      "Bash(jq -r .htmlBody __TRACKED_VAR__/toolu_01A5BsUAu37HnYG1aFMbLP9K.txt)",
+      "Write(//Volumes/External/claude/profit-expense-tracker/**)",
+      "Read(//Volumes/External/claude/profit-expense-tracker/**)",
+      "Bash(cp *)",
+      "mcp__9e5fe0a6-8659-45ac-bfe2-dcb7d7d607f2__slack_read_channel"
     ]
   }
 }
