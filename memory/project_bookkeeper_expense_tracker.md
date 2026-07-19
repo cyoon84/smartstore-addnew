@@ -39,6 +39,8 @@ python3 scripts/add_expense.py -c 식비 -d 2026-07-18 -m "Costco" \
 
 **🔑 정산 프로세스와 병행 (2026-07-18 사용자 지시 "정산 프로세스 할 때 parallel로"):** 정산 세션에서 영수증 COGS 반영할 때(LEARNED §20-3의 1~3단계: order_settlement --add-cogs → output/receipts 복사 → Todoist cross off) **4번째로 이 장부에도 같은 영수증을 같은 턴에 병행 기입**한다. 정산 영수증(사입)은 보통 `물건산거 (COGS)` 탭. 영수증 원본은 정산의 `output/receipts/<출고일>/` 와 북키퍼의 `receipts/<YYYY-MM>/` **양쪽 다** 보관. 매출측 정산 COGS 와 지출측 장부는 목적이 달라 이중집계 아님.
 
+**🔑 왜 QuickBooks 떠나나 (2026-07-19):** ①일부 카드(CIBC Costco Mastercard 등) QB 은행연동 자동캡처 안 됨→거래 누락 ②혼합결제(우버 기프트카드+신용카드 등) QB 표현 지저분 ③기타. → 북키퍼 요구: **카드 불문 영수증 기반 캡처** + **혼합·분할 결제를 method 칸에 명시**(예 `DD기프트카드 $33 + Visa $8`), 기프트카드 잔액 별도 추적.
+
 **🎯 목표 = QuickBooks 대체 (2026-07-18 사용자):** **다음 회계년도(2026-11-01~)부터 QuickBooks 를 해지하고 이 북키퍼(Claude)로 장부를 옮긴다.** 즉 지금(~2026-10-31)은 QB 병행 + 북키퍼 구축/테스트 기간, **2026-11-01 이 실제 cutover**. 회계년도 = **2026-11-01 ~ 2027-10-31**(캐나다 소규모 사업 FY). 완전 대체가 되려면 필요한 것: ① **누락 없는 지출 포착** → Gmail 영수증 자동수집 job 이 핵심(수동 업로드만으론 QB 대체 불가) ② 회계년도 단위 장부·리포트(카테고리별·월별 지출 요약, P&L 성격) ③ 세무 신고에 쓸 카테고리 정합성. → 기존 [[project_qbo_receipt_upload]](QBO Drive 업로드/API)는 **cutover 후 폐기 대상**(QB 자체를 안 쓰므로). Nov 1 다가오면 회계년도별 장부 파일(`장부_FY2027.xlsx` 등)·리포트 스크립트 구축.
 
 **예정:** Gmail 영수증 자동수집 scheduled job 을 여기로 통합(현재 미구현, add_expense.py 호출 방식으로 설계 — QB 대체의 핵심 선결 과제). 관련 [[project_order_settlement]] · [[project_qbo_receipt_upload]] · LEARNED §20-3.
