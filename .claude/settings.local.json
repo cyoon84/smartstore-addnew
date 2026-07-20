@@ -410,7 +410,12 @@
       "Write(//Volumes/External/claude/profit-expense-tracker/**)",
       "Read(//Volumes/External/claude/profit-expense-tracker/**)",
       "Bash(cp *)",
-      "mcp__9e5fe0a6-8659-45ac-bfe2-dcb7d7d607f2__slack_read_channel"
+      "mcp__9e5fe0a6-8659-45ac-bfe2-dcb7d7d607f2__slack_read_channel",
+      "Bash(DIR=\"/Volumes/External/claude/profit-expense-tracker/receipts/2026-07\" *)",
+      "mcp__b7f0ad49-6099-47cf-91b3-606355d881d1__list_labels",
+      "mcp__b7f0ad49-6099-47cf-91b3-606355d881d1__create_label",
+      "mcp__b7f0ad49-6099-47cf-91b3-606355d881d1__label_thread",
+      "mcp__b7f0ad49-6099-47cf-91b3-606355d881d1__unlabel_thread"
     ]
   }
 }

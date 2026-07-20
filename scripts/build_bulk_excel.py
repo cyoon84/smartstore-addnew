@@ -310,7 +310,7 @@ def build_data(pinfo, detail_html, cat_rows, deliv_rows):
                            pinfo.get("sell_price_krw"), pinfo.get("selling_price_krw"), pinfo.get("sell_krw"),
                            calc.get("sell_price_krw"), calc.get("sell_krw"))
     d["brand"] = pick("brand", brand_ko)
-    d["maker"] = pick("maker", brand_ko)
+    d["maker"] = pick("maker", pinfo.get("maker"), brand_ko)
     d["importer"] = pick("importer", brand_ko)
     d["product_state"] = pick("product_state")
     d["tax_type"] = pick("tax_type")
