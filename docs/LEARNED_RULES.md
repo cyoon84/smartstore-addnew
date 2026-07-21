@@ -1740,6 +1740,8 @@ python3 scripts/build_inventory_list.py --all                                   
 
 **정산 병행 (§20-3 4단계):** 정산 세션에서 영수증 COGS 반영할 때 4번째로 이 장부에도 같은 턴에 기입.
 
+**🔑 세션 중 20분마다 영수증 폴링 루프 (2026-07-21 사용자 "20분마다 체크하는걸로"):** `chulhee.y+receipt@gmail.com` 인박스를 **ScheduleWakeup 자기페이싱 루프(delaySeconds 1200)**로 20분마다 폴링 — Gmail `search_threads`(`deliveredto:chulhee.y+receipt@gmail.com newer_than:2d`) → 장부(영수증파일 경로/merchant+날짜+total) 대조로 **신규만** → `fetch_gmail_receipts.py` 원본 무손실 저장 + `add_expense.py` 카테고리 기입(플러스-주소=무조건 사업, 애매하면 확인) → 보고 후 재스케줄. **세션 생존 중에만** 돎 — 영구 백그라운드 원하면 `gmail-receipt-collector` 스케줄작업(현재 매일 23:00)을 20분 cron으로 전환. [[project_receipt_20min_check_loop]]
+
 **🔑 영수증 "오프라인 캡처" 채널 = 플러스-주소 이메일 인박스 + 직접-다운로드 스크립트 (2026-07-20, "진짜 퀵북 클론"):** 캡처(사진→클라우드 확정저장)와 처리(장부 기입)를 분리 — 폰으로 영수증 찍어 **`chulhee.y+receipt@gmail.com`** 로 메일/공유하면 맥 상태 무관하게 Gmail(클라우드)에 즉시 확정저장(유실 없음). = QuickBooks Receipts 탭(이메일 인입)의 클론.
 - **수집:** gmail-receipt-collector 루틴 step 1-0 이 `deliveredto:chulhee.y+receipt@gmail.com has:attachment` 로 직접 검색(Gmail 필터 생성은 MCP 불가) → **자기발송=무조건 사업**(판별사전 스킵), 라벨 `북키퍼/영수증-인박스`(Label_84)+카테고리라벨.
 - **🔑 원본 저장 = `profit-expense-tracker/scripts/fetch_gmail_receipts.py` 로 (Gmail MCP 는 첨부 바이너리 못 줌).** **원본을 base64/Bash 도구출력으로 나르면 깨진다**(2026-07 Drive 저해상도 참사와 같은 원인, 사용자 "drive로 다 깨진 파일로 저장하던 너... 못믿겠어") → 스크립트가 **디스크에 직접 기록**(`part.get_payload/attachments().get` → `open(wb)`)해야 풀해상도·무손실. 백엔드 자동선택: **OAuth(권장·평문비번 없음·`gmail.readonly`)** 있으면 OAuth, 없으면 IMAP 앱비번. 크리덴셜은 `~/.config/finchmart/`(gitignore), **내가 값을 보거나 타이핑 안 함**(OAuth=사용자 브라우저 동의로 token 자동생성 / GCP 는 "데스크톱 앱" 클라이언트+본인을 테스트사용자로). 미설정=원본저장만 스킵(Gmail 라벨로 원본 안전, 재실행).
