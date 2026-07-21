@@ -415,7 +415,8 @@
       "mcp__b7f0ad49-6099-47cf-91b3-606355d881d1__list_labels",
       "mcp__b7f0ad49-6099-47cf-91b3-606355d881d1__create_label",
       "mcp__b7f0ad49-6099-47cf-91b3-606355d881d1__label_thread",
-      "mcp__b7f0ad49-6099-47cf-91b3-606355d881d1__unlabel_thread"
+      "mcp__b7f0ad49-6099-47cf-91b3-606355d881d1__unlabel_thread",
+      "mcp__b7f0ad49-6099-47cf-91b3-606355d881d1__label_message"
     ]
   }
 }
