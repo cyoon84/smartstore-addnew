@@ -26,4 +26,8 @@ curl -s "https://api.imgbb.com/1/upload?key=$KEY&name=<이름>" --data-urlencode
 
 **🔑 가격표·내부 소싱 이미지는 공개 호스팅 업로드 금지** (Costco 가격표·매대 가격 이미지 등) — 내부용. product_info 에 원가만 기록.
 
+**🔑 헬퍼 스크립트 = `scripts/imgbb_upload.py`:** `python3 scripts/imgbb_upload.py <폴더/파일...> [--full] [--prefix N]` → 네이버 크기 리사이즈+업로드+URL 출력. 폴더 통째로 OK. avif/webp/heic 변환. 매번 손 curl 말고 이거 사용.
+
+**🔑 폰→맥 사진 경로 = iCloud Drive `~/Library/Mobile Documents/com~apple~CloudDocs/스스업로드/`:** 폰에서 사진 찍고 "파일에 저장 → 스스업로드"(제품별 하위폴더 권장). 맥에 낱개 파일로 싱크됨(iCloud "사진"/Photos 라이브러리는 DB라 부적합 — Drive 폴더 사용). 세션 열려있을 때 "넣었어" 하면 그 폴더 → imgbb_upload.py → 산출물 삽입. (완전자동 folder-watch 훅은 옵션, 미설정.)
+
 **Why:** Flickr 대신 imgbb 로 전환(사용자 선호). How to apply: 신규 제품 이미지는 위 방법으로 imgbb 업로드, 네이버 크기 규칙 적용, product_info `bulk.rep_image`/`add_images` + detail 에 i.ibb.co URL. 첫 적용 = 타조 그린티 말차 라떼 946ml (2026-07-21). [[feedback_bulk_upload_excel]] · [[feedback_naver_field_limits]]
