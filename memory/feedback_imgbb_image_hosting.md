@@ -17,6 +17,8 @@ curl -s "https://api.imgbb.com/1/upload?key=$KEY&name=<이름>" --data-urlencode
 ```
 `--form "image=..."`·`<@` 문법은 실패 → **`--data-urlencode "image@파일"`**(base64 파일) 사용.
 
+**🔑 무조건 JPEG 만 (URL 업로드 금지 — webp 변환됨, 2026-07-22 사용자 "jpeg만 받아"):** imgbb 는 `image=<원격URL>` 도 받지만(URL만 있어도 업로드 OK), **URL 업로드는 결과가 `.webp` 로 변환**돼 네이버가 거부할 위험이 있다. **반드시 로컬로 jpeg 를 받아(원본이 CDN이면 `?fmt=jpeg` 등으로 jpeg 강제) → base64 업로드** → `.jpg` i.ibb.co URL 확보. base64 업로드는 원본 포맷(jpg) 을 유지한다(응답 `data.image.extension:"jpg"` 확인). 즉 **"url만 있어도 업로드"는 되지만 쓰지 말 것 — 항상 다운로드→jpeg→base64.** (룰루 CDN 예: `images.lululemon.com/is/image/lululemon/<style_color>_<view>?wid=1000&fmt=jpeg` → 1000×1200 jpg → base64 업로드.)
+
 **🔑 네이버 권장 크기 = 업로드 전 리사이즈 (imgbb thumb/medium 로는 안 나옴):** imgbb API 응답에 `thumb`(~180px)·`medium` URL 이 있으나 네이버 권장 1000×1000/750×1000 은 안 줌 → **PIL 로 미리 리사이즈 후 업로드**.
 - **정사각형 → 1000×1000**
 - **비정사각형 → height 1000 + 비례 width** (예: 3:4 세로 카톤 = 750×1000)
