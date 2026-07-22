@@ -28,3 +28,5 @@ metadata:
 - 온라인 재고: `POST ecom-api.costco.com/ebusiness/inventory/v1/inventorylevels/availability/batch/v2` (header `client-identifier: 481b1aec-aa3b-454b-b81b-48187e28f205`, body `{"distributionCenters":["535",…],"itemNumbers":["01957788"]}`). ⚠️ **item번호는 앞자리 0 포함**(예 `01957788`) — URL 카탈로그ID(4000380401)와 다름(이미지 URL `1957788-894__1` 에서 확인). programTypes 가 비면 창고전용 품목(온라인 재고 없음). **매장별 재고는 이 batch 로 안 나옴**(pickup·비배치 v2 는 403) → graphql/브라우저 필요.
 
 예: 발작 캐나다스컵 907g (코스트코 item 1957788, $26.99) → 매일 8:04 GTA 매장 In Stock 을 Slack 보고. 작업 id `balzac-canadas-cup-costco-stock`. [[reference_balzac_coffee]]
+
+**🔑 costco.ca 재고 판정 = JSON-LD `availability` 믿지 말 것, 화면 'How To Get It' 이 진실 (2026-07-22):** 상품 페이지 JSON-LD `offers.availability` 가 실제 판매중인데도 `OutOfStock` 으로 뜬다(온라인전용 상품은 '창고 픽업 불가'를 OOS 로 뱉는 듯). 실제 구매가능 여부는 페이지의 **'How To Get It' 블록**(`Available` / `Delivery Estimated <날짜>` + 활성 `Add` 버튼)으로 판정. 팀홀튼 디카페인 K컵(item 1667667) 을 schema 만 보고 OOS 로 잘못 플래그했다가 사용자 정정(화면은 Available·Delivery Thu Jul 23). 헤드리스 크롤 시 schema 값에 낚이지 말고 'How To Get It'/'Add' 상태를 파싱.
