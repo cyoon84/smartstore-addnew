@@ -16,7 +16,7 @@
 import sys, os, io, json, base64, glob, urllib.request, urllib.parse
 
 KEY_PATH = os.path.expanduser("~/.config/finchmart/imgbb_key")
-IMG_EXT = (".jpg", ".jpeg", ".png", ".webp", ".avif", ".heic", ".gif", ".bmp", ".tif", ".tiff")
+IMG_EXT = (".jpg", ".jpeg", ".png", ".webp", ".avif", ".heic", ".heif", ".gif", ".bmp", ".tif", ".tiff")
 
 
 def load_key():
@@ -37,9 +37,21 @@ def collect(paths):
     return files
 
 
+def _open_image(path):
+    """PIL open, HEIC/HEIF는 macOS sips 로 임시 변환(아이폰 기본 포맷)."""
+    from PIL import Image
+    if path.lower().endswith((".heic", ".heif")):
+        import subprocess, tempfile
+        tmp = tempfile.NamedTemporaryFile(suffix=".jpg", delete=False).name
+        subprocess.run(["sips", "-s", "format", "jpeg", path, "--out", tmp],
+                       check=True, capture_output=True)
+        return Image.open(tmp)
+    return Image.open(path)
+
+
 def to_jpeg_bytes(path, full=False):
     from PIL import Image
-    im = Image.open(path)
+    im = _open_image(path)
     if im.mode in ("RGBA", "LA", "P"):
         bg = Image.new("RGB", im.size, (255, 255, 255))
         im = im.convert("RGBA")
