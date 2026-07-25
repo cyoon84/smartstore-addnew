@@ -24,6 +24,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SETTLE_DIR = os.path.join(ROOT, "output", "settlement")
 SHIP_FEE_RATE = 0.0363   # 배송비 네이버 수수료(Npay만) — 제품가 6.6%와 다름 (§7-2)
 SHIP_WEEKDAYS = (1, 4)   # 출고일 = 화(1)/금(4). 주문 export 날짜 → 그 날 포함 다음 출고일.
+MANUAL_MARK = "<!-- 수기 섹션 (재실행해도 보존) -->"   # 이 줄 아래는 스크립트가 덮어쓰지 않음
 
 
 def ship_day(export_date_str):
@@ -94,7 +95,7 @@ def compute(header, data):
         if g not in ship_by_group:
             ship_by_group[g] = (r[c_sfee] or 0, recip)
         items.append({"recip": recip, "pno": str(r[c_pno]) if r[c_pno] else "",
-                      "name": r[c_name], "qty": r[c_qty] or 1,
+                      "name": r[c_name], "qty": r[c_qty] or 1, "bd": bd,
                       "oid": str(r[c_oid]) if c_oid is not None and r[c_oid] else ""})
     for g, (fee, recip) in ship_by_group.items():
         per_recip[recip]["ship"] += fee
@@ -154,6 +155,27 @@ def save_cogs(date, comps):
     json.dump(comps, open(cogs_file(date), "w", encoding="utf-8"), ensure_ascii=False, indent=2)
 
 
+def claude_breakdown(items):
+    """상품번호 레지스트리로 클로드 등록분/이전분/미분류 매출(BD) 집계."""
+    try:
+        import claude_skus
+        reg = claude_skus.load()
+    except Exception:
+        return None
+    agg = {"claude": 0, "prior": 0, "unclassified": 0}
+    unlist = {}
+    for it in items:
+        o = claude_skus.classify(it["pno"], reg) if it["pno"] else None
+        if o == "claude":
+            agg["claude"] += it["bd"]
+        elif o == "prior":
+            agg["prior"] += it["bd"]
+        else:
+            agg["unclassified"] += it["bd"]
+            unlist[it["pno"]] = (it["name"], unlist.get(it["pno"], ("", 0))[1] + it["bd"])
+    return agg, unlist
+
+
 def render_md(date, s, cogs_comps, cogs_total, ship_cost):
     L = [f"# 출고일 정산 — {date}", ""]
     L.append(f"## 매출 (정산 예정) = **₩{s['revenue']:,}**")
@@ -180,6 +202,16 @@ def render_md(date, s, cogs_comps, cogs_total, ship_cost):
         L.append(f"- **= 순이익: ₩{s['revenue']-cogs_total-ship_cost:,}**")
     else:
         L.append("- **= 순이익: (물건값·실배송비 입력 후 확정)**")
+    cb = claude_breakdown(s["items"])
+    if cb:
+        agg, unlist = cb
+        L += ["", "## 클로드 등록분 (상품번호 레지스트리)"]
+        L.append(f"- 🤖 클로드 등록 제품 매출(BD): **₩{agg['claude']:,}**")
+        L.append(f"- 이전 등록분: ₩{agg['prior']:,}")
+        if agg["unclassified"]:
+            L.append(f"- ⚠️ 미분류: ₩{agg['unclassified']:,} → `python3 scripts/claude_skus.py --classify <발주발송.xlsx>` 로 분류")
+            for pid, (nm, bd) in sorted(unlist.items(), key=lambda x: -x[1][1]):
+                L.append(f"    · {pid} | ₩{bd:,} | {str(nm)[:36]}")
     L += ["", f"_주문 {len(s['items'])}건 · 배송 묶음 {len(s['ship_by_group'])}개 · 갱신 {date}_"]
     return "\n".join(L)
 
@@ -250,9 +282,15 @@ def main():
 
     os.makedirs(SETTLE_DIR, exist_ok=True)
     out = os.path.join(SETTLE_DIR, f"정산_{date}.md")
+    # 수기 섹션 보존 — MANUAL_MARK 아래 내용(취소 메모·리스팅→주문 기간·대기 항목 등)은 재실행해도 유지
+    tail = ""
+    if os.path.exists(out):
+        prev = open(out, encoding="utf-8").read()
+        if MANUAL_MARK in prev:
+            tail = "\n" + MANUAL_MARK + prev.split(MANUAL_MARK, 1)[1]
     with open(out, "w", encoding="utf-8") as f:
-        f.write(render_md(date, s, comps, cogs_total, args.shipping_cost))
-    print(f"  → {out}")
+        f.write(render_md(date, s, comps, cogs_total, args.shipping_cost) + tail)
+    print(f"  → {out}" + (" (수기 섹션 보존)" if tail else ""))
 
 
 if __name__ == "__main__":

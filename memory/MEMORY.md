@@ -1,105 +1,113 @@
-- [산출물 iCloud 백업](feedback_deliverables_icloud_backup.md) — 딜리버러블(엑셀·상세 등)은 SendUserFile 전송 + iCloud Drive `~/Library/Mobile Documents/com~apple~CloudDocs/핀치마트_산출물/` 에 백업 복사(폰 파일앱 접근). 리모트 세션서 채팅 다운로드 안 되는 이슈 대응(2026-07-22). 한글 별칭 파일명. 통째 클라우드 이전은 실브라우저 크롤 때문에 불가→딜리버러블만 클라우드
-- [영수증 20분마다 체크 루프](project_receipt_20min_check_loop.md) — 사용자 "20분마다 체크하는걸로"(2026-07-21). chulhee.y+receipt@gmail.com(플러스-주소 인박스, §24)로 온 신규 영수증을 ScheduleWakeup 자기페이싱 루프(delaySeconds 1200)로 20분마다 검색→장부 대조(이중기입 방지)→fetch_gmail_receipts.py 원본 무손실 저장→add_expense.py 카테고리 기입(플러스-주소=무조건 사업). 세션 생존 중에만 돎, 영구 원하면 gmail-receipt-collector 스케줄작업을 20분 cron으로. 첫 firing DoorDash 1건은 아침에 이미 처리→신규없음 (LEARNED §24)
-- [이미지 호스팅 = imgbb (Flickr 대체)](feedback_imgbb_image_hosting.md) — 2026-07-21부터 상품 이미지는 imgbb(i.ibb.co), Flickr 대체(기존 Flickr URL은 유지). API키 ~/.config/finchmart/imgbb_key(리포 커밋 금지). 업로드=base64 단일라인+curl --data-urlencode "image@파일". 🔑네이버 권장크기는 업로드 전 PIL 리사이즈(정사각→1000×1000/아니면 height1000+비례width, 3:4카톤=750×1000) — imgbb thumb/medium로는 안나옴. 앨범지정 불가(공개API=계정루트). 가격표·내부이미지 공개업로드 금지. 첫적용 타조 그린티 말차라떼 946ml (LEARNED §18)
-- [녹차/차류 기타속성 매번 채우기](feedback_tea_attributes.md) — 차류(식품>음료>차) 등록 시 네이버 "기타속성"(타입·중량·포장수량·개당용량·보관방법) 5개를 매번 product_info.json의 tea_attributes 블록+등록정보.md에 담아 사용자가 입력화면에서 바로 채우게. 타입=제형(말차/가루차→분말, 잎차→잎(원물), 티백→티백), 보관=대부분 실온보관. 건강기능식품(§16-2)과 같은 패턴. 데이비드티 피치 말차 65g 케이스(분말/65g/1/65g/실온보관) (2026-07-21, LEARNED §16-3)
-- [월 순수익 목표 ₩1,000,000](project_monthly_profit_goal.md) — 핀치마트 월 순수익 목표 100만원(2026-07-21 설정). 순수익=매출−COGS−실배송비, 제품+배송 마진 합(§7-2). 감: 개당 ₩4,000~7,000 → 월 ~180건(출고일 회당 ~20). 소싱·SKU 판단 기준 = 효자 SKU(가볍고 마진 두꺼운) 우선, 유입 없는 니치템은 구색만, 매 출고일 정산으로 진척 추적
-- [건강기능식품 인증 필수 속성 매번 채우기](feedback_health_food_attributes.md) — 영양제/건강기능식품 등록 시 네이버 "건강식품 인증 필수"(주요 기능성·영양소 원료명 식약처고시)+기타속성(섭취대상·제품타입·제품용량·1일 총 섭취량·섭취횟수·섭취방법) 8개를 매번 product_info.json의 health_food_attributes 블록+등록정보.md에 담아 사용자가 입력화면에서 바로 채우게. 미네랄/비타민 보충=영양보충, 성분표 기준 원료 체크(칼슘+D3→칼슘·비타민D 둘 다). 웨버 마그네슘300·칼슘시트레이트D3 350 케이스, 사용자 "건강기능식품은 무조건 이거 채울수있게" (2026-07-21, LEARNED §16-2)
-- [네스프레소 주문·재고·사입 워크플로](project_nespresso_workflow_settlement.md) — 🔑일반 상품과 별개: ①슬리브 단위 판매(10개입=1, 캡슐별 X) ②무세금(커피0%)·final sale ③사입≠전량재고(영수증 품목이 사입/주문나감/자가소비로 갈림, 재고로 잡을 것만). 네스프레소 사입=구글 Restock+로컬 엑셀 사입목록 둘 다. Orders 탭(주문자 한글 클립보드 붙여넣기·주문번호'텍스트·지역=캐나다재고지역). Todoist 사야할=구매수량(주문−재고, Maple 주문3−재고2=1)·수취인별=배송전량3. 스킬 nespresso-order, 시트 Nespresso Vertuo Order. 홍지원 7/21 케이스. 🔑네스프레소=제품마진으로 배송적자 메꾸는 가격모델(부피무게 커서 배송 구조적 적자, 손익은 제품+배송 합으로만 판단, 홍지원 배송−₩4,984이지만 전체+₩5,894) (2026-07-17·07-20, LEARNED §23·§7-2)
-- [결과물 바로 뽑고 피드백 루프](feedback_deliver_result_not_command_churn.md) — 확립된 작업은 중간 커맨드 반복(측정·재시도) 최소화, 결과물 한 번에 뽑아 보여주고 사용자 피드백으로 조정. YETI 이미지 센터링 과다반복 반성 (2026-07-19)
-- [커맨드 실행 요청 금지](feedback_never_ask_run_commands.md) — 커맨드를 사용자에게 실행하라 요청하지 말고 내가 직접 실행. settings.json allow=Bash(전체). 로컬 실행은 무조건 내가 함 (2026-07-19)
-- [북키퍼 지출/손익 장부 (profit-expense-tracker)](project_bookkeeper_expense_tracker.md) — 🎯QuickBooks 대체(2026-11-01 회계년도 cutover, FY=11/1~10/31). 장부.xlsx = 수입(RBC)탭 + 지출 7탭(식비·차기름·차주차·차정비·물건산거COGS·Supply·monthly subscription). scripts: add_expense.py(영수증 원본 receipts/<YYYY-MM>/ 그대로 복사·카테고리 별칭)·add_income.py·build_pnl.py(--fy/--from-to → output/pnl). 🔑손익 전부 CAD — RBC 입금 CAD가 매출(매달 bank statement), 네이버 정산 원화는 smartstore 운영추적용 분리·FX환산 안 함, P&L=매출−COGS−운영비 CAD, 정산 원화 안 끌어오니 COGS 이중집계 없음. 🔑정산 프로세스와 병행 — 정산 세션서 영수증 COGS 반영(§20-3 1~3단계)할 때 4번째로 이 장부에도 같은 턴에 기입, 원본은 output/receipts와 북키퍼 receipts 양쪽 보관. 🔑영수증 오프라인캡처=폰→chulhee.y+receipt@gmail.com 이메일 인박스(루틴 step1-0 직접검색·자기발송=사업), 원본은 scripts/fetch_gmail_receipts.py(OAuth우선/IMAP폴백, 디스크 직접기록 무손실 — base64/Bash로 나르면 깨짐)로 receipts/<월>/ 저장(테스트 Esso Gas 4032×3024·1.8MB 검증). 🔑결제수단 사전: *1002·*2201=같은 카드 AMEX Aeroplan Reserve Business(1002실물/2201 ApplePay, 매체태그 유지·한 카드로 롤업) (2026-07-18·07-20, LEARNED §20-3·§24)
-- [Todoist 수취인별 주문 서브태스크 옵션분리](feedback_todoist_recipient_subtask_split.md) — 🔑"수취인별 주문" 하위도 "사야할 제품들"과 동일하게 옵션마다 별도 서브태스크로 분리, 한 태스크에 몰아넣지 말 것. 박수현 Gerber 5옵션 케이스에서 한 줄에 몰아넣었다가 정정 (2026-07-17)
-- [정산 확정 → Notion 자동추가 트리거](feedback_settlement_notion_trigger.md) — "확정됐어" 한마디면 최신 확정 출고일 정산을 Notion "2026 7월부터 정산" 페이지에 바로 추가(재질문 없이). Slack DM과 별개, 둘 다 필요시 각각 수행 (2026-07-17)
-- [정산 확정 → Notion 추가 + 제품별 주문수 차트 + 월정산](feedback_settlement_notion_chart.md) — 🔑"확정됐어" 한마디면 최신 확정 정산을 Notion "2026 7월부터 정산"에 추가(되묻지 말고, Slack DM과 별개). `제품별 주문 데이터` DB 하나에 모든 달 누적(무료플랜=chart 1개 제한), 차트=주문수(count) 기준 금액 아님. 제품명 풀네임·옵션별 행분리·등록산출물 title_ko 사용, 🔑`개수`=실제 주문량(발주발송 엑셀 `수량` 컬럼값)이지 주문건수 아님 — 같은 옵션 여러 개면 그 수량(Gerber 맛별 5·5·8·6·6·네스카페18), 진짜 세트/묶음 SKU만 세트 1개=1(2026-07-17 정정). 차트는 MCP DSL이 sum-of-property 안 돼 count만 됨→주문량 막대는 UI에서 Sum 수동변경. 🔑날짜별 상세 = 주문별 순이익까지 한 테이블(수취인별 표에 제품손익·무게kg·실배송비·순이익 컬럼) — 실배송비는 한미 무게별 실청구(§7-1 무게식 연속값×FX, 8명 합=총액 검산), 균등분배 금지(7/10 윤지애 −₩2,798→+₩1,466 반전). 매 출고일 한미 오피셜 나오면 반복. 🔑매월 1일(이후 첫 세션)엔 전달 전체 확정배치 합산한 월간누적도 "월별 정산 요약" 섹션에 추가(미확정 배치는 제외). Notion MCP DSL/inline 노하우 (2026-07-17, LEARNED §20-8·§20-10·§20-11)
-- [DoorDash 기프트카드 잔액 추적](feedback_doordash_giftcard_balance.md) — 🔑액면 $200을 $159.98에 할인구매(우버 기프트카드와 별개). output/inventory/기프트카드_잔액.md 에서 액면가 기준 차감 추적, "기프트카드"·"차감해" 언급 시 이 파일부터 확인. 이 카드 결제분은 정산 COGS ₩0. 정보 흘려서 사용자가 재설명해야 했던 실수 (2026-07-16)
-- [비즈어드바이저 실시간 유입 검색어 학습](project_bizadvisor_keyword_monitoring.md) — 실제 유입 검색어(추정 검색량보다 강한 신호)를 주기 관찰해 §10 태그·§5 상품명에 반영. 첫 관찰: 브라이언부스터(네이밍 재검색 실증)·일본제bandaid(신규 원산지축)·룰루레몬everywhere벨트백 (2026-07-15)
-- [도브 = 미국 제조 정품 + 배치코드 해독](reference_dove_batch_code_usa.md) — 도브는 미국 공장 제조(원산지 미국 0204000, 소싱은 캐나다 코스트코). 고객이 "미국산이냐" 자주 물음 → 상세에 배치코드로 증명(예 03135XU04 = 2025.03.13 제조·XU04 미국공장·유통 36개월). 다른 도브 제품에도 재사용. 첫 적용 도브 센서티브 뷰티바 106g 16개(10556673976) (2026-07-14)
-- [아이보리 브랜드명 = IVORY](reference_ivory_brand.md) — P&G 아기세제·블리스풀 향기부스터 네이버 브랜드명은 "아이보리(IVORY)", "아이보리스노우" 아님(사용자 확정 2026-07-14). 한글 브랜드/상품명/카피는 아이보리, 영어 모델명만 봉지 공식 Ivory Snow 유지 가능. 기존 핀치마트 아기세제도 아이보리라 크로스셀 일관 (2026-07-14)
-- [원격 산출물 파일 채팅 첨부](feedback_send_files_to_user.md) — 워크플로 최종 산출물(발송처리·업로드용 엑셀 등)은 경로만 주지 말고 SendUserFile로 채팅 첨부 → 모바일·다른 컴퓨터에서 다운로드 가능 (2026-07-14)
-- [QBO 영수증 인입](project_qbo_receipt_upload.md) — 🔑채택=Drive `receipt-qb/<YYYY-MM-DD>/` 업로드(완전자동, 폴더id 1gK52…, Drive MCP base64+disableConversion). 영수증 COGS 반영 시 같이 업로드. 이메일 포워딩(qbodocs, 드래프트만 가능)·API(샌드박스 검증완료)는 기각/보류 (2026-07-11)
-- [그룹상품 vs 단일+여러옵션 준비방식](feedback_group_conversion_workflow.md) — 🔑일괄등록 자체가 그룹상품 생성 미지원. 그룹상품 갈 제품군=옵션마다 개별 단일상품으로 일괄등록 준비, 그룹 묶기는 등록후 판매자센터에서 사용자가 직접. 단일+여러옵션 갈 제품군=한 상품ID에 옵션값 여러개 그대로 담아 준비 (2026-07-10)
-- [KD 라면 제품·태그 레퍼런스](reference_kd_ramen.md) — KD 라면(치즈라면). 🔑브랜드=KD/크래프트 디너(디너), 제조사=크래프트 하인즈("크래프트 디너를 만든 크래프트 하인즈가 출시"). 용기면 3맛(마일드97/미디엄95/스파이시97), 체다치즈·우유밀, 원가$3.47·마진$2·₩6,350·4개당배송15000·컵라면50014000·맛별 개별단일3개. 라면/컵라면 태그축 첫사전10(치즈라면·용기면·수입라면·자취요리·치즈맛·매운라면·캐나다직수입·캠핑음식·전자렌지조리·캐나다산). 상품명은 검색어(치즈라면) 앞·브랜드 뒤 (2026-07-10)
-- [유튜브 쇼츠 워크플로 (youtube-shorts-test 협업)](project_youtube_shorts_workflow.md) — 제품 세로쇼츠. /Volumes/External/claude/youtube-shorts-test, node shorts.mjs "raw/<이름>"(script.txt 문장당1줄+세로클립, TTS ElevenLabs 재생성 느림→타임아웃300s, ffmpeg는 bin/번들). overlays.json=줄단위 이미지팝업(여러개면 줄쪼갬), 음성=George(스토어채널), 존댓말, 가로→세로 블러배경변환+트림, 나레이션>영상=정지→클립6초+끝+0.8트림. 🔑사실정확(§9)·기대vs현실(물조절실패 솔직대조)·gag 1~2초+페이드전 종료 (2026-07-10)
-- [정산 순이익 확정 시 Slack DM + 출고일 정산 사이클](feedback_settlement_slack_dm.md) — 표준 사이클: 출고일 한미플로우·발송처리 후 추정 정산 → 한미 오피셜 배송비 오면 확정 재계산 → 나(U0B1TFC186Q)+김아름(U0B696MML21) DM으로 🔑그 출고일 정산+이번달 누적 정산 같이 전송(손익이라 팀채널 X, 추정 잠정단계엔 나에게만·김아름 X) (2026-07-14 확정)
-- [코스트코 한정품 재고체크(실브라우저 스케줄)](feedback_costco_stock_check.md) — 코스트코.ca=Akamai 봇차단→Claude for Chrome 실브라우저만 통과(headless 403). 매장별 재고=로그인 없이 "Check Nearby Warehouses" 패널 In Stock 텍스트 읽기(수량·API 불필요). 자동화=scheduled-task 매일 Slack #new-item(launchd 불가, 앱 열림+Chrome 연결 필요, 첫 Run now로 권한승인). 참고 API: warehouses.json/inventorylevels batch/v2(client-identifier, item번호 앞자리0 01957788), 매장별은 batch로 안됨(graphql/브라우저). 🔑특정 지점(Downsview·Markham) 재고는 인근패널만 믿지 말고 Find박스에 지역명 직접 조회(인근목록이 매장 누락→오판, 2026-07-15 하리보 Markham 오보→정정). 발작 캐나다스컵 케이스 (2026-07-09, LEARNED §22)
-- [발작커피 브랜드·블렌드 레퍼런스](reference_balzac_coffee.md) — 발작=온타리오 스페셜티(1993카트→1996스트랫퍼드→16매장, "전국마트" 과장금지). 블렌드5종 로스트/노트/taste(산단바디5점)/용량/소싱가: 파머스(미디엄·유기농공정무역 3/4/3)·발작스(미디엄 2/4/3)·다크어페어(다크 0/3/5)·디카페인(2/4/4 공홈전용)·캐나다스컵(미디엄 2/3/3 코스트코한정 item1957788). 340g전부₩22,000, 파머스907g₩27,900, 디카907g₩62,900/2.27kg₩138,000. 그룹"발작 스페셜티 원두커피" 로스팅포인트×용량×수량 (2026-07-09)
-- [상표권 신고 대응+이미지 저작권](feedback_trademark_report_response.md) — 병행수입도 상표권자 오인신고 시 판매중지 가능. 정품증빙(영수증·매장사진) 사입건별 보관, 실사진만 사용(이미 준수). 판매실적기반 등록한도설은 비공식 소스라 반영보류. 🔑2026-07-13 추가: 전용사용권 단독설정 시 진정상품도 위법가능→KIPRIS 사전확인 권장(제안), 상표권침해 손배 3배→5배(2025-07-22, 공식), 국내대리인법 2027-01-21시행(무관) (2026-07-09·07-13, LEARNED §21)
-- [리뷰 관리 루프+포토리뷰 재활용](feedback_review_management_loop.md) — 리뷰=수집→노출→악성대응→재구매유도 루프. 포토리뷰를 SEO리프레시 실사진 소재로 재활용. 대가성 체험단(모집→결제→환급)은 어뷰징 리스크로 미채택, 실구매고객 톡톡 요청만 유지 (2026-07-08)
-- [AI검색 대량등록 페널티+카테고리단계 엄격성](feedback_ai_search_2026_bulk_penalty.md) — 2026 네이버 AI검색: 하루50개등록→2~3개만노출/1000개→990개밖(수치근거), 카테고리 마지막 한단계만 달라도 "다른 상품유형"으로 AI 판단(§15 검증절차 근거보강). /source-launch 배치등록 시간차 제안(미반영). 태그 5~7개>10개 주장은 벤더블로그 1건뿐이라 미반영(§8·§10 10개 표준 유지) (2026-07-07, LEARNED §17-1 보강)
-- [Todoist 추가주문 중복방지](feedback_todoist_additional_order_dedup.md) — 🔑화/금 출고일 무관, 부모(사야할 제품들/수취인별 주문) 있으면 무조건 그 밑에 계속 추가(배치별 새 부모 판단 자체 금지, 사용자 명시 2026-07-11). 없을 때만(0건) 스킬 기본형 이름으로 신규생성. 완료(crossed off) 태스크까지 find-completed-tasks로 대조해 진짜 신규만 추가. 2026-07-06 학습 → 2026-07-11 재발 후 규칙 강화. 스킬: skills/order-2task-todoist
-- [완구/어린이제품 KC 인증](feedback_kc_children_cert.md) — 완구=어린이제품 KC(안전확인) 대상. 일괄엑셀엔 KC필드 없어 완구/블록/레고/유아 업로드시 자동 판매중지. 🔑'인증대상 아님'은 구매대행일 때만 — 직수입·사입 재고판매는 판매자가 KC 의무자라 부정확·제재리스크(판매정지/과태료). build_bulk_excel 완구 감지시 뉘앙스 경고. 처음 '완구=인증대상아님'으로 뭉뚱그렸다 블로그로 정정 (2026-07-09, LEARNED §16)
-- [출고일 정산·손익 워크플로](project_order_settlement.md) — 매 출고일(화/금) scripts/order_settlement.py <발주발송.xlsx>(암호1111). 매출=Σ정산예정금액(BD)+배송비(묶음유니크)×0.9637. --update-inventory 재고 판매반영(출고파일당1회), --cogs·--shipping-cost로 순이익=매출−물건값−실배송비. output/settlement/정산_<날짜>.md. 3단계입력(발주발송→영수증물건값→한미실배송비). 🔑추가주문 더 올 수 있음→최종확정 전까지 열어두고 신규만 누적(매출 재계산 idempotent, 재고반영 상품주문번호 dedup=정산_<date>_processed.json, COGS 계속 누적). 물건값=실현금(글리치 무료취득분 ₩0). 🔑영수증으로 COGS 추가할 때마다 Todoist "사야할 제품들"만 complete-tasks로 cross off("수취인별 주문"은 사용자가 포장하며 직접 처리 — 절대 건들지 말 것, 2026-07-16 정정). 🔑배치마다 리스팅→주문 경과일+유형별 패턴 코멘트 기록(stat -f %SB로 등록일, 매칭 실패=클로드 도입 이전으로 처리·추적중단). 🔑🔑영수증 보관 = Drive 업로드 폐기, output/receipts/<출고일>/ 로 원본 그대로 로컬 복사(압축·인코딩 없음, 화질저하+시간낭비 이슈로 2026-07-17 전환) (2026-07-08~17, LEARNED §20·§20-1·§20-7)
-- [배송비 마진 + 네이버 수수료 3.63%](feedback_shipping_fee_margin.md) — 배송비도 마진. 네이버 수수료 제품가 6.6% vs 배송비 3.63%만. SKU 손익=제품손익(6.6%)+배송손익(3.63%) 합산. 다우니 언스토퍼블 1.13kg: 배송비₩15,000×0.9637−실비($11.25/1.5kg=₩12,184)=+₩2,272/개. 배송마진 빼먹고 저마진 오판 금지. 🔑효자SKU=가벼운무게+넉넉한마크업(정액배송비₩15,000인데 실배송비는 무게비례→가벼울수록 배송마진↑): 303g퓨전 +₩12,722/개 vs 1.13kg +₩1,478. 소싱시 가볍고 원가대비 판매가여유 품목 우선 (2026-07-07)
-- [사입 재고 관리 리스트 도구](project_inventory_list.md) — scripts/build_inventory_list.py <상품ID/슬러그/이름> → output/inventory/재고관리_<날짜>.xlsx. 3단계 자동채움(등록산출물→guide판매목록 Product_*.csv→미등록수동), --append 이어붙이기. 컬럼 사입일·원가·판매가·마진·사입단가(₩landed)·사입/판매/현재고(수식)·유통기한·PA감시 등. 실원가 계산은 LEARNED §19 (2026-07-07)
-- [Costco price adjustment (30-day)](feedback_costco_price_adjustment.md) — 코스트코 구매 후 30일내 그 제품 세일하면 차액 환급(PA) → 사입 원가↓. 재고관리에서 구매일+30일 PA창구 모니터, 세일시 사입단가 하향. 이미 세일가 구매는 PA 없음(도브=인스턴트세이빙이 이미 세일). 우버/인스타카트 배달도 PA 가능(멤버십 구매기록+코스트코 매장영수증 발행→매장가서 요청). 코스트코 원가 리베이트 3종: ①인스턴트세이빙(즉시차감) ②PA(그 제품 30일내 세일 차액) ③P&G spend&save($100→$25카드)는 획득제품 원가에 소급말고 별도 크레딧으로 다음 사입/발송에 사용 (2026-07-07)
-- [Youtheory 원산지=미국](reference_youtheory_origin_us.md) — 유씨어리는 미국 브랜드(제조 Nutrawise Irvine CA) → 원산지 미국(0204000). 캐나다 Jamieson이 인수했어도 인수사 국적에 낚이지 말 것. 소싱은 캐나다 코스트코라 카피 "캐나다 직수입"은 OK(원산지 필드와 별개) (2026-07-06)
-- [Naver 등록 필드 제약 종합](feedback_naver_field_limits.md) — 등록 산출물 사전점검: 상품명 50자 미만(초과=검색최적화 태클)·모델명 50자 미만+금지문자(\ * ? " < >)·옵션값 25자 미만·이미지 sell.smartstore 도메인 차단→외부호스팅(Flickr)·상세 전역태그(html/meta/script/style블록/body/head)만 차단+word-break:keep-all. 단일/옵션조합형/그룹 구조 선택 (2026-07-05, LEARNED §18)
-- [Bulk excel 추가이미지 optional](feedback_bulk_additional_images_required.md) — 네이버 일괄등록 추가이미지(X)는 필수 아님(대표이미지 W만 필수). 여러 장 있으면 `bulk.add_images`(Flickr URL)에 넣고, 대표 하나뿐이면 스킵 OK. verifier 필수체크에서 추가이미지는 FAIL 사유 아님 (2026-07-05 정정 — 처음 "필수"로 오해했다 사용자 정정)
-- [Pre-register self-verification checklist](feedback_pre_register_verification.md) — 등록 산출물 확정 전 직접 검증: ①옵션마다 대표이미지 열어 라벨확인(rep[0] 일괄 금지) ②브랜드=모브랜드/제조사=실제 제조사(라인명 금지, Unstopables→다우니/P&G) ③배송 "M개당 N" 환산 없이 그대로 ④카테고리 강제 전 세분류 확인 ⑤태그 입력화면 검증. 열어보면 아는 건 추측 말 것 (2026-06-26 반복실수)
-- [Senior copywriter mindset](feedback_senior_copywriting_mindset.md) — 상세페이지·SNS 카피는 초짜 아닌 시니어 마케터 마인드(후킹 먼저·고객심리·스캔가능·쉬운한글·전환설계·소재품질 책임·프로액티브). 단 §9 데이터 진실성 유지(사실만 매력적으로 프레이밍, 날조 금지)
-- [SNS bio link — Linktree](reference_sns_bio_link.md) — 인스타 프로필 바이오 링크=Linktree https://linktr.ee/finchmart_ca. 캡션 "프로필 링크" CTA가 이걸 가리킴. 캡션 URL은 클릭 안 됨→바이오/스토리 링크로 유도
-- [SNS MZ 라인업 모드 (croket) — 구현완료](project_sns_mz_croket_style.md) — scripts/build_sns_mz.py [그룹ID]: CSV 그룹→4:5 실사진 라인업 카드(마커헤드라인/형광펜·말풍선·로고·추천템·향추천가이드·CTA). MZ가 만들고 시니어가 공식페이지 팩트체크+가이드/CTA/캡션, 문제시 MZ 재작업. /sns-instagram mz 모드
-- [Apply code without asking](feedback_apply_without_asking.md) — 로컬 코드/파일/산출물 변경은 확인 묻지 말고 바로 적용·사후보고. 되돌리기 어렵거나 외부 전송(Slack·push·삭제)만 예외 확인
-- [Sub-agent model is Claude Code desktop only](feedback_subagent_env_split.md) — 서브에이전트는 Claude Code `/register-agents` 전용. 모바일 현장 dispatch 는 기존 Cowork 그대로, Cowork instructions 엔 안 심음
-- [SEO refresh daily automation](project_seo_refresh_automation.md) — 매일 17:00 launchd → /seo-refresh 헤드리스: 판매중 2개 SEO 감사·재생성·Slack. seo-auditor 에이전트 + seo_pick/slack_notify/seo_refresh_cron 스크립트
-- [Mobile output sync](project_mobile_output_sync.md) — 매일 23:30 launchd → Cowork output 을 여기로 no-clobber 복사(동일 파일명은 여기꺼 keep). sync_mobile_output.sh, Claude 불필요
-- [Agents & orchestrator overview](project_agents_overview.md) — 서브에이전트 5종(market-strategist·market-researcher·product-extractor·listing-writer·seo-auditor) + 커맨드(/market-launch·/register-agents·/seo-refresh) 역할
-- [Source-launch batch command](project_source_launch_batch.md) — investigate products.json → 등록 산출물 배치(/source-launch). 매장수 기반 가격(2곳+ 최고가+$1.50 / 1곳 +$2), 정액 ₩15,000 배송이 저단가품 경쟁력 죽임. 토요일 02:05 launchd 주1회 자동(크롤 ca-grocery-sourcing-daily 토 01:00, 18:00 oneshot 제거)
-- [Model name from current store](feedback_model_name_from_store.md) — dispatch "현재 보고 있는 매장" 을 소스로 공식 영어 풀네임 추출 → 네이버 모델명 필드. 그룹은 옵션별. 크롤 가능=직접 추출 / 차단=사용자 확인
-- [Naver Smart Store fee always 6.6%](feedback_naver_fee.md) — 스마트스토어 판매가 산정 시 항상 6.6% 수수료를 가격에 포함 (gross-up)
-- [No unverified usage/recipe tips in product pages](feedback_no_usage_tips.md) — 상세페이지에 검증 안 된 활용 팁/레시피/조리법 섹션 만들지 말 것
-- [Brand name Korean transliteration for Naver search](feedback_brand_ko_names.md) — 브랜드명 한글 표기는 네이버 검색량 기준으로 표기 (예: Chosen Foods → 초슨푸드)
-- [No French in detail pages](feedback_no_french.md) — 캐나다 이중언어 라벨이어도 프랑스어 표기 사용 금지, 영어만
-- [HST/GST tax — always ask, never auto-apply](reference_hst_zero_rated.md) — 세금은 매번 물어봄. 사용자 제공 가격은 세전(pre-tax). 참고 세율: 일반 13% / 소스·커피·쿠키 0% / 키즈 의류·신발 5%
-- [Dispatch quick-input template](feedback_dispatch_template.md) — 폰에서 사진+한 줄 입력으로 상세페이지 워크플로 자동 시작하는 형식
-- [Slack delivery of 등록정보](feedback_slack_delivery.md) — 등록 완료 후 등록정보.md 전체(형식 A)를 Slack #new-item 채널에 자동 전송
-- [Title spec label](feedback_title_spec_label.md) — 상품명 수치 사양은 단독 숫자 말고 라벨 결합 (23g → 단백질23g)
-- [Naver title SEO guide](feedback_naver_title_seo_guide.md) — 네이버 공식 SEO 가이드 기반 상품명 작성 규칙 (50자 내외/동의어 중복 금지/판매처명 금지 등)
-- [Group detail update on new option](feedback_group_detail_update_on_new_option.md) — 그룹상품에 새 맛/옵션(색상·용량) 추가할 때마다 그룹 통합 상세(detail.html) 라인업에 카드 반드시 추가. 옵션만 늘리면 판매는 되나 상세 자동갱신 안 됨→불일치. 옵션추가=상세갱신 세트로. 도리토스 4맛 그룹서 사용자 지시 (2026-07-08, LEARNED §13-1)
-- [Naver group product names and options editable](feedback_naver_group_lock.md) — 그룹명(상품명)도 기존 옵션도 사후 수정 가능. 새 옵션 추가 가능, 그룹명이 새 옵션과 안 맞으면 일반화 수정 (2026-06-21 정정 — 이전 "옵션 잠김"은 오류)
-- [Group product per-option shipping](feedback_group_shipping_per_option.md) — 네이버 그룹상품은 옵션(제품)별로 배송비 다르게 설정 가능. 묶음/개당/금액 차등 OK, 별도 분리 권고 X
-- [Smart Store ID: finchmart_ca](reference_smartstore_id.md) — 사용자 네이버 스마트스토어 ID와 상품 URL 패턴
-- [Title source tag rules — no "정품", store name only for store-exclusive SKU](feedback_title_source_tag.md) — 상품명 끝 출처: 매장 한정 SKU만 "캐나다 코스트코" 식, 일반 유통은 "캐나다"만, "정품"은 항상 제외. NB+소매사이즈는 디폴트 일반 유통 (사용자 "코스트코 라인" 발언만으로 매장 한정 자동 가정 X)
-- [Source tag in title — no repeat in detail body](feedback_no_source_repeat.md) — 상품명에 들어간 출처/매장 태그는 상세페이지 본문에서 반복하지 않고 제품 자체 매력 중심으로 작성
-- [Naver tag policy — no category/brand/seller names](feedback_naver_tags.md) — 태그에 카테고리·브랜드·판매처명 사용 금지. 트렌드/USP·재료·변형·시나리오·타겟·사양·원산지로 10개 구성
-- [Free shipping + absorbed shipping cost in price](feedback_free_shipping_absorb.md) — "무료배송 + N$ 흡수" 패턴: 배송비를 상품가에 얹고 네이버에는 무료배송으로 등록 (수수료 gross-up 그대로 적용). 🔑 손익 판단 시 무배(흡수) 주문을 "배송 적자/아까움"으로 따로 빼지 말 것 — 흡수분이 이미 매출에 있어 순이익=매출−COGS−실배송비가 자동 상계 (2026-07-10, LEARNED §7-3)
-- [HST-included cost — skip HST gross-up](feedback_hst_included_cost.md) — 사용자가 "원가 HST 포함"이라 명시하면 HST 가산 스킵, 마진+수수료 gross-up만 적용
-- [Price pattern dispatch table](feedback_price_patterns.md) — HST 가산/포함 + 배송비(개당/무배흡수) 짧은 입력 → 정확한 산식 분류 마스터 테이블
-- [Percent margin pricing](feedback_percent_margin.md) — % 마진: "수수료 감안 N%" = 판매가 = 원가KRW ÷ (0.934 − N/100), gross-up 별도 적용 X
-- [Pre-workflow domestic price check](feedback_domestic_price_check.md) — 산출물 만들기 전에 쿠팡·네이버 검색으로 국내 시세 확인하고 가격 경쟁력 보고, GO 받으면 진행
-- [Skip §0-A when "not sold in Korea"](feedback_skip_domestic_check_not_in_korea.md) — 사용자가 "한국에 안 판다/국내 미출시" 명시 시 §0-A 국내 시세 확인 스킵
-- [§0-A domestic price verify limits](feedback_domestic_price_verify_limits.md) — market-researcher/검색 결과는 stale·사장 리스팅 포함 가능. 한국 커머스(네이버쇼핑·쿠팡·11번가)는 Chrome MCP 차단+JS렌더로 실시간 검증 불가. "가격으로 안 됨" 단정 전 링크 생존 의심, 사용자가 죽었다면 즉시 철회·완화
-- [Source store affects price comparison](feedback_source_store_price_comparison.md) — 같은 그룹/라인업 형제라도 매입처(코스트코 vs 월마트) 다르면 원가 baseline 달라 판매가 직접 비교 불가. 매입처 다른 형제보다 비싸도 "과하다" 자동 판정 X, 원가(손익분기) 기준 책정
-- [Target price-match pricing pattern](feedback_target_price_match.md) — "가격 N$로 맞춰" 명시 시 cost-plus 스킵, N CAD를 목표 판매가(pre-fee)로 사용
-- [Shipping per-unit, no bundle rule](feedback_shipping_per_unit_no_bundle.md) — "배송비 N원 (몇 개당 그런 거 없이)"=수량당 단순곱셈(수량별,AP=1). vs "flat/균일 N원(개당 없이)"=수량 무관 유료(AP 공란) — 정반대 주의 (2026-06-20 트위즐러). "M개당 N원"은 액면 그대로 수량별 fee=N·AP=M — "=개당 X원" 분담 환산으로 재해석 금지(2026-06-23 자미에슨)
-- [Overseas shipping weight-tiered $9+$4.5/kg](feedback_overseas_shipping_baseline.md) — 해외 배송비 무게기반: $9(첫1kg≈₩10,000)+추가kg당$4.5(2kg≈₩15,000). 부과수량=1kg경계 넘기는 개수(765g→2개당15,000). 미지정이면 개당₩10,000 디폴트·하한, 명시값 우선. 🔑커피머그 특례=$1 통관수수료 없음+$8+$2.25/500g(이석주 미니머그 1kg=$8, base −$1만 다름) (2026-07-20, LEARNED_RULES §7-1)
-- [Canadian price tag "N/X.XX OR Y.YY EA" format](feedback_price_tag_or_format.md) — Loblaws 양식 = N개 묶음 X.XX / 단품 Y.YY. 기본 단품가 사용, OCR 오인 흔함 → 사용자 확정 받기
-- [Group product — one unified detail page](feedback_group_product_one_detail.md) — 🔑2026-07-10: "통합1장" 절대규칙 아님으로 격하 → 그룹상품 만들 때마다 통합/옵션별분리 사용자가 라인별 지정(옵션많고 자주바뀌는 룰루레몬류는 분리 검토)
-- [Naver category — 식품>스낵/과자 verified tree](feedback_naver_category_snack.md) — 스낵·과자 상위는 식품>스낵/과자(과자/베이커리 아님). 세분류 8개만 실존(일반스낵·쿠키/비스킷·파이/케익·팝콘/강냉이류 등). 감자스낵·감자칩·포테이토칩 등 잎 노드 지어내기 금지 → 칩류=일반스낵
-- [Naver category for ice/slush/freezies](feedback_naver_category_ice.md) — 슬러시·아이스바·얼려먹는 빙과 모두 "식품 > 아이스크림/빙수 > 아이스크림" (빙과/아이스 > 슬러시 노드 존재 X)
-- [Naver category 패션잡화>모자 tree](feedback_naver_category_hat.md) — 야구모자·스냅백은 중분류, leaf는 메시캡/일반캡. 볼캡/클린업캡=일반캡(50003990), 메시=50003991. build_bulk_excel은 leaf 전체경로 필요
-- [Naver top-level category lock — copy & re-register](feedback_naver_category_toplevel_lock.md) — 등록 후 대(최상위)분류 카테고리 변경 불가. 같은 대분류 내 이동만 즉시 수정, 대분류 바뀌면 기존 상품 복사 후 새 상품 재등록(셀러). SEO 리프레시는 대분류 넘는 이동이면 "⚠️ 복사 재등록 필요" 명시
-- [detail.html — skip shipping section and outro](feedback_detail_skip_shipping_outro.md) — 상세페이지 본문에 🚚 배송 안내·마무리 인사 한 줄 자동 삽입 금지 (instructions.md 명시 룰)
-- [detail.html — English subtitle under headline](feedback_detail_english_subtitle.md) — 헤드라인 바로 아래 영문 풀네임 부제 한 줄 추가 패턴
-- [detail.html — English blocked-word rejection](feedback_detail_blocked_word_english.md) — 네이버 상세설명 금칙어는 공백 제거 후 매칭. 영문 제품유형명(Taco Seasoning Mix→tacoseasoningmix) 거부 가능 → 거부 시 영문 부제 줄 제거(한글 헤드라인 유지)
-- [Naver detail — text+image split, not standalone HTML](feedback_naver_detail_format.md) — 최종 산출물은 HTML 말고 섹션별 붙여넣기용 텍스트 + 이미지 URL 분리 형식
-- [Loss-leader / traffic-driver pricing](feedback_loss_leader.md) — "검색 유입용·끼워팔기·마진 포기" 표현 시 마진 최소화 모드 (gross-up은 유지, 2안 제시)
-- [Made-to-order fulfillment](feedback_made_to_order.md) — "재고 없이 주문 들어오면 매입" SKU는 made-to-order, 네이버 발송예정일 길게 설정
-- [Ceramic mugs ship under 1kg](feedback_mug_shipping_weight.md) — 세라믹 머그·컵류는 배송 중량 1kg 미만, 배송 원가 마진 잠식 경고 달지 말 것
-- [Release market is not country of origin](feedback_origin_vs_release_market.md) — "캐나다 한정 출시"는 판매 시장, 제조국 아님. 페이지에 제조국 미명시면 원산지 캐나다로 단정 금지
-- [Granola spelling — Quaker uses 그라놀라](feedback_granola_spelling.md) — Quaker Harvest Crunch 등록 시 "그라놀라" 표기 (그래놀라 X). 다른 브랜드는 케이스별 확인
-- [Output location — workspace output/, flat naming](feedback_output_location.md) — 데스크톱·모바일 dispatch 둘 다 ~/smartstore-addnew/output/에 `<slug>_detail.html` 식 평탄 저장 (Downloads X, 중첩 폴더 X)
-- [detail.html — bare fragment format](feedback_detail_html_bare_fragment.md) — p/strong/br + 이모지 + img(외부 호스팅 URL 생존, 2026-06-12). ⚠️ 2026-07-02 완화: div래퍼+inline style+h1/h2도 생존 → 스타일드 상세 가능([[feedback_detail_styled_deco_template]])
-- [detail.html — styled deco template](feedback_detail_styled_deco_template.md) — 네이버가 div/inline-style/h1/h2/말풍선(삼각형div) 유지 → inline CSS 스타일드 상세. 브랜드 레드 팔레트+말풍선 헤더+색상별 대표색, 본문19px 가운데정렬. 폰트선택 불가, style블록/flex/class X, 공지 안 붙임. **🔑 2026-07-03 표준 refine 프레임 확정("앞으로 이걸로"): 공지식 2겹 프레임(피치밴드#fff7f4+흰라운드카드)+아이브로우 pill+핵심포인트2줄행+번호뱃지, 국가카피=캐나다기준(미국인기 금지). 레퍼런스=post_honey_bunches…detail.html** (LEARNED §17)
-- [Store design guide + palette](reference_design_guide.md) — guide/디자인 가이드/ 위치. 브랜드 레드 #e0483f + 피치/크림/텍스트 팔레트, 공지 원본, 폰트 YgJalnan/NanumSquareRound(공지용·상세 미적용)
-- [Lululemon relist playbook](feedback_lululemon_relist_playbook.md) — 룰루레몬 재등록 반복 워크플로: 실브라우저 크롤(Akamai 우회)·ProductGroup JSON-LD(offers 배열/객체)·색상별 단일→그룹·스타일드 데코·블랙/화이트 킵·OOS 제외·베트남 0200014·재고 모니터 추가. lulu_stock_check.py --fetch-help
-- [Naver Search MCP](reference_naver_search_mcp.md) — PlayMCP/isnow890 네이버 검색 MCP 연동(2026-07-03). search_shop=§0-A 국내시세 자동화. ⚠️ search_shop total(등록상품수)≠태그 입력화면 검색량 — 죽은태그/중복 거르기용, 검색량·표기갈림(헤드밴드vs헤어밴드)은 입력화면 확인
-- [Group detail — condense option/size text](feedback_group_detail_condensation.md) — 그룹상품 detail.html에서 옵션·사이즈 안내는 시각 카드 캡션 수준 한 줄로 응축 (사용자가 네이버 에디터에서 박스 사진·callout 등 시각 요소로 처리)
-- [Pre-sale regular price as cost](feedback_pre_sale_regular_price.md) — 세일가 식별되면(SAVE/정가 동시표시) 명시 없어도 세일전 정상가가 디폴트(2026-06-02 격상). 정상가/세일가 둘 다 기록. 🔑 예외: **Final Sale은 세일가에서 마진 계산**(영구 클리어런스, 2026-07-04 §12-1) (LEARNED_RULES §12·§12-1)
-- [Demand inflow ≠ price + shipping search tactic](feedback_demand_and_shipping_tactic.md) — §0-A 시세경쟁력≠유입수요: 검색유입 없는 카테고리(테니스 등)는 좋은 마진이어도 접기. 경쟁사 과한 배송비(₩79,000)는 실비 아닌 네이버 검색노출 꼼수(상품가 정렬)라 블라인드 카피 금지 (LEARNED_RULES §0-D)
-- [Brand country ≠ made-in origin](feedback_brand_country_vs_made_in.md) — 브랜드 출신국·"Flavours from India" 맛 문구를 원산지로 오인 금지. 봉지 전면 MADE IN 배지/뒷면 라벨로 확정. 인도 브랜드 Kurkure도 캐나다 제조(0204006). 캐나다 제조면 "인도 직수입" 카피 금지, 인도과자는 genre로만
-- [Naver 일괄수정(기존상품 수정) Excel](feedback_naver_bulk_edit_excel.md) — 기존 상품 상품명·판매가·옵션·이미지·배송 한번에 수정(상품번호 기준, 일괄'등록'과 다름). 🔑컬럼 위치 파싱이라 컬럼 삭제 금지→값만 비우기(즉시할인 삭제 시 컬럼삭제하면 뒤 밀려 에러). 가이드3~5행 삭제·데이터 3행. 상세설명 컬럼 없음→편집화면 별도. 옵션 2축→3축=기존 옵션번호 재활용+값만 수정+남는번호 미재고N(번호수=값줄수, 최소1개 옵션가0). 파이널세일가 전환시 기존 즉시할인 제거. 에러파일 col1=실패사유. 3축 대안=OptionCombination 파일. 룰루 트레일러닝베스트 케이스 (2026-07-14, LEARNED §18-1)
-- [Bulk-upload Excel — 5th artifact](feedback_bulk_upload_excel.md) — 등록 4종 뒤 네이버 일괄등록 엑셀도 build_bulk_excel.py 로 생성(메인 소유). 원산지 텍스트 0보존(캐나다 0204006)·배송방법 U+201A 구분자·상세설명=detail.html. 해외사업자라 영양제는 기타건강보조식품(50002615) 고정. 배송비는 resolve_shipping 으로 product_info 에서 SKU별 자동 도출(CONFIG 6개당 15,000 은 fallback, 일괄로 덮지 말 것). 대표이미지는 호스팅 URL 있으면 bulk.rep_image 로 자동 입력. 🔑진짜 2축 조합형(option_axes: 옵션명 컬러⏎사이즈, 옵션값 색상들⏎사이즈들, 옵션가·재고=1축 기준 콤마)로 색상별 옵션가 표현(체리엠버 0=기준가+나머지 +차액, ±50%·최소1개0). 2축 full-grid는 색상별 없는 사이즈조합 available로 생성→등록화면서 삭제. options[].option_add=결합축 옵션가 (LEARNED_RULES §16·§16-1)
-- [Detail dwell-time 5 elements](feedback_detail_styled_deco_template.md) — §17-1 상세페이지 체류시간 설계(톡키블로그 2026-07-06): ①문제공감 훅 ②핵심스펙 텍스트블록 ③이미지 캡션 ④부정추천 섹션 ⑤모바일 %패딩. 상세 본문에 제품 실물컷 필수(인포그래픽만 X). 노출 기본기는 이미 갖춤, 갭은 체류설계뿐 (LEARNED_RULES §17-1)
-- [Daily smartstore study routine](project_daily_smartstore_study.md) — 매일 저녁 구글/네이버 스마트스토어 SEO·상세·정책 검색·정독 → Slack #new-item 다이제스트 + LEARNED_RULES 개선안. launchd 저녁 잡(SEO 리프레시 패턴). 사용자 지시 2026-07-06
-- [Store-price +20% margin rationale](feedback_store_price_margin_rationale.md) — 매장가 +20% 마진의 근거: 인스타카트 등 배달대행이 같은 코스트코 상품에 이미 +24% 마크업(수수료 별도). 시장이 "현지 대행 편의"에 지불하는 값이라 20%는 오히려 낮음·정당. 마진 과하다 자체의심 금지, §0-A 경쟁력 논거로 활용 (2026-07-07 스크린샷 근거)
+- [제품명 원본그대로](feedback_product_name_verbatim.md) — 🚨최우선: 향/맛/용량 한글자도 안바꿈, 오배송 2회, 한미 파이널체크
+- [타입용어 한국어로](feedback_type_terms_korean.md) — 음역 금지: raw→생꿀·unpasteurized→비가열, 영문은 병기만
+- [팀홀튼 국내유통 현황](reference_tim_hortons_korea_retail.md) — 오리지널블렌드·일부 300g 그라운드 한국 코스트코/백화점 입점, 원두축 취급금지 / K컵·믹스·굿즈만 유효
+- [주간 신규SKU 자동파일럿](project_weekly_new_sku_autopilot.md) — 목요일밤 무인 발굴→§0-A→가격→일괄엑셀, 자동GO 1~2개/주
+- [영수증 자동대사](feedback_receipt_auto_reconcile.md) — poller가 이미 장부 기입, 정산 반영은 "정산해!" 라이브 트리거로(무인 자동화 롤백)
+- [정산 최신export 1개만](feedback_settlement_latest_export_only.md) — 발주발송 파일 여러날짜 합치면 취소주문 되살아남
+- [경쟁사 도착가 비교](feedback_competitor_landed_price_compare.md) — lprice 아닌 상품가+배송비, 주간 모니터링 루틴
+- [산출물 iCloud 백업](feedback_deliverables_icloud_backup.md) — SendUserFile+iCloud Drive 백업(리모트 다운로드 이슈 대응)
+- [영수증 20분 체크](project_receipt_20min_check_loop.md) — 2026-07-22 scheduled-tasks(`receipt-plus-address-poller`)로 전환, 화/금오후 1h·평시 20분
+- [imgbb 이미지호스팅](feedback_imgbb_image_hosting.md) — Flickr 대체, PIL 리사이즈 필요(1000×1000 등)
+- [차류 기타속성](feedback_tea_attributes.md) — 등록시 타입·중량 등 5개 채우기
+- [월 순수익 목표](project_monthly_profit_goal.md) — ₩1,000,000, 효자SKU(가벼움+마진두꺼움) 우선
+- [건강기능식품 인증속성](feedback_health_food_attributes.md) — 영양제 등록시 8개 필드 채우기
+- [네스프레소 워크플로](project_nespresso_workflow_settlement.md) — 슬리브단위·무세금, 배송적자는 제품마진으로 상쇄
+- [결과물 먼저 뽑기](feedback_deliver_result_not_command_churn.md) — 중간 커맨드반복 최소화, 결과물로 피드백
+- [커맨드 직접실행](feedback_never_ask_run_commands.md) — 사용자에게 실행 요청 금지
+- [북키퍼 장부](project_bookkeeper_expense_tracker.md) — QuickBooks 대체, 장부구조·영수증 4단계 처리체인
+- [Todoist 수취인 서브태스크](feedback_todoist_recipient_subtask_split.md) — 옵션별 분리(한줄 몰아넣기 금지)
+- [Notion 정산 트리거](feedback_settlement_notion_trigger.md) — "확정됐어"→재질문없이 즉시 추가
+- [Notion 정산차트](feedback_settlement_notion_chart.md) — 제품별 주문수(count)+월정산, 개수=실주문량
+- [DD기프트카드 잔액](feedback_doordash_giftcard_balance.md) — 액면가($200) 기준 차감추적
+- [비즈어드바이저 키워드](project_bizadvisor_keyword_monitoring.md) — 실시간 유입검색어 관찰→태그반영
+- [도브 배치코드](reference_dove_batch_code_usa.md) — 미국제조 정품, 배치코드 해독
+- [아이보리 브랜드명](reference_ivory_brand.md) — "아이보리(IVORY)" 확정
+- [산출물 채팅첨부](feedback_send_files_to_user.md) — SendUserFile로 최종 산출물 전달
+- [QBO 영수증업로드](project_qbo_receipt_upload.md) — Drive 업로드 방식(북키퍼로 대체중, §20-1 참고)
+- [그룹전환 준비방식](feedback_group_conversion_workflow.md) — 옵션별 단일등록 준비, 묶기는 등록후 수동
+- [KD라면 레퍼런스](reference_kd_ramen.md) — 브랜드=크래프트디너, 태그축 10개
+- [유튜브쇼츠 워크플로](project_youtube_shorts_workflow.md) — 세로쇼츠 제작(youtube-shorts-test 연동)
+- [정산 Slack DM](feedback_settlement_slack_dm.md) — 확정시 나+김아름 DM, 출고일 표준사이클
+- [코스트코 재고체크](feedback_costco_stock_check.md) — 실브라우저 스케줄, Find박스로 지점별 확인
+- [발작커피 레퍼런스](reference_balzac_coffee.md) — 브랜드·블렌드5종 스펙
+- [상표권 신고대응](feedback_trademark_report_response.md) — 정품증빙 보관, KIPRIS 사전확인 권장
+- [리뷰관리 루프](feedback_review_management_loop.md) — 포토리뷰 재활용, 카테고리별 요청타이밍, 대가성 체험단 미채택
+- [AI검색 대량등록페널티](feedback_ai_search_2026_bulk_penalty.md) — 카테고리 한단계 차이도 다른유형 판단
+- [Todoist 추가주문 dedup](feedback_todoist_additional_order_dedup.md) — 기존 부모 재사용, 새로 만들지 말것
+- [완구 KC인증](feedback_kc_children_cert.md) — 사입판매는 인증의무자, '대상아님'은 구매대행만
+- [출고일 정산](project_order_settlement.md) — order_settlement.py, 화/금 배치+영수증 로컬보관
+- [배송비 마진](feedback_shipping_fee_margin.md) — 네이버수수료 배송비엔 3.63%만
+- [사입 재고관리](project_inventory_list.md) — build_inventory_list.py, 3단계 자동채움
+- [코스트코 PA](feedback_costco_price_adjustment.md) — 30일 가격보정, 배달경유도 가능
+- [유씨어리 원산지](reference_youtheory_origin_us.md) — 미국(브랜드 인수국 아님)
+- [상세 금칙어(영양제)](feedback_detail_banned_words_supplement.md) — 질병명·의약품명·효능표현 하드블록, 해외라벨 직역 금지
+- [네이버 필드제약](feedback_naver_field_limits.md) — 글자수·금지문자·이미지도메인 사전점검
+- [일괄엑셀 추가이미지](feedback_bulk_additional_images_required.md) — 필수 아님(대표이미지만 필수)
+- [등록전 자체검증](feedback_pre_register_verification.md) — 이미지·브랜드·배송·카테고리 체크리스트
+- [시니어 카피라이팅](feedback_senior_copywriting_mindset.md) — 후킹·전환설계, §9 진실성은 유지
+- [SNS 바이오링크](reference_sns_bio_link.md) — Linktree
+- [SNS MZ 라인업](project_sns_mz_croket_style.md) — croket 스타일, build_sns_mz.py
+- [로컬변경 즉시적용](feedback_apply_without_asking.md) — 확인 없이 적용, 외부전송만 예외
+- [서브에이전트 환경분리](feedback_subagent_env_split.md) — 데스크톱 전용, Cowork엔 미적용
+- [SEO 리프레시 자동화](project_seo_refresh_automation.md) — 매일17:00 launchd
+- [모바일 output 동기화](project_mobile_output_sync.md) — 매일23:30, no-clobber
+- [서브에이전트 개요](project_agents_overview.md) — 5종 역할+커맨드
+- [소싱배치 등록](project_source_launch_batch.md) — /source-launch, 매장수기반 가격
+- [모델명=매장추출](feedback_model_name_from_store.md) — dispatch 스토어에서 영어풀네임
+- [네이버 수수료 6.6%](feedback_naver_fee.md) — 항상 gross-up
+- [활용팁 금지](feedback_no_usage_tips.md) — 검증안된 레시피/팁 자동생성 금지
+- [브랜드 한글표기](feedback_brand_ko_names.md) — 네이버 검색량 기준 확정
+- [프랑스어 금지](feedback_no_french.md) — 영어만 사용
+- [세율 참고표](reference_hst_zero_rated.md) — 매번 확인, 자동적용 금지
+- [dispatch 템플릿](feedback_dispatch_template.md) — 폰 빠른입력 형식(블록/한줄)
+- [Slack 등록완료 전송](feedback_slack_delivery.md) — 등록정보.md #new-item
+- [상품명 수치라벨](feedback_title_spec_label.md) — 라벨결합(23g→단백질23g)
+- [네이버 SEO 상품명](feedback_naver_title_seo_guide.md) — 50자내외·홍보성단어 금지
+- [그룹 신규옵션시 상세갱신](feedback_group_detail_update_on_new_option.md) — 옵션추가=상세갱신 세트
+- [그룹명/옵션 수정가능](feedback_naver_group_lock.md) — 사후 수정 가능(잠김 아님)
+- [그룹 옵션별 배송비](feedback_group_shipping_per_option.md) — 차등 설정 가능
+- [스토어ID](reference_smartstore_id.md) — finchmart_ca
+- [상품명 출처태그](feedback_title_source_tag.md) — 매장한정만 매장명, "정품" 항상 제외
+- [출처 본문반복 금지](feedback_no_source_repeat.md) — 상품명 출처를 본문서 반복 안함
+- [네이버 태그정책](feedback_naver_tags.md) — 카테고리·브랜드·판매처명 금지
+- [무배+흡수 패턴](feedback_free_shipping_absorb.md) — 흡수분은 매출에 이미 반영(적자아님)
+- [HST포함 원가](feedback_hst_included_cost.md) — 명시시 가산 스킵
+- [가격패턴 테이블](feedback_price_patterns.md) — HST+배송 조합 마스터표
+- [%마진 계산](feedback_percent_margin.md) — 수수료감안 N% 산식
+- [국내시세 확인](feedback_domestic_price_check.md) — §0-A GO게이트 필수
+- [한국미출시 스킵](feedback_skip_domestic_check_not_in_korea.md) — 사용자 명시시 §0-A 스킵
+- [국내시세 검증한계](feedback_domestic_price_verify_limits.md) — 실시간검증 불가, 죽은링크 의심
+- [매입처 다르면 비교무효](feedback_source_store_price_comparison.md) — 원가baseline 다름
+- [목표가 매칭](feedback_target_price_match.md) — cost-plus 스킵, 단위해석 우선확인
+- [배송비 수량당/flat](feedback_shipping_per_unit_no_bundle.md) — 두 표현 반대의미 주의
+- [해외배송 무게기반](feedback_overseas_shipping_baseline.md) — 한미공식 $8+$4.5×(kg−1)+통관$1, 0.5kg단위, 머그/헤어밴드 통관면제
+- [캐나다 가격표 OR표기](feedback_price_tag_or_format.md) — 단품가 우선 사용
+- [그룹상세 통합/분리](feedback_group_product_one_detail.md) — 절대규칙아님, 사용자지정
+- [스낵 카테고리트리](feedback_naver_category_snack.md) — 잎노드 지어내기 금지
+- [빙과 카테고리](feedback_naver_category_ice.md) — 아이스크림/빙수>아이스크림
+- [모자 카테고리](feedback_naver_category_hat.md) — 일반캡/메시캡 구분
+- [대분류 변경불가](feedback_naver_category_toplevel_lock.md) — 복사후 재등록 필요
+- [배송안내/인사 삽입금지](feedback_detail_skip_shipping_outro.md) — 상세본문 자동삽입 금지
+- [영문부제 패턴](feedback_detail_english_subtitle.md) — 헤드라인 아래 영문풀네임
+- [영문 금칙어](feedback_detail_blocked_word_english.md) — 공백제거 매칭, 거부시 부제 제거
+- [텍스트+이미지 분리형식](feedback_naver_detail_format.md) — 산출물은 섹션별 텍스트+URL
+- [끼워팔기 마진최소화](feedback_loss_leader.md) — gross-up 유지, 2안 제시
+- [주문시매입 SKU](feedback_made_to_order.md) — made-to-order, 발송예정일 길게
+- [머그 배송중량](feedback_mug_shipping_weight.md) — 1kg미만, 경고달지 않음
+- [출시시장≠원산지](feedback_origin_vs_release_market.md) — 제조국 미명시시 단정금지
+- [그라놀라 표기](feedback_granola_spelling.md) — Quaker=그라놀라
+- [산출물 저장위치](feedback_output_location.md) — output/ 평탄저장, Downloads금지
+- [베어fragment 포맷](feedback_detail_html_bare_fragment.md) — p/strong/br(완화됨→아래 참고)
+- [스타일드 데코+체류설계](feedback_detail_styled_deco_template.md) — inline CSS 표준프레임, 체류시간 5요소
+- [실사진 확보 전략](feedback_detail_photo_strategy.md) — 디자인은 이김, 라벨·성분 실사진이 남은 격차
+- [디자인가이드 팔레트](reference_design_guide.md) — 브랜드레드 #e0483f 등
+- [룰루레몬 재등록](feedback_lululemon_relist_playbook.md) — 크롤·그룹전환·재고모니터 플레이북
+- [네이버검색 MCP](reference_naver_search_mcp.md) — search_shop total≠태그검색량 주의
+- [그룹상세 옵션응축](feedback_group_detail_condensation.md) — 캡션수준 한줄로
+- [세일가vs정상가](feedback_pre_sale_regular_price.md) — 세일식별시 정상가 디폴트, Final Sale은 예외
+- [유입수요≠시세경쟁력](feedback_demand_and_shipping_tactic.md) — 검색유입 없으면 접기
+- [브랜드국≠제조국](feedback_brand_country_vs_made_in.md) — MADE IN 라벨로 확정
+- [일괄수정 엑셀](feedback_naver_bulk_edit_excel.md) — 컬럼삭제 금지, 값만 비우기
+- [일괄등록 엑셀](feedback_bulk_upload_excel.md) — 5번째 산출물, build_bulk_excel.py
+- [매일 스마트스토어 스터디](project_daily_smartstore_study.md) — 저녁 SEO/정책 검색→다이제스트
+- [매장가+20%마진 근거](feedback_store_price_margin_rationale.md) — 배달대행 마크업보다 낮음, 정당

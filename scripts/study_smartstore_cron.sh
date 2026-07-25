@@ -40,4 +40,12 @@ if [ $EXIT -ne 0 ]; then
   python3 "$PROJECT/scripts/slack_notify.py" \
     --text "⚠️ 스마트스토어 공부 cron 실패 (exit $EXIT) — $TS · 로그 $LOG" || true
 fi
+
+# 🔑 인증 만료 감지 (claude 는 미로그인이어도 exit 0 을 반환 → 로그 내용으로 판별. 2026-07-22 9일 무언실패 방지)
+if grep -qiE 'Not logged in|Please run /login|Invalid API key|authentication_error' "$LOG" 2>/dev/null; then
+  rm -f "$STAMP"   # 인증 실패는 '오늘 실행 완료'로 치지 않음 → 로그인 복구되면 다음 틱에 따라잡기
+  python3 "$PROJECT/scripts/slack_notify.py" \
+    --text "🔴 CLI 인증 만료 — 스마트스토어 공부 cron 미실행 ($TS). 터미널에서 \`~/.local/bin/claude\` 실행 후 \`/login\` 필요. (복구 전까지 매일 실패)" || true
+  exit 1
+fi
 exit $EXIT

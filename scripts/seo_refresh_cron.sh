@@ -39,4 +39,11 @@ if [ $EXIT -ne 0 ]; then
   python3 "$PROJECT/scripts/slack_notify.py" \
     --text "⚠️ SEO 리프레시 cron 실패 (exit $EXIT) — $TS · 로그 $LOG" || true
 fi
+
+# 🔑 인증 만료 감지 (claude 는 미로그인이어도 exit 0 → 로그 내용으로 판별. 2026-07-22 추가)
+if grep -qiE 'Not logged in|Please run /login|Invalid API key|authentication_error' "$LOG" 2>/dev/null; then
+  python3 "$PROJECT/scripts/slack_notify.py" \
+    --text "🔴 CLI 인증 만료 — SEO 리프레시 cron 미실행 ($TS). 터미널에서 \`~/.local/bin/claude\` 실행 후 \`/login\` 필요." || true
+  exit 1
+fi
 exit $EXIT

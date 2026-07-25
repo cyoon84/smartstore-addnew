@@ -9,5 +9,27 @@
       "WebSearch",
       "WebFetch"
     ]
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$CLAUDE_PROJECT_DIR/scripts/pending_receipts.py\" --quiet"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$CLAUDE_PROJECT_DIR/scripts/pending_receipts.py\" --quiet"
+          }
+        ]
+      }
+    ]
   }
 }
