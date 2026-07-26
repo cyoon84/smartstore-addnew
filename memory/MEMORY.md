@@ -1,4 +1,5 @@
-- [제품명 원본그대로](feedback_product_name_verbatim.md) — 🚨최우선: 향/맛/용량 한글자도 안바꿈, 오배송 2회, 한미 파이널체크
+- [제품명 원본그대로](feedback_product_name_verbatim.md) — 🚨최우선: 치환·축약 금지, 주문전 재고 먼저 대조, 오배송 2회, 한미 파이널체크
+- [7/28 배치 진행중](project_batch_20260728_wip.md) — 9주문8명, COGS일부반영, 구매4건 대기(타이드63개입·헤드밴드1·애프터바이트키즈4·캐스케이드)
 - [실사용·대체수요 앵글](feedback_capsule_detergent_real_benefits.md) — 클로드가 못 잡음→먼저 물어라. 캡슐세제(야간계량·손목)·이머전씨(커피대신·무카페인)
 - [타입용어 한국어로](feedback_type_terms_korean.md) — 음역 금지: raw→생꿀·unpasteurized→비가열, 영문은 병기만
 - [팀홀튼 국내유통 현황](reference_tim_hortons_korea_retail.md) — 오리지널블렌드·일부 300g 그라운드 한국 코스트코/백화점 입점, 원두축 취급금지 / K컵·믹스·굿즈만 유효
