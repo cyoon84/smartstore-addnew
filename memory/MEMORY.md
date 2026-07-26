@@ -1,4 +1,5 @@
 - [제품명 원본그대로](feedback_product_name_verbatim.md) — 🚨최우선: 향/맛/용량 한글자도 안바꿈, 오배송 2회, 한미 파이널체크
+- [실사용·대체수요 앵글](feedback_capsule_detergent_real_benefits.md) — 클로드가 못 잡음→먼저 물어라. 캡슐세제(야간계량·손목)·이머전씨(커피대신·무카페인)
 - [타입용어 한국어로](feedback_type_terms_korean.md) — 음역 금지: raw→생꿀·unpasteurized→비가열, 영문은 병기만
 - [팀홀튼 국내유통 현황](reference_tim_hortons_korea_retail.md) — 오리지널블렌드·일부 300g 그라운드 한국 코스트코/백화점 입점, 원두축 취급금지 / K컵·믹스·굿즈만 유효
 - [주간 신규SKU 자동파일럿](project_weekly_new_sku_autopilot.md) — 목요일밤 무인 발굴→§0-A→가격→일괄엑셀, 자동GO 1~2개/주
@@ -32,7 +33,7 @@
 - [발작커피 레퍼런스](reference_balzac_coffee.md) — 브랜드·블렌드5종 스펙
 - [상표권 신고대응](feedback_trademark_report_response.md) — 정품증빙 보관, KIPRIS 사전확인 권장
 - [리뷰관리 루프](feedback_review_management_loop.md) — 포토리뷰 재활용, 카테고리별 요청타이밍, 대가성 체험단 미채택
-- [AI검색 대량등록페널티](feedback_ai_search_2026_bulk_penalty.md) — 카테고리 한단계 차이도 다른유형 판단
+- [AI검색 대량등록페널티](feedback_ai_search_2026_bulk_penalty.md) — 카테고리 한단계 차이도 다른유형, 판매실적 등록한도(확인됨)
 - [Todoist 추가주문 dedup](feedback_todoist_additional_order_dedup.md) — 기존 부모 재사용, 새로 만들지 말것
 - [완구 KC인증](feedback_kc_children_cert.md) — 사입판매는 인증의무자, '대상아님'은 구매대행만
 - [출고일 정산](project_order_settlement.md) — order_settlement.py, 화/금 배치+영수증 로컬보관
