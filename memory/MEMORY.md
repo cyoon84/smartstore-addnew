@@ -68,7 +68,7 @@
 - [상품명 수치라벨](feedback_title_spec_label.md) — 라벨결합(23g→단백질23g)
 - [네이버 SEO 상품명](feedback_naver_title_seo_guide.md) — 50자내외·홍보성단어 금지
 - [그룹 신규옵션시 상세갱신](feedback_group_detail_update_on_new_option.md) — 옵션추가=상세갱신 세트
-- [그룹명/옵션 수정가능](feedback_naver_group_lock.md) — 사후 수정 가능(잠김 아님)
+- [그룹명/옵션 수정가능](feedback_naver_group_lock.md) — 사후 수정 가능(잠김 아님), 단 색상행마다 별도 수정 필요
 - [그룹 옵션별 배송비](feedback_group_shipping_per_option.md) — 차등 설정 가능
 - [스토어ID](reference_smartstore_id.md) — finchmart_ca
 - [상품명 출처태그](feedback_title_source_tag.md) — 매장한정만 매장명, "정품" 항상 제외
