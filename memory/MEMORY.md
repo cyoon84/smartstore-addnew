@@ -1,8 +1,10 @@
 - [제품명 원본그대로](feedback_product_name_verbatim.md) — 🚨최우선: 치환·축약 금지, 주문전 재고 먼저 대조, 오배송 2회, 한미 파이널체크
 - [7/28 배치 진행중](project_batch_20260728_wip.md) — 9주문8명, COGS일부반영, 구매4건 대기(타이드63개입·헤드밴드1·애프터바이트키즈4·캐스케이드)
+- [🔄 상세개편 WIP](project_detail_overhaul_wip.md) — 도브 오리지널 옵션추가(사진대기)·도브블로그·구형상세 189개중 6개완료, clear 후 이어서
 - [실사용·대체수요 앵글](feedback_capsule_detergent_real_benefits.md) — 클로드가 못 잡음→먼저 물어라. 캡슐세제(야간계량·손목)·이머전씨(커피대신·무카페인)
 - [타입용어 한국어로](feedback_type_terms_korean.md) — 음역 금지: raw→생꿀·unpasteurized→비가열, 영문은 병기만
 - [팀홀튼 국내유통 현황](reference_tim_hortons_korea_retail.md) — 오리지널블렌드·일부 300g 그라운드 한국 코스트코/백화점 입점, 원두축 취급금지 / K컵·믹스·굿즈만 유효
+- [2026 여름 시즌캘린더](project_seasonal_calendar_2026.md) — 복날(초복7/15·중복7/25·말복8/14, 월복)+폭염중대경보, 영양제라인 시즌태그 후보(미검증)
 - [주간 신규SKU 자동파일럿](project_weekly_new_sku_autopilot.md) — 목요일밤 무인 발굴→§0-A→가격→일괄엑셀, 자동GO 1~2개/주
 - [영수증 자동대사](feedback_receipt_auto_reconcile.md) — poller가 이미 장부 기입, 정산 반영은 "정산해!" 라이브 트리거로(무인 자동화 롤백)
 - [정산 최신export 1개만](feedback_settlement_latest_export_only.md) — 발주발송 파일 여러날짜 합치면 취소주문 되살아남
@@ -101,6 +103,7 @@
 - [산출물 저장위치](feedback_output_location.md) — output/ 평탄저장, Downloads금지
 - [베어fragment 포맷](feedback_detail_html_bare_fragment.md) — p/strong/br(완화됨→아래 참고)
 - [스타일드 데코+체류설계](feedback_detail_styled_deco_template.md) — inline CSS 표준프레임, 체류시간 5요소
+- [블로그 콘텐츠 표준](feedback_blog_content_style.md) — 본문은 텍스트+이미지배치 명시(HTML 아님), 화법=질문인용→라벨증거→한계고지
 - [실사진 확보 전략](feedback_detail_photo_strategy.md) — 디자인은 이김, 라벨·성분 실사진이 남은 격차
 - [디자인가이드 팔레트](reference_design_guide.md) — 브랜드레드 #e0483f 등
 - [룰루레몬 재등록](feedback_lululemon_relist_playbook.md) — 크롤·그룹전환·재고모니터 플레이북
