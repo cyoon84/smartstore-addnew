@@ -3,6 +3,7 @@
 - [🔄 상세개편 WIP](project_detail_overhaul_wip.md) — 도브 오리지널 옵션추가(사진대기)·도브블로그·구형상세 189개중 6개완료, clear 후 이어서
 - [실사용·대체수요 앵글](feedback_capsule_detergent_real_benefits.md) — 클로드가 못 잡음→먼저 물어라. 캡슐세제(야간계량·손목)·이머전씨(커피대신·무카페인)
 - [타입용어 한국어로](feedback_type_terms_korean.md) — 음역 금지: raw→생꿀·unpasteurized→비가열, 영문은 병기만
+- [카테고리 분기개편](reference_naver_category_reorg_2026.md) — 2026-07 완구/인형 세분화, 레고 리스팅 확인필요 플래그
 - [팀홀튼 국내유통 현황](reference_tim_hortons_korea_retail.md) — 오리지널블렌드·일부 300g 그라운드 한국 코스트코/백화점 입점, 원두축 취급금지 / K컵·믹스·굿즈만 유효
 - [2026 여름 시즌캘린더](project_seasonal_calendar_2026.md) — 복날(초복7/15·중복7/25·말복8/14, 월복)+폭염중대경보, 영양제라인 시즌태그 후보(미검증)
 - [주간 신규SKU 자동파일럿](project_weekly_new_sku_autopilot.md) — 목요일밤 무인 발굴→§0-A→가격→일괄엑셀, 자동GO 1~2개/주
@@ -107,6 +108,7 @@
 - [실사진 확보 전략](feedback_detail_photo_strategy.md) — 디자인은 이김, 라벨·성분 실사진이 남은 격차
 - [디자인가이드 팔레트](reference_design_guide.md) — 브랜드레드 #e0483f 등
 - [룰루레몬 재등록](feedback_lululemon_relist_playbook.md) — 크롤·그룹전환·재고모니터 플레이북
+- [네이버 오픈API](reference_naver_openapi.md) — playmcp 네이버MCP 제거→scripts/naver_search.py, 스케줄작업은 폴더있어도 미등록일 수 있음
 - [네이버검색 MCP](reference_naver_search_mcp.md) — search_shop total≠태그검색량 주의
 - [그룹상세 옵션응축](feedback_group_detail_condensation.md) — 캡션수준 한줄로
 - [세일가vs정상가](feedback_pre_sale_regular_price.md) — 세일식별시 정상가 디폴트, Final Sale은 예외
