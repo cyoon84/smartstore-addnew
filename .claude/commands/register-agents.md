@@ -38,10 +38,23 @@ argument-hint: [사진/URL + 가격 한 줄 또는 블록]
    - `<ascii_slug>_product_info.json` (추출 JSON + price_calc 의 pricing 블록 `--json` 병합)
    같은 슬러그 덮어쓰기. 파일명 ASCII, 한국어는 내용에만.
 
-7. **Slack** — 완료 후 `등록정보.md` 전체를 #new-item 에 전송.
+7. **Codex 독립 QA (필수)** — 일괄등록 엑셀 생성 직후 아래 명령으로 Codex를 읽기 전용
+   `bulk-excel-verifier`로 호출한다.
+
+   ```bash
+   bash scripts/verify_bulk_with_codex.sh <엑셀경로> <slug> [slug ...]
+   ```
+
+   `output/verification/<엑셀명>_codex_report.md`의 `VERDICT: PASS`를 확인한다.
+   FAIL이면 보고서의 책임 구분에 따라 listing-writer 또는 메인이 수정하고, 엑셀 재생성 후 재검증한다.
+   PASS 전에는 다음 단계로 진행하지 않는다. Codex 실행 불가 환경에서는 메인이
+   `.claude/agents/bulk-excel-verifier.md`를 읽고 인라인 검증하며, Codex PASS라고 표기하지 않는다.
+
+8. **Slack** — Codex QA PASS 후 `등록정보.md` 전체를 #new-item 에 전송.
 
 ## 주의
 - 서브에이전트는 사용자에게 못 묻는다 — 모든 확인/결정/GO 는 메인이 처리.
 - 가격은 절대 서브에이전트에 맡기지 않는다. `price_calc.py` 단일 소스.
 - 데이터 진실성(§9): 추출 안 된 필드는 비워둔다. 가짜 데이터 금지.
+- Codex QA는 `--sandbox read-only`로 실행하며 구현·수정·커밋·푸시를 맡기지 않는다.
 - 진행 상황은 TodoWrite 로 단계별 기록.

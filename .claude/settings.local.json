@@ -419,7 +419,8 @@
       "mcp__b7f0ad49-6099-47cf-91b3-606355d881d1__label_message",
       "Bash(cp memory/feedback_deliverables_icloud_backup.md /Users/chulhee-macmini/.claude/projects/-Volumes-External-claude-smartstore-addnew/memory/)",
       "Bash(cp memory/MEMORY.md /Users/chulhee-macmini/.claude/projects/-Volumes-External-claude-smartstore-addnew/memory/)",
-      "Bash(mkdir -p \"/Users/chulhee-macmini/.claude/scheduled-tasks\" 2>/dev/null; ls docs/ | tail -5)"
+      "Bash(mkdir -p \"/Users/chulhee-macmini/.claude/scheduled-tasks\" 2>/dev/null; ls docs/ | tail -5)",
+      "Bash(cp ~/.claude/scheduled-tasks/competitor-price-monitor/SKILL.md /private/tmp/claude-501/-Volumes-External-claude-smartstore-addnew/c4a53c03-c133-4174-bcd2-ce2e8dcec220/scratchpad/cpm_backup.md *)"
     ]
   }
 }

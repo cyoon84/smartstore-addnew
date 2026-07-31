@@ -1,7 +1,7 @@
 # smartstore-addnew — 네이버 스마트스토어(finchmart_ca) 상품 등록 에이전트
 
 이 폴더는 캐나다/미국 → 한국 리셀러용 스마트스토어 상품 등록 워크플로를
-Claude Code 에이전트로 운영하기 위한 프로젝트다. 이 `CLAUDE.md` 는 세션 시작 시
+Codex 에이전트로 운영하기 위한 프로젝트다. 이 `AGENTS.md` 는 세션 시작 시
 자동 로드된다. 아래 규칙은 **항상 적용**되며, 상세 규칙은 `@docs/...` 로 임포트한다.
 
 스토어 ID: **finchmart_ca** · 상품 URL 패턴은 @memory/reference_smartstore_id.md 참고.
@@ -22,7 +22,7 @@ Claude Code 에이전트로 운영하기 위한 프로젝트다. 이 `CLAUDE.md`
    일괄엑셀까지 쪼개라는 게 아니다.)
 
 URL 크롤 → 추출 → 가격 산정 → 렌더 파이프라인은 **`product-detail-page-ko` 스킬**이
-담당한다 (`.claude/skills/product-detail-page-ko/`). 쇼핑 URL 이 들어오면 이 스킬을 쓴다.
+담당한다 (`.agents/skills/product-detail-page-ko/`). 쇼핑 URL 이 들어오면 이 스킬을 쓴다.
 
 ---
 
@@ -36,10 +36,13 @@ single 기본. 형식은 @docs/LEARNED_RULES.md §0-B, @memory/feedback_dispatch
 **실행 엔진 플래그 (dispatch·일반 메시지 공통):** 입력에 **`엔진: agents`** (블록) 또는 끝에
 **`/ agents`**·**`에이전트`** 토큰(한 줄)이 있으면 **서브에이전트 모델**로 실행한다 — 그때는
 `.claude/commands/register-agents.md` 의 오케스트레이션(시세조사·추출·작성을 전문 에이전트에
-위임, 가격계산·GO게이트·저장·Slack 은 메인이 소유)을 **읽어서 그대로 따른다**. 플래그가 없으면
+위임, 가격계산·GO게이트·저장·Slack 은 메인이 소유)을 **읽어서 그대로 따른다** — 이 파일은
+Codex 전용 포맷이 없으므로 원본을 그대로 읽는다. 서브에이전트 역할은 `.codex/agents/*.toml`
+(market-researcher·product-extractor·listing-writer·seo-auditor·bulk-excel-verifier·
+market-strategist·farmer·inventory-manager)을 참고해 인라인 플레이북으로 수행한다. 플래그가 없으면
 아래 §2 기본 워크플로로 진행 (기존 동작 유지). dispatch 는 슬래시 커맨드를 확장하지 못하므로
-이 플래그가 유일한 서브에이전트 진입점이다. **서브에이전트 spawn 이 불가한 환경(Cowork 등)에서는
-메인이 세 에이전트 파일을 역할 플레이북으로 읽어 인라인 수행한다 (register-agents.md "실행 환경" 절).**
+이 플래그가 유일한 서브에이전트 진입점이다. **Codex CLI 는 `.codex/agents/*.toml`을 역할
+플레이북으로 읽어 메인이 인라인 수행한다 (register-agents.md "실행 환경" 절과 동일한 원칙).**
 
 ---
 
@@ -56,15 +59,10 @@ single 기본. 형식은 @docs/LEARNED_RULES.md §0-B, @memory/feedback_dispatch
 3. (URL 있으면) 스킬로 페이지 크롤·추출.
 4. 상품명·태그·카테고리·상세본문 작성 (§5~§7 규칙).
 5. 산출물 1~4종을 `output/` 에 평탄 저장 (§3) → organize → **일괄등록 엑셀(5번째 산출물, §16) 생성**. 여러 SKU면 한 파일 배치.
-5-1. **Codex 독립 일괄엑셀 검증 (업로드 전 필수).** 엑셀 생성 직후
-   **`bash scripts/verify_bulk_with_codex.sh <엑셀경로> <slug...>`** 를 실행해 Codex를 읽기 전용
-   `bulk-excel-verifier`로 호출하고 엑셀+슬러그를 넘겨
+5-1. **일괄엑셀 검증 (업로드 전 필수).** 엑셀 생성 직후 **`bulk-excel-verifier` 에이전트**에 엑셀+슬러그를 넘겨
    각 행이 product_info/등록정보와 일치하고 필수 필드(대표·추가이미지, **관부가세=포함**)가 들어갔는지 검증.
    FAIL 나오면 그 슬러그를 listing-writer(콘텐츠 불일치) 또는 product_info 재생성(매핑·이미지·관부가세)으로 고친 뒤
-   엑셀 재생성→같은 명령으로 재검증. 보고서는 `output/verification/`에 저장한다.
-   **`VERDICT: PASS` 받기 전에는 Slack 완료 전송·업로드 가능 안내를 하지 않는다.**
-   Codex CLI가 없거나 실행 불가한 환경에서는 메인이 `.claude/agents/bulk-excel-verifier.md`를
-   플레이북으로 읽어 인라인 검증하되, 이를 Codex PASS로 표현하지 않는다.
+   엑셀 재생성→재검증. **PASS 받기 전에는 업로드용으로 내보내지 않는다.** (spawn 불가 환경이면 메인이 에이전트 파일을 플레이북으로 읽어 인라인 검증.)
 6. 완료 후 `등록정보.md` 전체를 Slack `#new-item` 채널에 전송 (@memory/feedback_slack_delivery.md).
 
 ---

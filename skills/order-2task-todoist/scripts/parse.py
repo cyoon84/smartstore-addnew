@@ -11,7 +11,7 @@ order-2task-todoist / parse.py
 상품명은 한글(상품명 컬럼) 그대로 쓴다. 영문 변환/학습 사전 없음.
 
 사용:
-  python3 parse.py <엑셀경로> <비밀번호 (없으면 "")>
+  python3 parse.py <엑셀경로> <비밀번호 (없으면 "")> [출력 JSON 경로]
 
 출력 (stdout, 1 line):
   {
@@ -26,6 +26,7 @@ import sys
 import os
 import json
 import io
+from pathlib import Path
 
 try:
     import msoffcrypto
@@ -121,12 +122,20 @@ def main():
     shopping = [shop_idx[k] for k in shop_order]
     recipients = [rec_idx[r] for r in rec_order]
 
-    print(json.dumps({
+    result = json.dumps({
         "shopping": shopping,
         "recipients": recipients,
         "buyer_count": len(recipients),
         "shopping_line_count": len(shopping),
-    }, ensure_ascii=False))
+    }, ensure_ascii=False)
+
+    if len(sys.argv) > 3:
+        output_path = Path(sys.argv[3])
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        output_path.write_text(result + "\n", encoding="utf-8")
+        print(output_path)
+    else:
+        print(result)
 
 
 if __name__ == "__main__":

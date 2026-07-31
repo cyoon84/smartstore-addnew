@@ -1,3 +1,6 @@
+- [윤덕훈 캡슐 36통 one-off 분할](project_oneoff_yoon_deokhun_36_split_20260804.md) — 🚨 한미 송장 이번분 qty 18 + 8/4 qty 18; 양쪽 배송비는 사실상 동일 예상, 최종 정산은 8/4 출고 후
+- [조현근·윤기순 네스카페 one-off 분할](project_oneoff_jo_yoon_split_20260804.md) — 🚨 발주목록에 윤기순이 포함돼도 이번 한미 송장에서는 ignore; 8/4 출고분
+- [7/31 배치 진행중 — Codex 인계](project_batch_20260731_wip.md) — 7/31 12:11 원본 30주문·16명, 실출고는 송영진·배성민 이월 후 28주문·14명; 🚨 한미 송장 QA: 윤기순·송영진·배성민 0 entry / 윤덕훈 qty 18 / 조은비 2 entries(8+2)
 - [제품명 원본그대로](feedback_product_name_verbatim.md) — 🚨최우선: 치환·축약 금지, 주문전 재고 먼저 대조, 오배송 2회, 한미 파이널체크
 - [7/28 배치 진행중](project_batch_20260728_wip.md) — 9주문8명, COGS일부반영, 구매4건 대기(타이드63개입·헤드밴드1·애프터바이트키즈4·캐스케이드)
 - [🔄 상세개편 WIP](project_detail_overhaul_wip.md) — 도브 오리지널 옵션추가(사진대기)·도브블로그·구형상세 189개중 6개완료, clear 후 이어서
@@ -108,7 +111,7 @@
 - [실사진 확보 전략](feedback_detail_photo_strategy.md) — 디자인은 이김, 라벨·성분 실사진이 남은 격차
 - [디자인가이드 팔레트](reference_design_guide.md) — 브랜드레드 #e0483f 등
 - [룰루레몬 재등록](feedback_lululemon_relist_playbook.md) — 크롤·그룹전환·재고모니터 플레이북
-- [네이버 오픈API](reference_naver_openapi.md) — playmcp 네이버MCP 제거→scripts/naver_search.py, 스케줄작업은 폴더있어도 미등록일 수 있음
+- [네이버 오픈API](reference_naver_openapi.md) — playmcp 네이버MCP 제거→scripts/naver_search.py, shop만 SE05 사망시 kr_price_check.py(다나와)로 폴백
 - [네이버검색 MCP](reference_naver_search_mcp.md) — search_shop total≠태그검색량 주의
 - [그룹상세 옵션응축](feedback_group_detail_condensation.md) — 캡션수준 한줄로
 - [세일가vs정상가](feedback_pre_sale_regular_price.md) — 세일식별시 정상가 디폴트, Final Sale은 예외

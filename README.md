@@ -28,6 +28,8 @@ claude
 | `.claude/settings.json` | 프로젝트 권한 설정 |
 | `scripts/price_calc.py` | **결정론적 가격 산정 엔진** (§1~§12 산식 코드화) |
 | `scripts/test_price_calc.py` | 회귀 테스트 (LEARNED_RULES 실제 6케이스) |
+| `scripts/verify_bulk_with_codex.sh` | Codex 읽기 전용 일괄엑셀 독립 QA |
+| `scripts/verify_todoist_with_codex.sh` | Todoist 상품명·옵션 원문보존 Codex QA |
 | `docs/LEARNED_RULES.md` | 누적 학습 규칙 전문 (CLAUDE.md 가 import) |
 | `docs/pricing_rules.md` | price_calc.py 모드별 산식 스펙 |
 | `docs/instructions_original.md`, `docs/cowork_instructions_patch.md` | 원본 Cowork 지침 보관 |
@@ -44,6 +46,20 @@ python3 scripts/price_calc.py std --cost 12.99 --markup 5 --fx 1083 --tax 0
 python3 scripts/test_price_calc.py   # 12/12 통과
 ```
 산식 근거는 `docs/pricing_rules.md`, 전체 케이스는 `docs/LEARNED_RULES.md`.
+
+## Codex 일괄엑셀 QA
+
+등록 산출물과 일괄엑셀을 만든 뒤 Claude Code가 Codex를 독립 읽기 전용 검수자로 호출한다.
+
+```bash
+bash scripts/verify_bulk_with_codex.sh \
+  output/new-item/_batch/example_bulk_upload.xlsx \
+  product_slug_a product_slug_b
+```
+
+보고서는 `output/verification/`에 저장되며, 마지막 줄이 `VERDICT: PASS`일 때만
+Slack 완료 전송과 업로드 가능 안내로 진행한다. Claude Code에서는
+`/verify-bulk-codex <엑셀 경로> <slug...>`로도 실행할 수 있다.
 
 ## Cowork 프로젝트와의 관계
 

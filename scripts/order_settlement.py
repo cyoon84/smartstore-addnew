@@ -15,6 +15,7 @@
   python3 scripts/order_settlement.py <파일> --update-inventory output/inventory/재고관리_2026-07-07.xlsx
   python3 scripts/order_settlement.py <파일> --add-cogs "애프터바이트(박은영,재고)=16070"   # 물건값 요소 추가
   python3 scripts/order_settlement.py <파일> --shipping-cost 45000     # 한미 실배송비 → 순이익
+  python3 scripts/order_settlement.py <파일> --exclude-recipient 송영진 # 다음 출고일로 미룬 주문 제외
   # --date 로 출고일 지정(기본: 파일명 날짜). --cogs 로 구성요소 무시하고 총액 직접 지정.
 """
 import argparse, io, json, os, sys, datetime
@@ -225,6 +226,8 @@ def main():
                     help="물건값 구성요소 추가(누적). 반복 가능.")
     ap.add_argument("--cogs", type=int, help="물건값 총액 직접지정(구성요소 무시)")
     ap.add_argument("--shipping-cost", type=int, help="총 실 배송비(원, 한미)")
+    ap.add_argument("--exclude-recipient", action="append", default=[], metavar="수취인명",
+                    help="이번 출고 정산에서 제외할 수취인. 반복 가능.")
     ap.add_argument("--date")
     args = ap.parse_args()
 
@@ -241,6 +244,10 @@ def main():
             if _oid:
                 _seen.add(_oid)
             data.append(_r)
+    if args.exclude_recipient:
+        _ri = col(header, "수취인명")
+        _excluded = set(args.exclude_recipient)
+        data = [_r for _r in data if _ri is None or str(_r[_ri]).strip() not in _excluded]
     s = compute(header, data)
 
     date = args.date
