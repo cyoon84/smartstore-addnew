@@ -36,6 +36,7 @@
 - [KD라면 레퍼런스](reference_kd_ramen.md) — 브랜드=크래프트디너, 태그축 10개
 - [유튜브쇼츠 워크플로](project_youtube_shorts_workflow.md) — 세로쇼츠 제작(youtube-shorts-test 연동)
 - [정산 Slack DM](feedback_settlement_slack_dm.md) — 확정시 나+김아름 DM, 출고일 표준사이클
+- [정산 특이사항 노션기록](feedback_settlement_notable_notes.md) — 정산 마무리마다 자동으로 "스토어 구매패턴 & etc"에 배치 특이사항 기록, 한글 유니코드 이스케이프 입력 금지
 - [코스트코 재고체크](feedback_costco_stock_check.md) — 실브라우저 스케줄, Find박스로 지점별 확인
 - [발작커피 레퍼런스](reference_balzac_coffee.md) — 브랜드·블렌드5종 스펙
 - [상표권 신고대응](feedback_trademark_report_response.md) — 정품증빙 보관, KIPRIS 사전확인 권장
