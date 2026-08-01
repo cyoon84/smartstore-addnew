@@ -79,7 +79,7 @@ Slack DM([[feedback_settlement_slack_dm]] §20-6)과 **별개 채널** — Notio
 
 **절차 (Codex는 Notion MCP 접근이 없으므로 반드시 로컬 파일 경유):**
 1. `notion-query-data-sources` 로 DB 전체 행(제품명·개수·출고일 등)을 로컬 파일(`url|제품명|개수|출고일` 파이프 구분)로 export.
-2. CLAUDE.md 상단 Codex 규칙대로 `codex exec --sandbox read-only --skip-git-repo-check -` 헤어독 방식으로 호출, 그 파일 경로를 프롬프트에 주고 "동일 SKU인데 표기가 다른 그룹을 찾아 canonical 이름을 제안하라"고 시킨다. 판단 기준(브랜드+제품명+용량+옵션 동일=같은 SKU, 사소한 표기차는 합치되 실제 옵션/용량이 다르면 별개)을 프롬프트에 명시.
+2. CLAUDE.md 상단 Codex 규칙대로 `codex exec --sandbox read-only --skip-git-repo-check -` heredoc 방식으로 호출, 그 파일 경로를 프롬프트에 주고 "동일 SKU인데 표기가 다른 그룹을 찾아 canonical 이름을 제안하라"고 시킨다. 판단 기준(브랜드+제품명+용량+옵션 동일=같은 SKU, 사소한 표기차는 합치되 실제 옵션/용량이 다르면 별개)을 프롬프트에 명시.
 3. Codex가 찾은 그룹마다 각 페이지를 `notion-update-page`(`update_properties`)로 canonical 제품명으로 통일 — 행을 지울 필요 없음, 텍스트만 맞으면 GROUP BY로 자동 합쳐짐.
 4. 결과를 요약해 사용자에게 보고.
 
