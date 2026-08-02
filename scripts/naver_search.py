@@ -18,33 +18,18 @@ import urllib.parse
 import urllib.request
 from pathlib import Path
 
-CONF = Path.home() / ".config" / "finchmart" / "naver_api.json"
-ENDPOINT = "https://openapi.naver.com/v1/search/{kind}.json"
+# NAVER API HUB 우선 · 개발자센터 폴백 (scripts/naver_api.py)
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import naver_api as NV
+
 TAG = re.compile(r"<[^>]+>")
 
 
-def creds():
-    if not CONF.exists():
-        sys.exit(f"크리덴셜 없음: {CONF}")
-    c = json.loads(CONF.read_text())
-    return c["client_id"], c["client_secret"]
-
-
 def search(kind, query, display=20, start=1, sort=None):
-    cid, sec = creds()
-    params = {"query": query, "display": display, "start": start}
-    if sort:
-        params["sort"] = sort
-    url = ENDPOINT.format(kind=kind) + "?" + urllib.parse.urlencode(params)
-    req = urllib.request.Request(
-        url,
-        headers={"X-Naver-Client-Id": cid, "X-Naver-Client-Secret": sec},
-    )
     try:
-        with urllib.request.urlopen(req, timeout=15) as r:
-            return json.loads(r.read().decode())
-    except urllib.error.HTTPError as e:
-        sys.exit(f"HTTP {e.code}: {e.read().decode()[:300]}")
+        return NV.search(kind, query, display, start, sort)
+    except NV.NaverAPIError as e:
+        sys.exit(f"\n{e}\n")
 
 
 def clean(s):

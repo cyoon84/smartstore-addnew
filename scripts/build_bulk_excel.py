@@ -310,8 +310,15 @@ def build_data(pinfo, detail_html, cat_rows, deliv_rows):
                            pinfo.get("sell_price_krw"), pinfo.get("selling_price_krw"), pinfo.get("sell_krw"),
                            calc.get("sell_price_krw"), calc.get("sell_krw"))
     d["brand"] = pick("brand", brand_ko)
-    d["maker"] = pick("maker", pinfo.get("maker"), brand_ko)
-    d["importer"] = pick("importer", brand_ko)
+    # 제조사: bulk.maker > product_info.manufacturer/maker > (없으면 브랜드로 폴백 + 경고)
+    _maker = pick("maker", pinfo.get("manufacturer"), pinfo.get("maker"))
+    if not _maker:
+        _maker = brand_ko
+        warn.append("제조사 미확인 — 브랜드명으로 폴백. 실제 제조사를 확인해 "
+                    "product_info 의 `manufacturer` 에 넣을 것 "
+                    "(예: 오레오→몬델리즈, 스키틀즈→마스리글리, 프링글스→켈라노바)")
+    d["maker"] = _maker
+    d["importer"] = pick("importer", pinfo.get("importer"), brand_ko)
     d["product_state"] = pick("product_state")
     d["tax_type"] = pick("tax_type")
     # import_tax(K 관부가세)는 카테고리 판정 후 설정 (아래 카테고리 블록 뒤)
