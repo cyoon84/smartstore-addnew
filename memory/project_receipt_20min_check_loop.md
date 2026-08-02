@@ -1,6 +1,6 @@
 ---
 name: project_receipt_20min_check_loop
-description: chulhee.y+receipt@gmail.com 신규 영수증을 20분마다(화/금 오후는 1시간마다) 찾아 북키퍼 장부에 기입하는 폴링 — 영구 스케줄 작업(scheduled-tasks)
+description: chulhee.y+receipt@gmail.com + chulhee.y@gmail.com 직접수신 두 채널을 20분마다(화/금 오후는 1시간마다) 폴링해 북키퍼 장부에 기입 — 영구 스케줄 작업(scheduled-tasks), gmail-receipt-collector는 삭제됨
 metadata: 
   node_type: memory
   type: project
@@ -31,3 +31,15 @@ metadata:
 > 2026-07-21 22:27 — 세션 루프로 Uber Eats(Costco Business Centre, Titan Packing Tape) $46.71 Supply 건 1건 신규 처리.
 > 2026-07-21 20:23(화)부터 화/금 오후 저빈도(1시간) 규칙 적용 시작.
 > 2026-07-22 — 세션 루프가 01:11 예약 이후 재기동 없이 ~19시간 공백(세션이 닫히면서 wakeup이 조용히 스킵됨). 그 사이 Costco 큐리그 사입·Anthropic 구독·Blinkay 주차 3건은 다른 경로로 이미 장부에 반영돼 있었음(사용자 "왜 안했어?" 지적) → **scheduled-tasks(`receipt-plus-address-poller`)로 전환**, 이 세션의 ScheduleWakeup 루프는 종료. [[project_bookkeeper_expense_tracker]]
+
+## 🔑 2026-08-01 — 직접수신 채널(chulhee.y@gmail.com 본계정) 추가 + `gmail-receipt-collector` 삭제
+
+사용자 지시: **"추가로 +recipt에 온거 말고 내 이메일(chulhee.y@gmail.com)로 다이렉트로 온 이메일에도 똑같은 액션 취해줘. 그럼 gmail receipt collector routine retire시킬게."** 위 §16의 "`gmail-receipt-collector`와는 별개 작업으로 공존" 문구는 이 시점에 **더 이상 유효하지 않음** — 그 작업은 이번에 삭제됐고, `receipt-plus-address-poller` 하나가 두 채널을 다 처리한다.
+
+- **채널 A(플러스-주소)** — 기존 그대로 무조건 사업, 즉시 전체 체인.
+- **채널 B(직접수신, 신규)** — 검색 `to:chulhee.y@gmail.com -to:chulhee.y+receipt@gmail.com (category:purchases OR receipt OR order OR invoice OR 영수증 OR 결제 OR payment) newer_than:2d`. 후보마다 `/Volumes/External/claude/profit-expense-tracker/CLAUDE.md` §5 "영수증 판별 사전"으로 **사업/개인/확인필요** 판정 — 사업만 전체 체인(원본저장+`add_expense.py` 기입), 확인필요는 원본만 저장(기입 보류), 개인은 완전 스킵. Amazon 이름 필터(CHULHEE만 사업)·Costco MasterCard 결제수단 오버라이드(품목과 무관 무조건 사업, [[feedback_costco_mastercard_always_business]])를 판정에 반영.
+- **`fetch_gmail_receipts.py` 에 `--extra` 옵션 신규 추가** — `--addr` 하나만으론 채널 B(본계정 전체)가 인박스를 통째로 긁으므로, 판정 통과한 메시지의 Message-ID로 `--extra '-to:chulhee.y+receipt@gmail.com (rfc822msgid:<id> ...)'` 좁혀서 원본을 받는다.
+- **`gmail-receipt-collector`(매일 23:00, 수집·라벨링·보고만) 는 `delete_scheduled_task` 로 삭제됨.** SKILL.md 파일은 복구용으로 디스크에 남음(`~/.claude/scheduled-tasks/gmail-receipt-collector/SKILL.md`). 그 작업의 Gmail 라벨 부착 기능(북키퍼/COGS 등)은 이번 이식에 포함 안 함.
+- `/Volumes/External/claude/profit-expense-tracker/CLAUDE.md` §7("(예정) Gmail 영수증 자동 수집")도 "구현됨"으로 갱신.
+
+[[project_bookkeeper_expense_tracker]]

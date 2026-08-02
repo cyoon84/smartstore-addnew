@@ -25,3 +25,9 @@ python3 scripts/naver_search.py shop "검색어" --json      # 원본 JSON
 **🔑 후속 (2026-07-31) — `shop.json` 엔드포인트만 `SE05 (Invalid search api)` 로 사망할 수 있다.** blog/webkr/news/cafearticle 는 영향 없음. §0-A 국내 시세 확인용 상품검색이 막히면 `python3 scripts/kr_price_check.py "<검색어>" [--danawa-only]` 로 대체 — 다나와(search.danawa.com) 1차 + 네이버 blog/webkr 보조. 같은 시기 네이버쇼핑 웹(418 차단)·쿠팡(챌린지 페이지)·11번가·G마켓도 전부 막혀 §0-A 채널로 못 씀. 다나와 가격도 상품가(배송비 미포함)이고 식품 커버리지가 얕을 수 있어 0건이 "국내 미유통" 확정은 아님(§0-A-1 병행). 상세 = docs/LEARNED_RULES.md §0-G.
 
 관련: [[reference_naver_search_mcp]](구 MCP 시절 노하우 — `total`≠태그검색량 등은 여전히 유효) · [[feedback_imgbb_image_hosting]](같은 크리덴셜 디렉터리)
+
+**✅ 2026-07-31 — NAVER API HUB 이관 완료.** 개발자센터 공지 32530 으로 **쇼핑·책·전문자료 검색은 영구 종료(대체 없음)**, 나머지는 API HUB 로 이관(개발자센터는 2027-06-30 까지).
+- 공용 클라이언트 **`scripts/naver_api.py`** — HUB 우선·개발자센터 폴백. 진단 `python3 scripts/naver_api.py`.
+- Base `https://naverapihub.apigw.ntruss.com` · 헤더 `X-NCP-APIGW-API-KEY-ID`/`X-NCP-APIGW-API-KEY` · 크리덴셜 `~/.config/finchmart/naver_apihub.json`
+- 경로: 검색 `/search/v1/{kind}` · 트렌드 `/search-trend/v1/search` · 쇼핑인사이트 `/shopping/v1/categories`·`/shopping/v1/category/keywords`
+- **401 = 콘솔 미활성**(체크하면 됨) / **404 = 그 API 자체가 없음**(shop·book·doc). 국내 시세는 계속 `kr_price_check.py`(다나와).
