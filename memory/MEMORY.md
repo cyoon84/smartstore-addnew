@@ -1,3 +1,4 @@
+- [8/4 배치 진행중](project_batch_20260804_wip.md) — 신규 5명 추가(전재은·조은혜·김연경·노을·원광연), 윤기순 네스카페 구매완료
 - [윤덕훈 캡슐 36통 one-off 분할](project_oneoff_yoon_deokhun_36_split_20260804.md) — 🚨 한미 송장 이번분 qty 18 + 8/4 qty 18; 양쪽 배송비는 사실상 동일 예상, 최종 정산은 8/4 출고 후
 - [조현근·윤기순 네스카페 one-off 분할](project_oneoff_jo_yoon_split_20260804.md) — 🚨 발주목록에 윤기순이 포함돼도 이번 한미 송장에서는 ignore; 8/4 출고분
 - [7/31 배치 진행중](project_batch_20260731_wip.md) — 정산은 윤기순·송영진·배성민 제외 27주문·COGS ₩925,670; 남소라 네스프레소 완료, 남은건 윤덕훈 Blonde3·조은비 파인솔·박종현 비욘드필; 한미송장 QA: 윤덕훈 qty18/조은비 2entries(8+2)
@@ -8,7 +9,7 @@
 - [타입용어 한국어로](feedback_type_terms_korean.md) — 음역 금지: raw→생꿀·unpasteurized→비가열, 영문은 병기만
 - [카테고리 분기개편](reference_naver_category_reorg_2026.md) — 2026-07 완구/인형 세분화, 레고 리스팅 확인필요 플래그
 - [팀홀튼 국내유통 현황](reference_tim_hortons_korea_retail.md) — 오리지널블렌드·일부 300g 그라운드 한국 코스트코/백화점 입점, 원두축 취급금지 / K컵·믹스·굿즈만 유효
-- [2026 여름 시즌캘린더](project_seasonal_calendar_2026.md) — 복날(초복7/15·중복7/25·말복8/14, 월복)+폭염중대경보, 영양제라인 시즌태그 후보(미검증)
+- [2026 시즌캘린더](project_seasonal_calendar_2026.md) — 복날+폭염, 추석(9/25)대비 국제배송 리드타임 갭 8/1추가
 - [주간 신규SKU 자동파일럿](project_weekly_new_sku_autopilot.md) — 목요일밤 무인 발굴→§0-A→가격→일괄엑셀, 자동GO 1~2개/주
 - [영수증 자동대사](feedback_receipt_auto_reconcile.md) — poller가 이미 장부 기입, 정산 반영은 "정산해!" 라이브 트리거로(무인 자동화 롤백)
 - [정산 최신export 1개만](feedback_settlement_latest_export_only.md) — 발주발송 파일 여러날짜 합치면 취소주문 되살아남
