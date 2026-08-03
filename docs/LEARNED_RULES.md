@@ -1911,6 +1911,12 @@ Codex 검사자를 그대로 따랐다가 두 번 사고날 뻔했다.
 - **보강 — alt 업그레이드:** 우리 alt 는 `alt="상품명"` 단순 반복 → **"이미지 토픽 서술 125자 전후, 키워드 나열식 금지"** 로. 이미지 검색 유입에 유리(마이너, ascentkorea 통이미지 SEO 차선책). 우리는 통이미지가 아니라 inline 텍스트 기반(§17)이라 근본 문제는 이미 회피 중.
 - 출처: [weolbu 전환율 2배 7단계](https://weolbu.com/community/3574767) · [converta 상세페이지 가이드 2026](https://converta.co.kr/community/resources/smartstore-detail-page-guide) · [sellpage 상세 규격 2026](https://sellpage.life/guide/smartstore-detail-page-size-guide-2026) · [ascentkorea 통이미지 SEO](https://www.ascentkorea.com/text-image-seo/). (홍보성 "전환율 2배" 단일사례·자사툴 홍보는 방향만 취하고 수치는 참고선.)
 
+**추가 학습 — 동적 정보(사용법·개폐방식)는 GIF `<img>` 로 표현 가능, 6단계 콘텐츠 흐름 재확인 (2026-08-02 1분상세·키위스냅 정독):**
+- **🔑 GIF = 별도 마크업 없이 기존 `<img src="...">` 로 이미 가능.** 키위스냅 가이드가 "사용법·개폐방식 등 동적 정보는 GIF/영상으로"를 강조하는데, 우리 §7/§17 은 `<img>` 만 허용(동영상 `<video>`/embed 는 여전히 금지 대상 태그라 미검증·리스크). **GIF 는 이미지 포맷의 하나**라 호스팅 URL 이 `.gif` 면 `<img>` 태그 그대로 넣으면 된다 — 새 규칙이 아니라 **기존 허용 범위 안에서 활용도를 넓히는 노트**. 사용법 시연·비교(전/후) 등에서 이미지 대신 GIF 를 시도해볼 가치. (동영상은 여전히 미검증 — 시도 전 사용자 확인.)
+- **재확인(갭 없음):** 가로 860px·세로 ~1,100px 분할·20MB 상한(1분상세) — 이미 §17-1 "호스팅 이미지 최적화"에 반영된 수치와 정확히 일치, 신규 반영 불필요. 키위스냅의 6단계 콘텐츠 흐름(특장점강조→입증→시각화→디테일→상황카피→리뷰)도 우리 §17 표준프레임(아이브로우→핵심포인트→이런점이좋아요→추천)+§17-1(문제공감훅·스펙블록·캡션·부정추천)과 사실상 동형 — 새 구조 변경 불필요.
+- i-boss 신규 글(`ab-2987-553828`)은 403 접근차단으로 정독 실패, 스니펫만으로는 신규 실행포인트 확인 못 함 → 반영 없음.
+- 출처: [1분상세 상세페이지 규격 가이드](https://1minutesangse.com/guides/smartstore-detail-page) · [키위스냅 잘 팔리는 상세페이지](https://home.kiwisnap.net/post/jal-palrineun-neibeo-seumateuseutoeo-sangsepeiji-mandeulgi) · (i-boss `ab-2987-553828` 접근실패)
+
 ---
 
 ## 18. 네이버 등록 필드 제약 종합 (글자수·특수문자·이미지URL·구조) (2026-07-05)
@@ -2241,6 +2247,19 @@ python3 scripts/build_inventory_list.py --all                                   
 - 자동 반영을 시도했다가 롤백한 이유: 고객명 매칭·배치 선정·FX 확정 같은 판단이 헤드리스 컨텍스트에서 애매할 수 있고, 그 판단을 신뢰할 근거(라이브 대화 맥락)가 크론에는 없음 — §20-13 취소 처리·[[feedback_settlement_latest_export_only]] 안전규칙은 여전히 **"정산해!" 처리 시** 그대로 적용.
 
 > 관련: [[feedback_receipt_auto_reconcile]] · [[feedback_settlement_latest_export_only]] · [[project_receipt_20min_check_loop]]
+
+### 20-16. 🚨 폴러가 자동수집한 영수증 = 탭 분류 + pending 재주문 매칭 둘 다 검산 — merchant명만 보고 "무관" 넘기지 말 것 (2026-08-02)
+
+`receipt-plus-address-poller`/`fetch_gmail_receipts.py` 가 영수증을 장부에 자동 기입해주지만, **자동 분류를 그대로 믿으면 두 종류 사고가 난다:**
+
+1. **탭 오분류.** 사입(COGS) 영수증인데 `물건산거 (COGS)` 대신 `식비`(또는 다른 무관 탭)에 들어갈 수 있다. merchant 이름(약국·편의점 등 카테고리성 이름)만 보고 폴러가 잘못 판단.
+2. **pending 재주문과 매칭 누락.** 배치 안에 "품절/재주문 필요"로 플래그된 미완료 항목이 있으면, 새로 들어온 영수증을 **그 미완료 목록과 먼저 대조**해야 한다. merchant가 이전에 안 쓰던 곳(약국에서 스낵 산다든지)이어도 "무관하다"고 넘기지 말 것 — 날짜·수량·품목 라인이 미완료 항목과 일치하면 그게 재주문일 확률이 높다.
+
+**절차 (영수증 COGS 반영 때마다):**
+- 장부에 기입된 항목이 **올바른 탭**(COGS는 COGS 탭)에 있는지 먼저 확인. 다른 탭에 들어가 있으면 그 탭에서 삭제하고 COGS 탭으로 옮긴다(단순 메모 수정이 아니라 행 자체 이동).
+- 그 배치의 "재주문 필요"·"품절" 플래그 목록을 항상 열어두고, 새 영수증의 품목·수량·날짜가 거기 맞는지 대조. 맞으면 매칭해서 그 항목의 Todoist·정산 COGS를 채우고 플래그를 해제한다.
+
+> 2026-08-02 8/4 배치 — 전재은 주문 중 No Frills 배송에서 Twigz Buttery Herb & Garlic×2가 품절돼 "재주문 필요"로 남겨뒀다. 같은 날 Rexall에서 TWIGZ PRETZEL×2($6.78)를 샀는데, 폴러가 이걸 **`식비` 탭**에 잘못 넣었고 memo도 "Twigz Pretzel x2 | 채널A 자동수집"이라고만 적혀 있어 나는 이걸 그냥 "무관한 간식 구매"로 취급하고 넘어갔다. 사용자가 "check receipt from rexall again idiot"으로 지적할 때까지 발견 못 함 — 실제로는 정확히 그 재주문이었다(같은 날, 같은 수량 2, 같은 제품 라인). `식비`→`물건산거 (COGS)` 탭 이동 + 정산 COGS ₩7,343 추가 + Todoist cross off로 정정. [[feedback_receipt_poller_tab_and_pending_match]]
 
 ---
 

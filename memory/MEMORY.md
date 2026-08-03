@@ -1,3 +1,4 @@
+- [폴러영수증 탭+매칭 검산](feedback_receipt_poller_tab_and_pending_match.md) — 🚨 자동수집 영수증도 탭분류·pending재주문 대조 필수, merchant명만 보고 무관처리 금지
 - [8/4 배치 진행중](project_batch_20260804_wip.md) — 신규 5명 추가(전재은·조은혜·김연경·노을·원광연), 윤기순 네스카페 구매완료
 - [윤덕훈 캡슐 36통 one-off 분할](project_oneoff_yoon_deokhun_36_split_20260804.md) — 🚨 한미 송장 이번분 qty 18 + 8/4 qty 18; 양쪽 배송비는 사실상 동일 예상, 최종 정산은 8/4 출고 후
 - [조현근·윤기순 네스카페 one-off 분할](project_oneoff_jo_yoon_split_20260804.md) — 🚨 발주목록에 윤기순이 포함돼도 이번 한미 송장에서는 ignore; 8/4 출고분
