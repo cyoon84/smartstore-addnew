@@ -409,6 +409,20 @@ def build_data(pinfo, detail_html, cat_rows, deliv_rows):
     else:
         d["import_tax"] = CONFIG["import_tax"]      # 관부가세 포함
 
+    # 🔑 관부가세는 네이버가 enum 3개만 받는다. 축약형('포함')을 넣으면 업로드 전량 실패
+    #    ("[관부가세] 입력정보가 올바르지 않습니다") — 2026-08-02 9행 전량 실패로 확인.
+    _IMPORT_TAX_OK = ("부과 대상 아님", "관부가세 포함", "관부가세 미포함")
+    _it = str(d.get("import_tax") or "").strip()
+    if _it in ("포함", "관부가세포함"):
+        d["import_tax"] = "관부가세 포함"
+    elif _it in ("미포함", "관부가세미포함"):
+        d["import_tax"] = "관부가세 미포함"
+    elif _it in ("부과대상 아님", "부과대상아님", "해당없음"):
+        d["import_tax"] = "부과 대상 아님"
+    elif _it and _it not in _IMPORT_TAX_OK:
+        warn.append(f"관부가세 값 '{_it}' 은 네이버 허용값이 아님 → 업로드 실패함. "
+                    f"허용: {' / '.join(_IMPORT_TAX_OK)}")
+
     # 원산지코드 — bulk 우선, 없으면 캐나다(0204006) 기본 고정 (전 상품 캐나다로 깔고 사용자 수동 보정)
     # (앞자리 0 보존 위해 문자열. 국가명 자동해석은 안 씀 — 사용자 지시로 캐나다 기본.)
     d["origin_code"] = str(bulk.get("origin_code") or CONFIG["origin_code"])

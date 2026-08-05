@@ -124,6 +124,15 @@ PRIORITY — work through these five, then stop and write the report:
    g) Origin: a brand native to its own country (Tim Hortons, BeaverTails) may use the brand
       country as origin without a MADE IN label. Only multinational or contract-manufactured
       brands require the label.
+6. KOREAN SPELLING DICTIONARY (playbook section E). Mechanical string match, not judgement.
+   Any of these WRONG forms anywhere (title, body, alt, caption, tag candidates) = FAIL.
+   Report where it appears.
+      켈틀칩 -> 케틀칩        그래놀라 -> 그라놀라      초즌푸드 -> 초슨푸드
+      시사이드스파 -> 씨사이드 스파                     디제스티브 -> 다이제스티브
+      스머커즈 -> 스머커스    데이비스티 -> 데이비드티  알더블유가르시아 -> RW가르시아
+      로우꿀 -> 생꿀          언패스처라이즈드 -> 비가열
+   Loanwords NOT in this table must NOT be failed. If a spelling looks suspicious but is not
+   listed, raise it as a warning only - the correct form is decided by search volume, not by you.
 Network is blocked by design — that is NOT a defect. Judge images from the mirrors only;
 never mark an image UNVERIFIED just because the remote URL was unreachable.
 

@@ -64,8 +64,13 @@ Rules:
 - Do not edit, regenerate, rename, or delete any repository file.
 - Inspect the workbook and source artifacts directly.
 - Run only read-only checks.
-- If an external image URL cannot be checked because network access is unavailable,
-  mark that item UNVERIFIED and make the overall result FAIL; do not guess.
+- Network is blocked by design in this sandbox. That is NOT a defect and NOT a FAIL.
+  Image URL reachability is verified by the main agent outside the sandbox, so do not
+  attempt curl/DNS and never fail a run because i.ibb.co could not be resolved.
+  Check image CELLS instead: present, non-empty, https, on an allowed host, and matching
+  product_info images.rep_image_url / additional_image_urls exactly. Report reachability
+  as NOT-CHECKED (out of scope) rather than UNVERIFIED.
+  (2026-08-02: a run failed all 9 SKUs purely because DNS was unavailable.)
 - Return the exact structured SKU-by-SKU PASS/FAIL format required by the playbook.
 - End with exactly one machine-readable line:
   VERDICT: PASS
