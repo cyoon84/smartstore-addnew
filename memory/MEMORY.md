@@ -1,3 +1,5 @@
+- [네이버 태그 카테고리사전](reference_naver_tag_dictionary.md) — 감자칩·영양제·텀블러 등 수십 카테고리 통과/거부 누적, 태그 작성할 때만 Read
+- [세션 토큰 슬림화 8/4](project_session_token_slimdown_20260804.md) — 영수증폴러 20분→3시간, LEARNED_RULES §10 태그사전 분리로 세션당 55.6K→34.7K 토큰
 - [폴러영수증 탭+매칭 검산](feedback_receipt_poller_tab_and_pending_match.md) — 🚨 자동수집 영수증도 탭분류·pending재주문 대조 필수, merchant명만 보고 무관처리 금지
 - [8/4 배치 진행중](project_batch_20260804_wip.md) — 신규 5명 추가(전재은·조은혜·김연경·노을·원광연), 윤기순 네스카페 구매완료
 - [윤덕훈 캡슐 36통 one-off 분할](project_oneoff_yoon_deokhun_36_split_20260804.md) — 🚨 한미 송장 이번분 qty 18 + 8/4 qty 18; 양쪽 배송비는 사실상 동일 예상, 최종 정산은 8/4 출고 후
