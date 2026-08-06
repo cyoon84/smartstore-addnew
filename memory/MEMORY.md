@@ -44,7 +44,7 @@
 - [코스트코 재고체크](feedback_costco_stock_check.md) — 실브라우저 스케줄, Find박스로 지점별 확인
 - [발작커피 레퍼런스](reference_balzac_coffee.md) — 브랜드·블렌드5종 스펙
 - [상표권 신고대응](feedback_trademark_report_response.md) — 정품증빙 보관, KIPRIS 사전확인 권장
-- [리뷰관리 루프](feedback_review_management_loop.md) — 포토리뷰 재활용, 카테고리별 요청타이밍, 대가성 체험단 미채택
+- [리뷰관리 루프](feedback_review_management_loop.md) — 포토리뷰 재활용, 카테고리별 요청타이밍, 포인트지급기능, 별점톤분기, 대가성체험단 미채택
 - [AI검색 대량등록페널티](feedback_ai_search_2026_bulk_penalty.md) — 카테고리 한단계 차이도 다른유형, 판매실적 등록한도(확인됨)
 - [Todoist 추가주문 dedup](feedback_todoist_additional_order_dedup.md) — 기존 부모 재사용, 새로 만들지 말것
 - [완구 KC인증](feedback_kc_children_cert.md) — 사입판매는 인증의무자, '대상아님'은 구매대행만
