@@ -1,3 +1,8 @@
+- [이미지 수집실패 대응](feedback_naver_image_fetch_fail.md) — 200이어도 네이버만 실패하는 URL 있음, 한 장이 행 전체 거부, 재인코딩해 새 URL
+- [그룹 옵션축 먼저 확인](feedback_group_option_axis_check.md) — 카테고리가 축을 정한다, 칠리/핫소스는 용량·수량뿐이라 맛변형은 단일상품+옵션
+- [월마트 주문확인=영수증](feedback_walmart_order_confirmation_as_receipt.md) — 품절없으면 최종영수증, 품절있으면 2차영수증 대기
+- [우버 그로서리 reimbursement 추적](feedback_uber_grocery_reimbursement_tracking.md) — 영수증 먼저 PENDING 기록, 확정메일 오면 나중에 매칭
+- [hangTag 주차영수증 체크](feedback_hangtag_parking_check.md) — 매 이메일확인 때 같이 검색, 폴러가 놓칠 수 있어 백업 확인 필요
 - [네이버 태그 카테고리사전](reference_naver_tag_dictionary.md) — 감자칩·영양제·텀블러 등 수십 카테고리 통과/거부 누적, 태그 작성할 때만 Read
 - [세션 토큰 슬림화 8/4](project_session_token_slimdown_20260804.md) — 영수증폴러 20분→3시간, LEARNED_RULES §10 태그사전 분리로 세션당 55.6K→34.7K 토큰
 - [폴러영수증 탭+매칭 검산](feedback_receipt_poller_tab_and_pending_match.md) — 🚨 자동수집 영수증도 탭분류·pending재주문 대조 필수, merchant명만 보고 무관처리 금지
