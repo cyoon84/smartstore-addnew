@@ -86,7 +86,7 @@ prompt_file="$report_dir/${stem}_prompt.txt"
     "Mirrored images (open THESE; network is blocked, never curl):" "$img_dir" \
     "SKU folders:" "$slug_lines" "$prev_block"
   cat <<'STATIC_PROMPT'
-PRIORITY — work through these five, then stop and write the report:
+PRIORITY — work through these, then stop and write the report:
 1. *** PRICE-TAG LEAK — highest priority, automatic FAIL. ***
    Open every mirrored image and look for ANY readable price: shelf tags (electronic or paper),
    promo tags ("SAVE $3"), unit-price lines ("1.409 per 100 G"), store SKU/barcode labels,
@@ -96,8 +96,14 @@ PRIORITY — work through these five, then stop and write the report:
    (2026-08-01: a Costco shelf shot with a legible "5.99" shipped past QA; the owner caught it.)
 2. Open every mirrored image. For each: is the product identifiable from that photo alone?
    Does the alt text and the "▲" caption in detail.html match what the photo actually shows?
-3. Blank-padding ratio of BODY images only (rep_image is exempt). >25% = FAIL.
-4. Forbidden wording / spec mismatch vs product_info.json.
+3. PRODUCT WHOLENESS (playbook A-2). Is the product fully inside the frame, or is it cut off?
+   A bottle/tube/box whose cap, base or side edge runs off the frame = FAIL. This happens when
+   someone crops a tall product to force a squarer aspect ratio. Judge the REP image strictly -
+   it is the first thing a shopper sees.
+   EXCEPTION: a deliberate label close-up is fine IF the caption says so (e.g. "라벨에 ... 표기되어
+   있습니다"). So decide "cut off" vs "close-up" by whether the caption declares it.
+4. Blank-padding ratio of BODY images only (rep_image is exempt). >25% = FAIL.
+5. Forbidden wording / spec mismatch vs product_info.json.
    NOT-IN-LABEL IS NOT A LIE. Rule 9 forbids inventing product-specific facts (nutrition
    numbers, certifications, origin, efficacy). It does NOT forbid ordinary category knowledge.
    Example that PASSES: pumpkin spice is a North American autumn seasonal flavour. That is
@@ -105,7 +111,7 @@ PRIORITY — work through these five, then stop and write the report:
    in product_info.json; if the basis is recorded there, accept it. Ask yourself: is this a
    claim unique to THIS product, or something anyone familiar with the category knows? If the
    latter, pass it. When unsure, report a warning instead of FAIL.
-5. COPY-QUALITY PATTERNS (playbook section D). These are mechanical checks, not taste:
+6. COPY-QUALITY PATTERNS (playbook section D). These are mechanical checks, not taste:
    a) em dash U+2014 anywhere in body or alt text = FAIL. Must use commas or split sentences.
    b) Translationese: bullet sentences ending in a bare noun (구성 / 질감 / 조합 / 용량 / 에디션)
       instead of a verb. Also modifier-first order like "라벨 표기 기준 한 병당 30g".
@@ -124,7 +130,7 @@ PRIORITY — work through these five, then stop and write the report:
    g) Origin: a brand native to its own country (Tim Hortons, BeaverTails) may use the brand
       country as origin without a MADE IN label. Only multinational or contract-manufactured
       brands require the label.
-6. KOREAN SPELLING DICTIONARY (playbook section E). Mechanical string match, not judgement.
+7. KOREAN SPELLING DICTIONARY (playbook section E). Mechanical string match, not judgement.
    Any of these WRONG forms anywhere (title, body, alt, caption, tag candidates) = FAIL.
    Report where it appears.
       켈틀칩 -> 케틀칩        그래놀라 -> 그라놀라      초즌푸드 -> 초슨푸드
