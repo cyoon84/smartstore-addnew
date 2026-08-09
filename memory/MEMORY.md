@@ -1,3 +1,4 @@
+- [상세 고치면 엑셀 재생성](feedback_detail_edit_requires_excel_rebuild.md) — 상세 본문이 엑셀 셀에 복사됨, 등록 후엔 일괄수정으로 못 고쳐 삭제·재등록뿐
 - [이미지 수집실패 대응](feedback_naver_image_fetch_fail.md) — 200이어도 네이버만 실패하는 URL 있음, 한 장이 행 전체 거부, 재인코딩해 새 URL
 - [그룹 옵션축 먼저 확인](feedback_group_option_axis_check.md) — 카테고리가 축을 정한다, 칠리/핫소스는 용량·수량뿐이라 맛변형은 단일상품+옵션
 - [월마트 주문확인=영수증](feedback_walmart_order_confirmation_as_receipt.md) — 품절없으면 최종영수증, 품절있으면 2차영수증 대기
