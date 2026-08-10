@@ -66,7 +66,15 @@ for slug in slugs:
 PYEOF
 
 # 이전 회차 지적사항이 있으면 이어붙여 "고쳐졌는지" 추적
-prev="$(ls -t "$report_dir"/visual_*_codex_report.md 2>/dev/null | head -1 || true)"
+# 🔑 같은 SKU 를 다룬 보고서만 고른다 — 단순히 최신 파일을 집으면 무관한 SKU 리포트가 딸려가
+#    검사자가 "이전 결함과 대조 불가"를 결함으로 올린다 (2026-08-10 발견).
+prev=""
+for _cand in $(ls -t "$report_dir"/visual_*_codex_report.md 2>/dev/null || true); do
+  [[ "$_cand" == "$report_path" ]] && continue
+  for _s in "$@"; do
+    if grep -qF -- "$_s" "$_cand" 2>/dev/null; then prev="$_cand"; break 2; fi
+  done
+done
 prev_block=""
 if [[ -n "$prev" && "$prev" != "$report_path" ]]; then
   prev_block=$(cat <<EOF
