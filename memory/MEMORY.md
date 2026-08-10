@@ -1,3 +1,4 @@
+- [캐나다 전면경고 표시](reference_health_canada_fop_warning.md) — High in Sat fat 등, 카피엔 안 옮기되 사진에 보이니 사장님께 고지
 - [상세 고치면 엑셀 재생성](feedback_detail_edit_requires_excel_rebuild.md) — 상세 본문이 엑셀 셀에 복사됨, 등록 후엔 일괄수정으로 못 고쳐 삭제·재등록뿐
 - [이미지 수집실패 대응](feedback_naver_image_fetch_fail.md) — 200이어도 네이버만 실패하는 URL 있음, 한 장이 행 전체 거부, 재인코딩해 새 URL
 - [그룹 옵션축 먼저 확인](feedback_group_option_axis_check.md) — 카테고리가 축을 정한다, 칠리/핫소스는 용량·수량뿐이라 맛변형은 단일상품+옵션
