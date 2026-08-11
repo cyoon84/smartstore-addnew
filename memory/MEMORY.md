@@ -30,7 +30,8 @@
 - [차류 기타속성](feedback_tea_attributes.md) — 등록시 타입·중량 등 5개 채우기
 - [월 순수익 목표](project_monthly_profit_goal.md) — ₩1,000,000, 효자SKU(가벼움+마진두꺼움) 우선
 - [건강기능식품 인증속성](feedback_health_food_attributes.md) — 영양제 등록시 8개 필드 채우기
-- [네스프레소 워크플로](project_nespresso_workflow_settlement.md) — 슬리브단위·무세금, 배송적자는 제품마진으로 상쇄
+- [네스프레소 워크플로](project_nespresso_workflow_settlement.md) — 슬리브단위·무세금, 배송적자는 제품마진으로 상쇄, COGS는 정산에 항상 포함
+- [즉흥 정책 지어내기 금지](feedback_no_ad_hoc_policy_invention.md) — 애매하면 먼저 문서/memory 검색, 없으면 사용자에게 확인
 - [결과물 먼저 뽑기](feedback_deliver_result_not_command_churn.md) — 중간 커맨드반복 최소화, 결과물로 피드백
 - [커맨드 직접실행](feedback_never_ask_run_commands.md) — 사용자에게 실행 요청 금지
 - [북키퍼 장부](project_bookkeeper_expense_tracker.md) — QuickBooks 대체, 장부구조·영수증 4단계 처리체인
