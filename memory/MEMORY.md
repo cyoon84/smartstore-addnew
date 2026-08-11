@@ -36,7 +36,7 @@
 - [북키퍼 장부](project_bookkeeper_expense_tracker.md) — QuickBooks 대체, 장부구조·영수증 4단계 처리체인
 - [Todoist 수취인 서브태스크](feedback_todoist_recipient_subtask_split.md) — 옵션별 분리(한줄 몰아넣기 금지)
 - [Notion 정산 트리거](feedback_settlement_notion_trigger.md) — "확정됐어"→재질문없이 즉시 추가
-- [Notion 정산차트](feedback_settlement_notion_chart.md) — 제품별 주문수(count)+월정산, 개수=실주문량; 업데이트 후 항상 Codex QA로 제품명 중복 검증
+- [Notion 정산차트](feedback_settlement_notion_chart.md) — 제품별 주문수(count)+월정산, 개수=실주문량; 업데이트 후(소급 캐치업 포함) 항상 Codex QA로 제품명 중복 검증
 - [DD기프트카드 잔액](feedback_doordash_giftcard_balance.md) — 액면가($200) 기준 차감추적
 - [비즈어드바이저 키워드](project_bizadvisor_keyword_monitoring.md) — 실시간 유입검색어 관찰→태그반영
 - [도브 배치코드](reference_dove_batch_code_usa.md) — 미국제조 정품, 배치코드 해독
