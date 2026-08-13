@@ -57,6 +57,7 @@
 - [Todoist 추가주문 dedup](feedback_todoist_additional_order_dedup.md) — 기존 부모 재사용, 새로 만들지 말것
 - [완구 KC인증](feedback_kc_children_cert.md) — 사입판매는 인증의무자, '대상아님'은 구매대행만
 - [출고일 정산](project_order_settlement.md) — order_settlement.py, 화/금 배치+영수증 로컬보관
+- [COGS 환율=구매일 기준](feedback_cogs_fx_purchase_date.md) — 오늘환율·상수재사용 금지, frankfurter.dev로 그 영수증 날짜 조회
 - [배송비 마진](feedback_shipping_fee_margin.md) — 네이버수수료 배송비엔 3.63%만
 - [사입 재고관리](project_inventory_list.md) — build_inventory_list.py, 3단계 자동채움
 - [코스트코 PA](feedback_costco_price_adjustment.md) — 30일 가격보정, 배달경유도 가능
