@@ -1,3 +1,4 @@
+- [🚨한미 리스트무게≠Paid Weight](feedback_hanmi_list_weight_not_paid_weight.md) — 반드시 상세페이지(shipping_modi.cfm?sp_id=)에서 확인, 리스트 lbs컬럼 쓰면 안됨(63%오차 실측)
 - [한미 진행 멈추지 말것](feedback_hanmi_proceed_without_stalling.md) — 트래킹번호 보여준 것 자체가 확인, 재확인 대기 없이 매칭·파이널체크·Slack까지 진행
 - [🚨네이버 AI생성물정책](feedback_naver_ai_content_policy_2026.md) — 2026-07-10시행, 이미지는 준수·텍스트카피 포함여부 미확인, 건기식/유아식품 원천금지카테고리, 사장님확인필요
 - [캐나다 전면경고 표시](reference_health_canada_fop_warning.md) — High in Sat fat 등, 카피엔 안 옮기되 사진에 보이니 사장님께 고지
