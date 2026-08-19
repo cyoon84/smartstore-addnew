@@ -2,6 +2,7 @@
 - [🚨한미 리스트무게≠Paid Weight](feedback_hanmi_list_weight_not_paid_weight.md) — 반드시 상세페이지(shipping_modi.cfm?sp_id=)에서 확인, 리스트 lbs컬럼 쓰면 안됨(63%오차 실측)
 - [한미 진행 멈추지 말것](feedback_hanmi_proceed_without_stalling.md) — 트래킹번호 보여준 것 자체가 확인, 재확인 대기 없이 매칭·파이널체크·Slack까지 진행
 - [🚨네이버 AI생성물정책](feedback_naver_ai_content_policy_2026.md) — 2026-07-10시행, 이미지는 준수·텍스트카피 포함여부 미확인, 건기식/유아식품 원천금지카테고리, 사장님확인필요
+- [🚨목록통관 재판매 위법](feedback_customs_clearance_channel_risk.md) — 재판매목적은 목록통관(PCCC) 자체 불가(밀수입죄), 한미/우체국이 사업자통관인지 미확인, 사장님확인필요
 - [캐나다 전면경고 표시](reference_health_canada_fop_warning.md) — High in Sat fat 등, 카피엔 안 옮기되 사진에 보이니 사장님께 고지
 - [상세 고치면 엑셀 재생성](feedback_detail_edit_requires_excel_rebuild.md) — 상세 본문이 엑셀 셀에 복사됨, 등록 후엔 일괄수정으로 못 고쳐 삭제·재등록뿐
 - [이미지 수집실패 대응](feedback_naver_image_fetch_fail.md) — 200이어도 네이버만 실패하는 URL 있음, 한 장이 행 전체 거부, 재인코딩해 새 URL
