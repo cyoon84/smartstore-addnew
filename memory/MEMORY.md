@@ -1,3 +1,5 @@
+- [장부 엑셀이 정본](feedback_ledger_excel_is_source_of_truth.md) — md 보조노트에만 적고 장부 안 건드리면 어긋남, "장부에 있냐"는 장부 파일 직접 열어 답할 것
+- [8/21 배치 진행중](project_batch_20260821_wip.md) — 7명 매출₩640,058, COGS 3건 확보(김태훈·이수연·김다혜), 4명 영수증 대기
 - [🚨Notion QA 자동실행](feedback_notion_qa_always_automatic.md) — DB행 추가/수정마다 지적없이 자동 Codex QA+GROUP BY 전체스캔, 완료전 보고금지
 - [🚨한미 리스트무게≠Paid Weight](feedback_hanmi_list_weight_not_paid_weight.md) — 반드시 상세페이지(shipping_modi.cfm?sp_id=)에서 확인, 리스트 lbs컬럼 쓰면 안됨(63%오차 실측)
 - [한미 진행 멈추지 말것](feedback_hanmi_proceed_without_stalling.md) — 트래킹번호 보여준 것 자체가 확인, 재확인 대기 없이 매칭·파이널체크·Slack까지 진행

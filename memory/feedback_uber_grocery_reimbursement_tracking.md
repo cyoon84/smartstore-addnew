@@ -15,3 +15,12 @@ metadata:
 **Why:** 2026-08-06 세션에서 사용자가 "우버 영수증도 확인해줘"라고 해서 검색했는데 최근 포워딩 1건(8/6 02:38)에 대한 확정 메일이 아직 안 와서 이전 확정 메일(347DD $66.72)과 잘못 묶어 보고했다가 "하나 더있어... 이놈아"로 지적받음. **포워딩과 확정메일은 시차가 있고 항상 1:1로 바로 안 붙는다** — 무리하게 즉시 매칭하려 하지 말고 트래커에 PENDING으로 남겨두는 게 맞다.
 
 관련: [[project_bookkeeper_expense_tracker]]
+
+**🔑 정본 = 장부 엑셀 (2026-08-19 사장님 지시 "엑셀로 해"):**
+`/Volumes/External/claude/profit-expense-tracker/장부.xlsx` → **「우버이츠 reimburse 대기」 탭**.
+`output/inventory/우버_그로서리_reimbursement.md` 는 **폐기**(안내문만 남김) — 두 곳에서 관리하다
+장부에 6건 누락(그중 2건은 md 에 CONFIRMED 인데 장부엔 없음)이 쌓였다. [[feedback_ledger_excel_is_source_of_truth]]
+
+상태는 Note 컬럼 앞 토큰으로: `[확정 YYYY-MM-DD · order XXXXX]` / `[대기 · 확정메일 미수신]`.
+order# 는 `gmail-receipt-collector` 라벨 게이팅이 쓰므로 지우지 말 것.
+
