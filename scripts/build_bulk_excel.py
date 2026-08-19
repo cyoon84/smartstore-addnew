@@ -351,8 +351,14 @@ def build_data(pinfo, detail_html, cat_rows, deliv_rows):
     d["as_guide"] = pick("as_guide")             # A/S 안내 (스토어 공통)
     # 상품정보제공고시 — 품명=한글 상품명, 모델명=영문 공식 제품명, 제조자=브랜드
     d["gosi_name"] = pick("gosi_name", d.get("title"))
+    # 🔑 모델명 키 변형 흡수 — register 는 model_name, 일부 산출물은 model_en/model/english_name 을 쓴다.
+    #    빠뜨리면 고시 모델명이 통째로 빈칸이 되고 bulk-excel-verifier 가 FAIL 을 낸다(2026-08-19 킥킹호스).
     d["gosi_model"] = clean_gosi_model(
-        pick("gosi_model", pinfo.get("model_name"), pinfo.get("model_name_en"), pinfo.get("model_name_ko")))
+        pick("gosi_model", pinfo.get("model_name"), pinfo.get("model_name_en"),
+             pinfo.get("model_en"), pinfo.get("model"), pinfo.get("english_name"),
+             pinfo.get("product_name_en"), pinfo.get("model_name_ko")))
+    if not d["gosi_model"]:
+        warn.append("고시 모델명 비어있음 — product_info 에 model_name/model_en 중 하나를 넣을 것 (§5 영어 풀네임)")
     d["gosi_maker"] = pick("gosi_maker", brand_ko)
 
     # 옵션 — ① 진짜 2축(option_axes): 옵션명=축이름 줄바꿈(\n), 옵션값=축별 값(축은 \n, 값은 콤마).
