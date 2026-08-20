@@ -35,8 +35,11 @@ def band(title, grey=False):
 
 def figure(src, alt, cap, gap=34):
     """이미지 + 캡션. 캡션은 필수 — 이미지 연속 나열 금지(§17-1)."""
+    # 🔑 margin:0 auto — 컨테이너보다 좁은 이미지가 왼쪽에 붙지 않게 가운데 정렬.
+    #    display:block 은 부모의 text-align:center 를 안 따르므로 auto 마진이 필요하다.
     return ('<div style="margin:0 0 10px">'
             f'<img src="{src}" alt="{alt}" style="max-width:100%;border-radius:16px;display:block;'
+            'margin-left:auto;margin-right:auto;'
             'box-shadow:0 8px 22px rgba(0,0,0,.08)"></div>\n'
             f'<p style="margin:0 0 {gap}px;font-size:20px;color:#999">▲ {cap}</p>')
 
