@@ -1,3 +1,4 @@
+- [🚨리뷰 원문 인용 금지](feedback_review_copyright.md) — 작성자 저작물, 스토어 밖 사용은 동의 필요. 집계 수치·경향 서술만
 - [장부 엑셀이 정본](feedback_ledger_excel_is_source_of_truth.md) — md 보조노트에만 적고 장부 안 건드리면 어긋남, "장부에 있냐"는 장부 파일 직접 열어 답할 것
 - [네스프레소 재고=장부플래그 먼저확인](feedback_nespresso_restock_ledger_flag_check.md) — Stock탭 숫자만 믿지말고 장부 ⚠️Restock미반영 항목부터 체크, 안그럼 가짜재고부족
 - [8/21 배치 진행중](project_batch_20260821_wip.md) — 7명 매출₩640,058, COGS 3건 확보(김태훈·이수연·김다혜), 4명 영수증 대기

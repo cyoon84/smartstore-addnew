@@ -23,3 +23,7 @@ metadata:
 2026-07-26 도브 오리지널 vs 센서티브 글에서 확정 (사용자: "전에 도브 센서티브 미국산 확인하는법 보고 그런 스타일로 써" → 화법·포맷 둘 다).
 
 [[feedback_detail_styled_deco_template]] · [[feedback_senior_copywriting_mindset]] · [[project_detail_overhaul_wip]]
+
+**🚨 리뷰 원문 인용 금지** — 블로그에 고객 리뷰 문장을 그대로 옮기지 않는다(작성자 저작물).
+집계 수치·경향 서술로만 쓰고 원문은 상품 페이지 리뷰 탭 링크로 유도. [[feedback_review_copyright]]
+
