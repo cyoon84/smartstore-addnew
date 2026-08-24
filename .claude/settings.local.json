@@ -422,7 +422,11 @@
       "Bash(mkdir -p \"/Users/chulhee-macmini/.claude/scheduled-tasks\" 2>/dev/null; ls docs/ | tail -5)",
       "Bash(cp ~/.claude/scheduled-tasks/competitor-price-monitor/SKILL.md /private/tmp/claude-501/-Volumes-External-claude-smartstore-addnew/c4a53c03-c133-4174-bcd2-ce2e8dcec220/scratchpad/cpm_backup.md *)",
       "mcp__e6c00a26-9593-4015-b37b-139101f7ca6c__fetch-object",
-      "Bash([ -s \"$f\" ])"
+      "Bash([ -s \"$f\" ])",
+      "Bash(cp memory/feedback_ledger_excel_is_source_of_truth.md /Users/chulhee-macmini/.claude/projects/-Volumes-External-claude-smartstore-addnew/memory/)",
+      "Bash(cp memory/feedback_uber_grocery_reimbursement_tracking.md /Users/chulhee-macmini/.claude/projects/-Volumes-External-claude-smartstore-addnew/memory/)",
+      "Bash(cp memory/feedback_review_copyright.md /Users/chulhee-macmini/.claude/projects/-Volumes-External-claude-smartstore-addnew/memory/)",
+      "Bash(cp memory/feedback_blog_content_style.md /Users/chulhee-macmini/.claude/projects/-Volumes-External-claude-smartstore-addnew/memory/)"
     ]
   }
 }
