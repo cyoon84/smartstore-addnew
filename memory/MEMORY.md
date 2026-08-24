@@ -1,3 +1,4 @@
+- [🚨Todoist 부모재사용 검증](feedback_todoist_parent_reuse_verify.md) — 재사용 전 fetch로 상태확인, reparent 후 projectId 리스팅 검증, 애매하면 한번에 확정
 - [🚨네스프레소 재고vs신규구매 먼저확인](feedback_nespresso_stock_vs_purchase_check.md) — Todoist 사야할제품들 넣기 전 항상 확인, 재고면 COGS는 매입단가로
 - [🚨리뷰 원문 인용 금지](feedback_review_copyright.md) — 작성자 저작물, 스토어 밖 사용은 동의 필요. 집계 수치·경향 서술만
 - [🚨원가·규격 교차확인](feedback_source_price_verification.md) — 검색스니펫 가격 금지, costco.ca는 curl_cffi로 열림, 라벨>공식몰옵션, 커클랜드는 한국코스트코 확인
