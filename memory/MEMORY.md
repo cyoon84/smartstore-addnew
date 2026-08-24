@@ -1,4 +1,6 @@
 - [🚨리뷰 원문 인용 금지](feedback_review_copyright.md) — 작성자 저작물, 스토어 밖 사용은 동의 필요. 집계 수치·경향 서술만
+- [🚨원가·규격 교차확인](feedback_source_price_verification.md) — 검색스니펫 가격 금지, costco.ca는 curl_cffi로 열림, 라벨>공식몰옵션, 커클랜드는 한국코스트코 확인
+- [상세 카피 검사패턴](feedback_listing_copy_patterns.md) — 핵심포인트 헤더 AI티 3징후·섹션복창·라벨범위 단정·멀티팩 이미지
 - [🚨동물유래원료 통관체크](feedback_animal_origin_customs_screen.md) — softgel 젤라틴 bovine이면 플래그, §0-A 가격판정보다 먼저 확인
 - [🚨신규SKU dedup=상품번호 필드](feedback_new_sku_dedup_product_id.md) — product_info의 existing_product_id/live_product_id가 CSV보다 강한 증거, 라이브 확인 429면 후보 버릴 것
 - [장부 엑셀이 정본](feedback_ledger_excel_is_source_of_truth.md) — md 보조노트에만 적고 장부 안 건드리면 어긋남, "장부에 있냐"는 장부 파일 직접 열어 답할 것
