@@ -218,8 +218,15 @@ def resolve_shipping(pinfo):
         if per_unit in (None, ""):
             per_unit = sh.get("shipping_krw_per_unit")
         # bundle_rule/policy/description/rule/note 문자열에 'M개당' 묶음이 명시돼 있으면 그쪽 우선
-        r = parse_str(sh.get("policy") or sh.get("bundle_rule") or sh.get("description")
-                      or sh.get("rule") or sh.get("note"))
+        # 🔑 값이 문자열일 때만 후보로 삼는다 — bundle_rule:true 같은 boolean 이 or 체인을 가로채면
+        #    뒤의 description("6개당 10000원")까지 못 가서 CONFIG 기본값으로 덮인다 (2026-08-24 네스프레소).
+        r = None
+        for _k in ("policy", "bundle_rule", "description", "rule", "note"):
+            _v = sh.get(_k)
+            if isinstance(_v, str) and _v.strip():
+                r = parse_str(_v)
+                if r:
+                    break
         if r and r[2] not in (None, 1):
             return r
         if per_unit not in (None, ""):
@@ -234,6 +241,13 @@ def resolve_shipping(pinfo):
         per_units = sh.get("per_units")
         if krw not in (None, "") and per_units not in (None, ""):
             return ("수량별", int(krw), int(per_units))
+        # {shipping_fee_krw + bundle_size} 묶음 스키마 (네스프레소 계열 SKU)
+        fee = sh.get("shipping_fee_krw")
+        bsize = sh.get("bundle_size")
+        if fee not in (None, "") and bsize not in (None, ""):
+            return ("수량별", int(fee), int(bsize))
+        if fee not in (None, "") and sh.get("per_unit") is True:
+            return ("수량별", int(fee), 1)
         return r
 
     sh = pinfo.get("shipping")
@@ -359,7 +373,8 @@ def build_data(pinfo, detail_html, cat_rows, deliv_rows):
              pinfo.get("product_name_en"), pinfo.get("model_name_ko")))
     if not d["gosi_model"]:
         warn.append("고시 모델명 비어있음 — product_info 에 model_name/model_en 중 하나를 넣을 것 (§5 영어 풀네임)")
-    d["gosi_maker"] = pick("gosi_maker", brand_ko)
+    # 고시 제조자도 제조사(maker)와 같은 값 — 브랜드 폴백은 maker 해석 실패 시에만 (2026-08-24)
+    d["gosi_maker"] = pick("gosi_maker", d.get("maker"), brand_ko)
 
     # 옵션 — ① 진짜 2축(option_axes): 옵션명=축이름 줄바꿈(\n), 옵션값=축별 값(축은 \n, 값은 콤마).
     #        옵션가·옵션재고는 네이버 규칙상 '첫번째 옵션값(1축) 기준' 콤마 리스트. (템플릿 예시: 컬러\n사이즈 / 빨강,노랑\nS,M,L / 0,100 / 10,20)
