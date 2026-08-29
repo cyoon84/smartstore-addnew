@@ -1,3 +1,4 @@
+- [영수증 폴러 발신자 allowlist](feedback_receipt_sender_allowlist.md) — +receipt 포워딩 깜빡해도 lululemon/Costco/Walmart/Nespresso 발신자로 자동수집, 마케팅 공유주소는 금지
 - [🚨상세카피 개수말고 품질](feedback_detail_copy_quality_over_count.md) — 정원 채우기가 번역투·자명한사실·없는비교군·헤더복창을 만든다, 쓸말 없으면 줄여라
 - [🚨Todoist 부모재사용 검증](feedback_todoist_parent_reuse_verify.md) — 재사용 전 fetch로 상태확인, reparent 후 projectId 리스팅 검증, 애매하면 한번에 확정
 - [🚨네스프레소 재고vs신규구매 먼저확인](feedback_nespresso_stock_vs_purchase_check.md) — Todoist 사야할제품들 넣기 전 항상 확인, 재고면 COGS는 매입단가로

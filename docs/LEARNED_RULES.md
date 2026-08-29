@@ -1950,6 +1950,34 @@ Today/Upcoming 뷰가 한 배치로 도배된다.
 
 **Why:** 2026-08-06 세션에서 "우버 영수증도 확인해줘"에 답하며, 최근 포워딩 1건(8/6 02:38)을 이전 확정메일(347DD $66.72, 8/5 06:59)과 같은 건으로 잘못 묶어 보고했다가 "하나 더있어... 이놈아"로 지적받음 — 포워딩과 확정메일은 항상 1:1로 바로 안 붙는다.
 
+### 20-20. 🔑 영수증 폴러 = **가맹점 원본 발신자 allowlist** 로 포워딩 누락을 메운다 (2026-08-29)
+
+폴러(`fetch_gmail_receipts.py`)는 그동안 **`+receipt` 주소로 들어온 것만** 수집했다. 그래서 사장님이
+포워딩을 깜빡하거나 **다른 주소로만 포워딩하면 통째로 새어나간다.**
+
+> 2026-08-29 발견 — **8/26 lululemon Bloor St.(#220) Order #505 영수증($85.88, Back to Life Sport
+> Bottle 18oz Straw Lid PIAR 핑크펄 ×2)** 이 `finchmart_to@qbodocs.com` 으로만 포워딩돼 폴러가 못 잡았고,
+> 장부에도 없었다. 내가 한국발송 리스트에서 그 물병을 "구매내역 미확인"으로 남겨뒀는데
+> 사장님이 *"lululemon receipt 8/26에 두개 chulhee.y+receipt@gmail.com으로 보낸거 확인안했냐"* 로
+> 직접 짚어줘서야 발견. (8/25 Sherway Gardens 건은 +receipt 로 갔기에 정상 수집돼 있었다.)
+
+**해결 — `SENDER_ALLOWLIST` + `build_query()` 신설:** 쿼리를
+`(deliveredto:ADDR OR to:ADDR OR from:<가맹점1> OR from:<가맹점2> …)` 로 확장. OAuth·IMAP 양쪽 경로 모두 적용.
+
+| 발신자 | 대상 |
+|---|---|
+| `receipts@e.lululemon.com` | lululemon 매장 e-receipt |
+| `no-reply@sameday.costco.ca` | Costco Same-Day (Instacart) |
+| `noreply@walmart.ca` | Walmart.ca 주문/배송 (§20-17) |
+| `identification@nespresso.com` | Nespresso 주문확인 |
+| `support@hangtag.io` | hangTag 주차 (§20-19) |
+
+- **검증:** 같은 창(8/26~8/28) 재실행 시 16건 중 **5건을 새로 수집**(문제의 lululemon Bloor St. + 8/25 Sherway 원본 + Costco Same-Day 영수증·주문확인 + Nespresso 배송확인).
+- 🚨 **allowlist 에 넣을 것 = 거래 영수증 전용 no-reply 주소만.** 마케팅과 발신주소를 공유하는 곳
+  (`CostcoNews@digital.costco.ca`·`offers@em.walmart.ca` 등)은 넣으면 **인박스 전체가 딸려온다.**
+  새 가맹점을 추가할 땐 그 주소가 영수증만 보내는지 먼저 확인할 것.
+- 중복은 `add_expense.py` 가 자동 스킵하므로 allowlist 확대에 따른 이중기입 위험은 없다.
+
 ### 20-19. 🔑 이메일 체크 때 hangTag 주차 영수증도 같이 확인 (2026-08-06)
 
 주문 처리 세션에서 이메일을 볼 때 **hangTag(`support@hangtag.io`, "hangTag Parking Receipt")**도 매번 검색해서 확인한다. `receipt-plus-address-poller`(3시간 간격)가 대부분 자동으로 북키퍼 `차 (주차)` 탭에 넣어주지만(2026-08-05 hangTag $10.00 건도 폴러가 이미 캐치), **폴러가 전부 잡는다는 보장은 없다**(같은 날 Walmart.ca 직접주문은 폴러가 놓쳐 수동으로 찾아 넣어야 했다 — §20-17). 이미 장부에 있으면 `add_expense.py`가 중복으로 자동 스킵하니 안전하게 재확인 가능. 추출 필드: Purchase Number·Lot(주차장 위치)·Start/End 시간·Vehicle(BRXT814-ON)·Card 끝자리·Total Amount(Taxes/Fees 포함, subtotal = Total−Taxes).
