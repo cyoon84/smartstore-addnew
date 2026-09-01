@@ -1,3 +1,4 @@
+- [한미 패킹비 건당 $5](feedback_hanmi_packing_fee.md) — 한미가 포장하면 배송공식에 +$5, 소액건은 적자로 뒤집힘
 - [🚨Todoist 배치부모 이름변경 금지](feedback_todoist_batch_parent_no_rename.md) — 배치 다르면 새 부모, 이름 바꾸면 완료이력이 새 배치 것으로 둔갑
 - [우체국 업로드 필드제약](feedback_epost_upload_field_rules.md) — 전화 하이픈·일반전화칸 유선만·메시지 이모티콘 제거, 출력xls 말고 convert.py 를 고칠 것
 - [🚨재고 먼저 확인 후 질문](feedback_check_inventory_before_asking.md) — "재고 있나요/사야하나요" 묻기 전 재고관리 엑셀부터, 있으면 사입단가 COGS+판매수량 차감
