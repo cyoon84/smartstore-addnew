@@ -1,4 +1,4 @@
-- [🎯한국체류 목표 ₩500,000](project_korea_trip_goal_20260828.md) — 8/28~, 현재 ₩289,836(58%), 배치마다 갱신
+- [🎯한국체류 목표 ₩500,000](project_korea_trip_goal_20260828.md) — 8/28~, 현재 ₩340,583(68%), 배치마다 갱신
 - [🚨한미 HS 음식=210690](feedback_hanmi_hs_code_food_210690.md) — 기존 21 폐기, 9/1 출고분부터. 매핑 211건 변경완료
 - [한미 패킹비 건당 $5](feedback_hanmi_packing_fee.md) — 한미가 포장하면 배송공식에 +$5, 소액건은 적자로 뒤집힘
 - [🚨Todoist 배치부모 이름변경 금지](feedback_todoist_batch_parent_no_rename.md) — 배치 다르면 새 부모, 이름 바꾸면 완료이력이 새 배치 것으로 둔갑
@@ -16,6 +16,7 @@
 - [장부 엑셀이 정본](feedback_ledger_excel_is_source_of_truth.md) — md 보조노트에만 적고 장부 안 건드리면 어긋남, "장부에 있냐"는 장부 파일 직접 열어 답할 것
 - [네스프레소 재고=장부플래그 먼저확인](feedback_nespresso_restock_ledger_flag_check.md) — Stock탭 숫자만 믿지말고 장부 ⚠️Restock미반영 항목부터 체크, 안그럼 가짜재고부족
 - [8/21 배치 진행중](project_batch_20260821_wip.md) — 7명 매출₩640,058, COGS 3건 확보(김태훈·이수연·김다혜), 4명 영수증 대기
+- [🚨Notion QA 프로즈=fetch 원본](feedback_notion_qa_prose_from_fetch.md) — 기억으로 다시 타이핑한 재작성본 넘기면 실제 오타가 검사에서 통째로 빠짐
 - [🚨Notion QA 자동실행](feedback_notion_qa_always_automatic.md) — DB행 추가/수정마다 지적없이 자동 Codex QA+GROUP BY 전체스캔, 완료전 보고금지
 - [🚨Todoist due date 는 부모 태스크에만](feedback_todoist_due_date_parent_only.md) — 자식(수취인/품목)엔 절대 금지, 2회 반복위반
 - [🚨한미 리스트무게≠Paid Weight](feedback_hanmi_list_weight_not_paid_weight.md) — 반드시 상세페이지(shipping_modi.cfm?sp_id=)에서 확인, 리스트 lbs컬럼 쓰면 안됨(63%오차 실측)
