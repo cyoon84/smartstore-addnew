@@ -102,9 +102,10 @@ def compute(header, data):
         per_recip[recip]["ship"] += fee
     ship_total = sum(f for f, _ in ship_by_group.values())
     ship_settle = round(ship_total * (1 - SHIP_FEE_RATE))
+    free_ship = [rc for rc, v in per_recip.items() if v["ship"] == 0]
     return {"bd_sum": bd_sum, "ship_total": ship_total, "ship_settle": ship_settle,
             "revenue": bd_sum + ship_settle, "per_recip": per_recip,
-            "items": items, "ship_by_group": ship_by_group}
+            "items": items, "ship_by_group": ship_by_group, "free_ship": free_ship}
 
 
 def _processed_file(date):
@@ -278,6 +279,16 @@ def main():
         print(f"  물건값(COGS) = ₩{cogs_total:,}" + (f" ({len(comps)}개 요소)" if comps else ""))
     if cogs_total is not None and args.shipping_cost is not None:
         print(f"  순이익 = {s['revenue']:,} − {cogs_total:,} − {args.shipping_cost:,} = ₩{s['revenue']-cogs_total-args.shipping_cost:,}")
+
+    if s.get("free_ship"):
+        print()
+        print("  \033[33m⚠️  무배(배송비 ₩0) 주문 %d건 — §7-3 판별 절차를 지킬 것\033[0m" % len(s["free_ship"]))
+        for rc in s["free_ship"]:
+            print(f"     · {rc}  제품정산 ₩{s['per_recip'][rc]['bd']:,}")
+        print("     무배 = 배송비를 판매가에 흡수한 구조라 배송원가가 매출 안에 이미 있다.")
+        print("     '배송비를 못 받았다/무거워서 적자일 것' 으로 판정하지 말 것 (2026-07-10·09-02 반복 오판).")
+        print("     순서: ①개당 판매가 ÷ 개당 landed 원가 = 마크업 배수 ②3배 이상이면 실제 손익을")
+        print("           계산한 뒤에 말할 것 ③유료배송 건과 같은 선상에서 비교 금지.")
 
     if args.update_inventory:
         up = update_inventory(args.update_inventory, s["items"], date)
