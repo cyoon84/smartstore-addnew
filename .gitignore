@@ -14,3 +14,7 @@ config/qbo_tokens.json
 # guide/ 안 — 스토어 상품 export(민감/대용량)·가이드 PDF, github 제외 (폴더 구조만 유지)
 guide/*
 !guide/.gitkeep
+
+# prose-qa-ko 스킬은 별도 리포에서 심볼릭 링크로 설치한다 (절대경로라 커밋 안 함)
+#   /Volumes/External/claude/prose-qa-ko/install.sh <이 프로젝트 경로>
+.claude/skills/prose-qa-ko
