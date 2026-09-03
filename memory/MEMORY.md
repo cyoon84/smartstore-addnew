@@ -1,4 +1,5 @@
 - [🎯한국체류 목표 ₩500,000](project_korea_trip_goal_20260828.md) — 8/28~, 현재 ₩340,583(68%), 배치마다 갱신
+- [한미 선언수량=실물 낱개수](feedback_hanmi_declared_qty_pack.md) — product-mapping 팩수량 열, 우리가 묶은 세트만 2 / 공장 묶음(세라비)은 1, 이름에 2개입 있다고 일괄 채우기 금지
 - [🚨한미 HS 음식=210690](feedback_hanmi_hs_code_food_210690.md) — 기존 21 폐기, 9/1 출고분부터. 매핑 211건 변경완료
 - [한미 패킹비 건당 $5](feedback_hanmi_packing_fee.md) — 한미가 포장하면 배송공식에 +$5, 소액건은 적자로 뒤집힘
 - [🚨Todoist 배치부모 이름변경 금지](feedback_todoist_batch_parent_no_rename.md) — 배치 다르면 새 부모, 이름 바꾸면 완료이력이 새 배치 것으로 둔갑
