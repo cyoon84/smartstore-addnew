@@ -59,10 +59,24 @@ for slug in slugs:
         f = img_dir / f"{slug[:18]}__{u.split('/')[-1]}"
         if f.exists():
             continue
-        try:
-            urllib.request.urlretrieve(u, f)
-        except Exception as e:
-            print(f"MIRROR-FAIL {u} {e}", file=sys.stderr)
+        # 🔑 urlretrieve 는 전송이 중간에 끊겨도 조용히 잘린 파일을 남긴다 —
+        #    검사자가 그걸 "이미지 손상"으로 잡아 오탐 FAIL 이 난다 (2026-09-04 실측:
+        #    200,200바이트 원본이 98,304바이트로 잘림). Content-Length 로 검증하고 재시도한다.
+        ok = False
+        for _try in range(3):
+            try:
+                with urllib.request.urlopen(u, timeout=60) as r:
+                    expect = r.headers.get("Content-Length")
+                    data = r.read()
+                if expect and len(data) != int(expect):
+                    raise IOError(f"truncated {len(data)}/{expect}")
+                f.write_bytes(data)
+                ok = True
+                break
+            except Exception as e:
+                err = e
+        if not ok:
+            print(f"MIRROR-FAIL {u} {err}", file=sys.stderr)
 PYEOF
 
 # 이전 회차 지적사항이 있으면 이어붙여 "고쳐졌는지" 추적
