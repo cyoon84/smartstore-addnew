@@ -6,6 +6,7 @@
 - [🚨한미 박스비·에어캡 개당 $1](feedback_hanmi_box_bubble_wrap_fee.md) — 청구서 TOTAL엔 없고 remaining balance로만 보임, 두 배치 ₩69,893 과대계상했었음
 - [한미 패킹비 건당 $5](feedback_hanmi_packing_fee.md) — 한미가 포장하면 배송공식에 +$5, 소액건은 적자로 뒤집힘
 - [🚨Todoist 배치부모 이름변경 금지](feedback_todoist_batch_parent_no_rename.md) — 배치 다르면 새 부모, 이름 바꾸면 완료이력이 새 배치 것으로 둔갑
+- [발송처리는 스킬로](feedback_shipment_file_use_skill.md) — 원본 export 복사 금지(시트명·1행 안내문 때문에 업로드 거부), 1건이어도 match_invoices.py
 - [우체국 업로드 필드제약](feedback_epost_upload_field_rules.md) — 전화 하이픈·일반전화칸 유선만·메시지 이모티콘 제거, 출력xls 말고 convert.py 를 고칠 것
 - [🚨재고 먼저 확인 후 질문](feedback_check_inventory_before_asking.md) — "재고 있나요/사야하나요" 묻기 전 재고관리 엑셀부터, 있으면 사입단가 COGS+판매수량 차감
 - [영수증 폴러 발신자 allowlist](feedback_receipt_sender_allowlist.md) — +receipt 포워딩 깜빡해도 lululemon/Costco/Walmart/Nespresso 발신자로 자동수집, 마케팅 공유주소는 금지
