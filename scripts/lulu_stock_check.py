@@ -53,7 +53,11 @@ def compare(monitor, variants):
         for v in variants or []:
             av = (v.get("availability") or "").strip()
             inst = av.lower() == "instock"
-            size = (v.get("size") or "").strip()
+            raw_size = v.get("size")
+            if isinstance(raw_size, list):
+                size = "/".join(str(s) for s in raw_size if s)
+            else:
+                size = (raw_size or "").strip()
             for key, bucket in ((norm_style(v.get("style_color", "")), by_style),
                                 ((v.get("color") or "").strip().lower(), by_color)):
                 if not key:
