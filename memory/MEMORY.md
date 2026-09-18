@@ -5,7 +5,7 @@
 - [한미 선언수량=실물 낱개수](feedback_hanmi_declared_qty_pack.md) — product-mapping 팩수량 열, 우리가 묶은 세트만 2 / 공장 묶음(세라비)은 1, 이름에 2개입 있다고 일괄 채우기 금지
 - [🚨한미 HS 음식=210690](feedback_hanmi_hs_code_food_210690.md) — 기존 21 폐기, 9/1 출고분부터. 매핑 211건 변경완료
 - [🚨한미 박스비·에어캡 개당 $1](feedback_hanmi_box_bubble_wrap_fee.md) — 청구서 TOTAL엔 없고 remaining balance로만 보임, 두 배치 ₩69,893 과대계상했었음
-- [한미 패킹비 건당 $5](feedback_hanmi_packing_fee.md) — 한미가 포장하면 배송공식에 +$5, 소액건은 적자로 뒤집힘
+- [한미 패킹비 건당 $5](feedback_hanmi_packing_fee.md) — 🔑기본=사장님 직접포장(패킹·박스·에어캡 0), 한국 체류 등 명시할 때만 +$5·자재비
 - [🚨Todoist 표기말고 cross off](feedback_todoist_crossoff_not_annotate.md) — 구매완료·전량재고면 그 자리에서 complete-tasks, 표기만 달고 끝내면 장보기 목록이 망가짐
 - [🚨Todoist 배치부모 이름변경 금지](feedback_todoist_batch_parent_no_rename.md) — 배치 다르면 새 부모, 이름 바꾸면 완료이력이 새 배치 것으로 둔갑
 - [발송처리는 스킬로](feedback_shipment_file_use_skill.md) — 원본 export 복사 금지(시트명·1행 안내문 때문에 업로드 거부), 1건이어도 match_invoices.py
