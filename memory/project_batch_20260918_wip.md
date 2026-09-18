@@ -32,3 +32,6 @@ metadata:
 - **배수철** 블루제이스 류현진 유니폼 ALT2/99/XL ×1 (무배) · **김영선** 커클랜드 크리미 아몬드 버터 765g ×1 — 둘 다 미구매라 오늘 못 나감.
 - 9/18 정산은 `--exclude-recipient 배수철 --exclude-recipient 김영선` 로 돌렸다(재실행 시 반드시 같이). 발송처리 안 하므로 다음 export 에 자동으로 다시 잡힌다.
 - Todoist: 두 수취인 + 사야할 2줄을 `🕐 이월 대기` 부모로 이동.
+- (추가, 2026-09-18 오후) **강현주·정다은**도 이월. 정산 재실행 옵션: `--exclude-recipient 배수철 --exclude-recipient 김영선 --exclude-recipient 강현주 --exclude-recipient 정다은`.
+  - 강현주: 시럽·누텔라는 Walmart.ca #600000111447791 로 **이미 구매 — COGS ₩12,289 다음 배치로 이월**(9/18 COGS에서 빼둠). 프로폴리스 ×2 는 costco.ca 주문완료, 영수증 대기.
+  - 정다은: 농심 똠얌 신라면 ×3 · Mama 똠얌 라면 ×1 미구매.
