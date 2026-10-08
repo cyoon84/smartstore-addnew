@@ -1,3 +1,6 @@
+- [보고는 쉬운 말로](feedback_plain_language_reporting.md) — 영어 음차 금지(로트·landed·dedup·FX), §5-1 음역금지 규칙을 보고문까지 확대
+- [9/25 배치 진행중](project_batch_20260925_wip.md) — 이월 강현주·장미나, 네스프레소 9/22 사입 13슬리브(슬리브당 ₩15,933)
+- [정산보고=순이익만](feedback_settlement_report_net_profit_only.md) — 배송손익 따로 강조 금지, 주문별 순이익 +/− 만 본다
 - [9/18 배치 이월](project_batch_20260918_wip.md) — 박영근 콜게이트 Clean Mint 오주문→반품·Whitening 재구매, Walmart 600000116762435 콜게이트분 COGS 제외
 - [리스테린 프레시버스트 288매](project_listerine_freshburst_wip.md) — 산출물 완료·검증 PASS, 남은 건 등록화면(태그10개·브랜드카탈로그·기타속성)
 - [한미보관 네스프레소 재고(one-off)](project_oneoff_hanmi_nespresso_stock_20260904.md) — 9/4 실사 23슬리브, 정본통합 보류. 7종 단가 확정(구매일 미확인분은 FX 잠정)

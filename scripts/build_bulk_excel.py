@@ -70,6 +70,9 @@ FIELD = {
     "product_state":"상품상태",
     "sale_price":   "판매가",
     "unit_price_use":"단위가격 사용여부",
+    "unit_price_qty":"표시용량",
+    "unit_price_unit":"표시단위",
+    "unit_price_total":"총용량",
     "tax_type":     "부가세",
     "import_tax":   "관부가세",
     "stock":        "재고수량",
@@ -336,7 +339,19 @@ def build_data(pinfo, detail_html, cat_rows, deliv_rows):
     d["product_state"] = pick("product_state")
     d["tax_type"] = pick("tax_type")
     # import_tax(K 관부가세)는 카테고리 판정 후 설정 (아래 카테고리 블록 뒤)
-    d["unit_price_use"] = pick("unit_price_use")
+    # 단위가격 표시제(§16-4) — product_info 에 unit_price 블록을 사람이 명시한 경우에만 채운다.
+    # 어느 카테고리가 조건부필수인지 자동 판별하지 않는다(525개 리스트 미확보) — 명시 없으면 종전대로 'N'.
+    _up = pinfo.get("unit_price") or (bulk.get("unit_price") if isinstance(bulk, dict) else None)
+    if isinstance(_up, dict) and _up.get("총용량") is not None:
+        d["unit_price_use"] = "Y"
+        d["unit_price_qty"] = _up.get("표시용량")
+        d["unit_price_unit"] = _up.get("표시단위")
+        d["unit_price_total"] = _up.get("총용량")
+    else:
+        d["unit_price_use"] = pick("unit_price_use")
+        d["unit_price_qty"] = None
+        d["unit_price_unit"] = None
+        d["unit_price_total"] = None
     d["stock"] = pick("stock")
     d["multi_origin"] = pick("multi_origin")
     d["ship_method"] = SHIP_METHOD
