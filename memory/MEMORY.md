@@ -56,7 +56,7 @@
 - [타입용어 한국어로](feedback_type_terms_korean.md) — 음역 금지: raw→생꿀·unpasteurized→비가열, 영문은 병기만
 - [카테고리 분기개편](reference_naver_category_reorg_2026.md) — 2026-07 완구/인형 세분화, 레고 리스팅 확인필요 플래그
 - [팀홀튼 국내유통 현황](reference_tim_hortons_korea_retail.md) — 오리지널블렌드·일부 300g 그라운드 한국 코스트코/백화점 입점, 원두축 취급금지 / K컵·믹스·굿즈만 유효
-- [2026 시즌캘린더](project_seasonal_calendar_2026.md) — 복날+폭염, 추석(9/25)대비 국제배송 리드타임 갭 8/1추가
+- [2026 시즌캘린더](project_seasonal_calendar_2026.md) — 복날+폭염+추석, 수능(11/19) 초콜릿선물 태그 강신호, 블프/크리스마스 10/22추가
 - [주간 신규SKU 자동파일럿](project_weekly_new_sku_autopilot.md) — 목요일밤 무인 발굴→§0-A→가격→일괄엑셀, 자동GO 1~2개/주
 - [영수증 자동대사](feedback_receipt_auto_reconcile.md) — poller가 이미 장부 기입, 정산 반영은 "정산해!" 라이브 트리거로(무인 자동화 롤백)
 - [정산 최신export 1개만](feedback_settlement_latest_export_only.md) — 발주발송 파일 여러날짜 합치면 취소주문 되살아남
@@ -67,6 +67,7 @@
 - [차류 기타속성](feedback_tea_attributes.md) — 등록시 타입·중량 등 5개 채우기
 - [월 순수익 목표](project_monthly_profit_goal.md) — ₩1,000,000, 효자SKU(가벼움+마진두꺼움) 우선
 - [건강기능식품 인증속성](feedback_health_food_attributes.md) — 영양제 등록시 8개 필드 채우기
+- [네스프레소 리베이트=한 커피 전용](feedback_nespresso_rebate_single_coffee.md) — "coffees" 표기여도 안분 금지, 어느 커피인지 사장님께 확인
 - [네스프레소 워크플로](project_nespresso_workflow_settlement.md) — 슬리브단위·무세금, 배송적자는 제품마진으로 상쇄, COGS는 정산에 항상 포함
 - [즉흥 정책 지어내기 금지](feedback_no_ad_hoc_policy_invention.md) — 애매하면 먼저 문서/memory 검색, 없으면 사용자에게 확인
 - [결과물 먼저 뽑기](feedback_deliver_result_not_command_churn.md) — 중간 커맨드반복 최소화, 결과물로 피드백
