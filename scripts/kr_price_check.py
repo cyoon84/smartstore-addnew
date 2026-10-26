@@ -33,18 +33,30 @@ TAG = re.compile(r"<[^>]+>")
 
 def danawa(query: str):
     url = "https://search.danawa.com/dsearch.php?" + urllib.parse.urlencode({"query": query})
+    out = ""
+    # 2026-10-18: engine 경로가 상품 목록을 못 받아와 0건이 나옴 → curl_cffi 우선, 실패 시 engine
     try:
-        out = subprocess.run(
-            [sys.executable, "-m", "engine", url],
-            cwd=ENGINE_DIR, capture_output=True, text=True, timeout=300,
-        ).stdout
-    except Exception as e:
-        return None, f"engine 실패: {e}"
-    names = re.findall(r'<p class="prod_name">\s*<a[^>]*>(.*?)</a>', out, re.S)
-    prices = re.findall(r"<strong>([0-9,]{3,12})</strong>", out)
+        from curl_cffi import requests as cffi
+        r = cffi.get(url, impersonate="chrome", timeout=45)
+        if r.status_code == 200 and 'class="prod_main_info"' in r.text:
+            out = r.text
+    except Exception:
+        pass
+    if not out:
+        try:
+            out = subprocess.run(
+                [sys.executable, "-m", "engine", url],
+                cwd=ENGINE_DIR, capture_output=True, text=True, timeout=300,
+            ).stdout
+        except Exception as e:
+            return None, f"engine 실패: {e}"
+    # 상품 단위로 잘라서 이름·첫 가격을 짝지음(전역 zip 은 가격 개수가 어긋나면 밀린다)
     rows = []
-    for n, p in zip(names, prices):
-        rows.append((TAG.sub("", n).strip(), int(p.replace(",", ""))))
+    for it in out.split('class="prod_main_info"')[1:]:
+        n = re.search(r'<p class="prod_name">\s*<a[^>]*>(.*?)</a>', it, re.S)
+        p = re.search(r"<strong>([0-9,]{3,12})</strong>", it)
+        if n and p:
+            rows.append((TAG.sub("", n.group(1)).strip(), int(p.group(1).replace(",", ""))))
     return rows, None
 
 

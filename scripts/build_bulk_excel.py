@@ -107,6 +107,110 @@ FIELD = {
 }
 
 
+# ── 단위가격 표시제 (§16-4) 자동 산정 ─────────────────────────────────────────
+# 템플릿 가이드 원문: "단위가격 표시의무 카테고리 상품이 아닌 경우, 작성된 값은 무시됩니다."
+#  → 525개 의무 카테고리 리스트 없이도, 총용량을 확실히 파싱할 수 있으면 항상 Y 로 채워도 안전.
+# 표시용량(기준단위): 기본 g→100g · ml→100ml. 카테고리 경로 키워드별 예외는 아래 표에 추가.
+#  - 커피믹스/인스턴트커피 = 10g  (2026-10-21 네이버 등록화면 AI 추천값, 팀홀튼 라떼믹스 13824924814 로 확인)
+#  표에 없는 카테고리는 100g/100ml 기본값 + "등록화면 AI 추천과 대조" 경고. 확인되면 여기 추가.
+UNIT_BASE_DEFAULT = {"g": 100, "ml": 100}
+UNIT_BASE_BY_CATEGORY = [
+    # (카테고리 경로에 포함될 키워드, 제외 키워드, 단위, 표시용량)
+    ("커피믹스/인스턴트커피", (), "g", 10),
+    ("유가공품 > 치즈", (), "g", 10),     # 2026-10-21 등록화면 AI 추천 10g — KD 쉐이커 치즈파우더 500g(13825015562)
+]
+UNIT_EXEMPT_MAX = 30          # 30g/30ml 이하 초소용량은 면제 → 자동 채움 안 함
+# 단위가격 의무 대상 대분류(식품·생활건강·화장품·유아용품). 그 외(패션잡화 가방 19L 등)는 자동 산정 안 함.
+UNIT_TOP_CATEGORIES = ("식품", "생활/건강", "화장품/미용", "출산/육아")
+UNIT_EXCLUDE_KEYWORDS = ("주방용품", "머그", "텀블러", "보온병")   # 용기류 ml 는 내용물이 아님
+
+_SIZE_RE = re.compile(r"(?<![0-9A-Za-z가-힣.])(\d+(?:\.\d+)?)\s*(kg|g|ml|mL|ML|L|l)(?![A-Za-z가-힣])")
+# 묶음 수량 표기 ("18개입", "2팩", "16pk", "18ct", "x 4" 등). 2 이상이면 개당/총 용량이 애매 → 자동 산정 안 함.
+# (예: 발작스 K컵 "189g 18개입" 의 189g 은 박스 총중량 — 곱하면 3,402g 으로 오기재)
+_COUNT_RE = re.compile(r"(?<![0-9])(\d+)\s*(개입|개|팩|병|캔|입|매|pk|pack|ct|count)(?![가-힣A-Za-z])", re.I)
+_X_RE = re.compile(r"(?<![A-Za-z])[x×]\s*(\d+)(?![0-9.])(?!\s*(?:kg|g|ml|l)(?![A-Za-z]))", re.I)   # "200g x 4" (Mix 350g 의 x 오탐 방지)
+
+
+def _parse_size(text):
+    """문자열에서 (총용량, 단위g|ml, 설명) 추출. 애매하면 (None, None, 사유)."""
+    if not text:
+        return None, None, "텍스트 없음"
+    sizes = []
+    for num, unit in _SIZE_RE.findall(text):
+        v = float(num)
+        u = unit.lower()
+        if u == "kg":
+            v, u = v * 1000, "g"
+        elif u == "l":
+            v, u = v * 1000, "ml"
+        sizes.append((round(v, 3), u))
+    uniq = sorted(set(sizes))
+    if not uniq:
+        return None, None, "용량(g/ml) 표기 없음"
+    if len(uniq) > 1:
+        return None, None, f"용량 표기가 여러 개({', '.join(f'{v:g}{u}' for v, u in uniq)})"
+    v, u = uniq[0]
+    return (int(v) if float(v).is_integer() else v), u, f"{v:g}{u}"
+
+
+def _pack_count(*texts):
+    """텍스트들에서 2 이상인 묶음 수량 표기를 찾아 반환(없으면 None)."""
+    for t in texts:
+        if not t:
+            continue
+        nums = ([int(c) for c, _ in _COUNT_RE.findall(t)] + [int(c) for c in _X_RE.findall(t)]
+                + [int(c) for c in re.findall(r"(?<![0-9.])(\d+)\s*[x×]\s*\d", t, re.I)])   # "4 x 200g"
+        nums = [n for n in nums if n > 1]
+        if nums:
+            return nums[0], t
+    return None
+
+
+def resolve_unit_price(pinfo, cat_paths, has_options):
+    """→ (dict|None, 경고|None). dict = {use, qty, unit, total, note}"""
+    bulk = pinfo.get("bulk") if isinstance(pinfo.get("bulk"), dict) else {}
+    up = pinfo.get("unit_price") if "unit_price" in pinfo else bulk.get("unit_price")
+    if up is False:                                   # 명시적으로 끔
+        return None, None
+    if isinstance(up, dict) and up.get("총용량") is not None:   # 사람이 명시 → 최우선
+        return {"use": "Y", "qty": up.get("표시용량"), "unit": up.get("표시단위"),
+                "total": up.get("총용량"), "note": "product_info unit_price 명시값"}, None
+    if cat_paths and (not any(cat_paths.lstrip().startswith(t) or f" {t}" in cat_paths for t in UNIT_TOP_CATEGORIES)
+                      or any(k in cat_paths for k in UNIT_EXCLUDE_KEYWORDS)):
+        return None, None                            # 비대상 카테고리 (가방·머그 등)
+    if has_options:
+        return None, ("단위가격: 옵션상품이라 자동 산정 생략(옵션별 용량이 다를 수 있음) — "
+                      "필요하면 product_info 에 unit_price 블록 명시 또는 등록화면에서 입력")
+    names = [pinfo.get("product_name_ko"), pinfo.get("title_ko"), pinfo.get("model_name_en"),
+             pinfo.get("model_name"), pinfo.get("official_name_en"), pinfo.get("sku")]
+    pk = _pack_count(*names)
+    if pk:
+        return None, (f"단위가격: 묶음 표기({pk[0]}개) 있어 자동 산정 안 함 — 개당/총 용량이 애매. "
+                      "product_info 에 unit_price {표시용량, 표시단위, 총용량(묶음 전체)} 명시 또는 등록화면에서 입력")
+    total, unit, desc, why = None, None, "", "상품명·모델명 없음"
+    for src in names[:5]:
+        if not src:
+            continue
+        total, unit, desc = _parse_size(src)
+        if total is not None:
+            break
+        if why == "상품명·모델명 없음" or "여러 개" in desc:
+            why = desc
+    if total is None:
+        return None, f"단위가격: 자동 산정 생략 ({why}) — 필요하면 product_info 에 unit_price 블록 명시"
+    if total <= UNIT_EXEMPT_MAX:
+        return None, None                            # 초소용량 면제
+    qty, verified = UNIT_BASE_DEFAULT[unit], False
+    for kw, excl, u, base in UNIT_BASE_BY_CATEGORY:
+        if kw in cat_paths and not any(x in cat_paths for x in excl) and u == unit:
+            qty, verified = base, True
+            break
+    w = None if verified else (f"단위가격: 기준단위 {qty}{unit} 는 기본값 — 업로드 후 등록화면 'AI 추천' 표시단위와 다르면 "
+                               "그 값으로 고치고 UNIT_BASE_BY_CATEGORY 에 추가")
+    return {"use": "Y", "qty": qty, "unit": unit, "total": total,
+            "note": f"자동: {desc} → 총 {total:g}{unit}, {qty}{unit}당"}, w
+
+
 def latest(pattern):
     files = sorted(glob.glob(os.path.join(GUIDE_DIR, pattern)))
     if not files:
@@ -339,19 +443,7 @@ def build_data(pinfo, detail_html, cat_rows, deliv_rows):
     d["product_state"] = pick("product_state")
     d["tax_type"] = pick("tax_type")
     # import_tax(K 관부가세)는 카테고리 판정 후 설정 (아래 카테고리 블록 뒤)
-    # 단위가격 표시제(§16-4) — product_info 에 unit_price 블록을 사람이 명시한 경우에만 채운다.
-    # 어느 카테고리가 조건부필수인지 자동 판별하지 않는다(525개 리스트 미확보) — 명시 없으면 종전대로 'N'.
-    _up = pinfo.get("unit_price") or (bulk.get("unit_price") if isinstance(bulk, dict) else None)
-    if isinstance(_up, dict) and _up.get("총용량") is not None:
-        d["unit_price_use"] = "Y"
-        d["unit_price_qty"] = _up.get("표시용량")
-        d["unit_price_unit"] = _up.get("표시단위")
-        d["unit_price_total"] = _up.get("총용량")
-    else:
-        d["unit_price_use"] = pick("unit_price_use")
-        d["unit_price_qty"] = None
-        d["unit_price_unit"] = None
-        d["unit_price_total"] = None
+    # 단위가격 표시제(§16-4) — 카테고리 경로가 필요해서 카테고리 블록 뒤에서 채운다 (아래 resolve_unit_price).
     d["stock"] = pick("stock")
     d["multi_origin"] = pick("multi_origin")
     d["ship_method"] = SHIP_METHOD
@@ -437,6 +529,23 @@ def build_data(pinfo, detail_html, cat_rows, deliv_rows):
                 warn.append(f"카테고리: 1순위 경로 미발견 → fallback '{full}'({code}) 사용. 등록화면 확인")
         else:
             warn.append("카테고리코드 자동해석 실패 — bulk.category_code 직접 지정 필요")
+
+    # 단위가격 (§16-4) — 명시 unit_price > 상품명/모델명 용량 파싱. 비의무 카테고리면 네이버가 값을 무시.
+    _has_opts = bool(d.get("option_type"))
+    _up, _up_warn = resolve_unit_price(pinfo, cat_paths, _has_opts)
+    if _up:
+        d["unit_price_use"] = _up["use"]
+        d["unit_price_qty"] = _up["qty"]
+        d["unit_price_unit"] = _up["unit"]
+        d["unit_price_total"] = _up["total"]
+        d["_unit_price_note"] = _up["note"]
+    else:
+        d["unit_price_use"] = pick("unit_price_use")
+        d["unit_price_qty"] = None
+        d["unit_price_unit"] = None
+        d["unit_price_total"] = None
+    if _up_warn:
+        warn.append(_up_warn)
 
     # K컬럼 관부가세 — 전 품목 '관부가세 포함'이 기본 (2026-06-30 사용자 지시: 핀치마트=국내발송 리셀러,
     # 구매자 통관세 없음). bulk.import_tax 명시가 있으면 그것을 최우선 존중(예외 케이스용).
@@ -583,6 +692,13 @@ def main():
         print(f"    상품명: {d.get('title')}")
         print(f"    카테고리 {d.get('category_code')} · 판매가 {d.get('sale_price')} · 원산지 {d.get('origin_code')} · "
               f"배송 {d.get('delivery_code')}/{d.get('shipping_type')} {d.get('shipping_fee')}")
+        if d.get("unit_price_use") == "Y":
+            try:
+                _upv = round(float(d["sale_price"]) / float(d["unit_price_total"]) * float(d["unit_price_qty"]))
+            except Exception:
+                _upv = "?"
+            print(f"    단위가격: {d['unit_price_qty']}{d['unit_price_unit']}당 {_upv}원 "
+                  f"(총 {d['unit_price_total']}{d['unit_price_unit']}) — {d.get('_unit_price_note', '')}")
         for w in warn:
             print(f"    ⚠️ {w}")
         # 완구/어린이제품 → 어린이제품 KC 인증 (일괄엑셀 템플릿에 필드 없음, 업로드 후 네이버 UI 설정 필수)

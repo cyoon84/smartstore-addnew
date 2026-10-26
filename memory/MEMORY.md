@@ -67,6 +67,7 @@
 - [차류 기타속성](feedback_tea_attributes.md) — 등록시 타입·중량 등 5개 채우기
 - [월 순수익 목표](project_monthly_profit_goal.md) — ₩1,000,000, 효자SKU(가벼움+마진두꺼움) 우선
 - [건강기능식품 인증속성](feedback_health_food_attributes.md) — 영양제 등록시 8개 필드 채우기
+- [네스프레소 invoice ACOMPTE=store credit](feedback_nespresso_invoice_store_credit.md) — Total과 차액은 credit 적용분, 원 주문이 장부에 있으면 현금분만 기입(이중계상 방지)
 - [네스프레소 리베이트=한 커피 전용](feedback_nespresso_rebate_single_coffee.md) — "coffees" 표기여도 안분 금지, 어느 커피인지 사장님께 확인
 - [네스프레소 워크플로](project_nespresso_workflow_settlement.md) — 슬리브단위·무세금, 배송적자는 제품마진으로 상쇄, COGS는 정산에 항상 포함
 - [즉흥 정책 지어내기 금지](feedback_no_ad_hoc_policy_invention.md) — 애매하면 먼저 문서/memory 검색, 없으면 사용자에게 확인
