@@ -65,7 +65,7 @@
 - [영수증 20분 체크](project_receipt_20min_check_loop.md) — +receipt(무조건사업)+직접수신(판별 후 기입) 2채널, gmail-receipt-collector 삭제됨
 - [imgbb 이미지호스팅](feedback_imgbb_image_hosting.md) — Flickr 대체, PIL 리사이즈 필요(1000×1000 등)
 - [차류 기타속성](feedback_tea_attributes.md) — 등록시 타입·중량 등 5개 채우기
-- [월 순수익 목표](project_monthly_profit_goal.md) — ₩1,000,000, 효자SKU(가벼움+마진두꺼움) 우선
+- [월 순수익 목표](project_monthly_profit_goal.md) — ₩1,000,000, 🔑운영비 다 빼고 나서 기준(2026-11-01 확정), 효자SKU 우선
 - [건강기능식품 인증속성](feedback_health_food_attributes.md) — 영양제 등록시 8개 필드 채우기
 - [네스프레소 invoice ACOMPTE=store credit](feedback_nespresso_invoice_store_credit.md) — Total과 차액은 credit 적용분, 원 주문이 장부에 있으면 현금분만 기입(이중계상 방지)
 - [네스프레소 리베이트=한 커피 전용](feedback_nespresso_rebate_single_coffee.md) — "coffees" 표기여도 안분 금지, 어느 커피인지 사장님께 확인

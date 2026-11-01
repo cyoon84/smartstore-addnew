@@ -122,6 +122,7 @@ market-strategist·farmer·inventory-manager)을 참고해 인라인 플레이�
 - 섹션: 헤드라인 → 영문 부제 → 소개 → 핵심 포인트 → "이런 점이 좋아요" → "이런 분들께 추천".
 - **제외:** 배송 안내, 마무리 인사 한 줄, 스펙 테이블, footer, 검증 안 된 활용 팁/레시피.
 - 이미지: **호스팅 URL 있으면** 본문 적절한 위치에 `<p><img src="URL" alt="상품명"></p>`로 직접 삽입 OK. 없으면 URL 리스트로 등록정보.md 에 분리 (@memory/feedback_detail_html_bare_fragment.md).
+- **제목 위 아이브로우 pill(`캐나다 직수입 · …` 둥근 라벨) 금지** — AI slop 느낌(2026-10-27). 상세는 h1 제목부터 시작.
 - 그룹상품은 옵션별 분리 X, 통합 1장. 자세한 포맷은 @docs/cowork_instructions_patch.md §5.
 
 ## 8. 네이버 태그 (10개)

@@ -6,7 +6,7 @@
 
 사용:
     from scripts.detail_render import detail, R, RD, band, figure, pill
-    html = detail(dict(eyebrow=..., h1=..., h2=..., intro=[...], points=[(이모지,키워드,설명)...],
+    html = detail(dict(h1=..., h2=..., intro=[...], points=[(이모지,키워드,설명)...],
                        img=..., alt=..., cap=..., [img2/alt2/cap2],
                        spec=[(이모지,라벨,값)...], good=[...], who=[...],
                        avoid=[(조건, 이유)...]))
@@ -60,9 +60,11 @@ def detail(d):
     P.append('<div style="background:#ffffff;border-radius:24px;padding:7% 5% 6%;text-align:center;'
              'font-size:26px;line-height:1.65;color:#3a3a3a;word-break:keep-all;'
              'box-shadow:0 6px 20px rgba(209,47,42,.06)">')
-    P.append(f'<p style="margin:0 0 20px;line-height:1.5"><span style="background:#fff1ec;color:{RD};'
-             f'border:1px solid #f3d3cd;border-radius:999px;padding:9px 20px;font-size:21px;'
-             f'font-weight:700;display:inline-block;margin:0 4px 8px">{d["eyebrow"]}</span></p>')
+    # 아이브로우 pill 폐기 (2026-10-27 사장님: "AI slop 같은 느낌") — eyebrow 키가 와도 렌더하지 않는다.
+    if d.get("eyebrow") and d.get("force_eyebrow"):
+        P.append(f'<p style="margin:0 0 20px;line-height:1.5"><span style="background:#fff1ec;color:{RD};'
+                 f'border:1px solid #f3d3cd;border-radius:999px;padding:9px 20px;font-size:21px;'
+                 f'font-weight:700;display:inline-block;margin:0 4px 8px">{d["eyebrow"]}</span></p>')
     P.append(f'<h1 style="font-size:40px;font-weight:800;letter-spacing:-1px;margin:0 0 14px;'
              f'color:#222">{d["h1"]}</h1>')
     P.append(f'<div style="width:60px;height:4px;background:{R};margin:0 auto 16px;'

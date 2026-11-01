@@ -40,6 +40,18 @@ def danawa(query: str):
         r = cffi.get(url, impersonate="chrome", timeout=45)
         if r.status_code == 200 and 'class="prod_main_info"' in r.text:
             out = r.text
+        elif r.status_code == 200 and '\\"productName\\"' in r.text:
+            # 2026-10-29: 다나와가 Next.js(RSC) 페이지로 개편 → 이스케이프된 JSON 에서
+            # 상품 객체 단위로 productName 과 그 뒤 첫 minPriceNumber 를 짝지음
+            rows = []
+            for chunk in r.text.split('\\"productName\\":\\"')[1:]:
+                name = chunk.split('\\"', 1)[0]
+                p = re.search(r'\\"minPriceNumber\\":(\d+)', chunk)
+                if p:
+                    name = name.encode().decode("unicode_escape").encode("latin-1").decode("utf-8", "ignore")
+                    rows.append((TAG.sub("", name).strip(), int(p.group(1))))
+            if rows:
+                return rows, None
     except Exception:
         pass
     if not out:
