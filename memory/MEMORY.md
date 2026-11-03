@@ -1,4 +1,5 @@
 - [보고는 쉬운 말로](feedback_plain_language_reporting.md) — 영어 음차 금지(로트·landed·dedup·FX), §5-1 음역금지 규칙을 보고문까지 확대
+- [🆕크로켓 채널](project_croket_channel.md) — 네이버와 별개 판매채널, 수수료 상품가13%+부가세(배송비0%), 정산_크로켓_<월>.md 로 분리
 - [11/3 배치 진행중](project_batch_20261103_wip.md) — 14명 34주문 매출 ₩993,981, COGS ₩534,179, 남은구매 1건(카화와야콩고), 박설지 다우니는 598g 발송 확정
 - [9/25 배치 진행중](project_batch_20260925_wip.md) — 이월 강현주·장미나, 네스프레소 9/22 사입 13슬리브(슬리브당 ₩15,933)
 - [정산보고=순이익만](feedback_settlement_report_net_profit_only.md) — 배송손익 따로 강조 금지, 주문별 순이익 +/− 만 본다
