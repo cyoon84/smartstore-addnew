@@ -16,6 +16,7 @@
 - [발송처리는 스킬로](feedback_shipment_file_use_skill.md) — 원본 export 복사 금지(시트명·1행 안내문 때문에 업로드 거부), 1건이어도 match_invoices.py
 - [우체국 업로드 필드제약](feedback_epost_upload_field_rules.md) — 전화 하이픈·일반전화칸 유선만·메시지 이모티콘 제거, 출력xls 말고 convert.py 를 고칠 것
 - [🚨재고 먼저 확인 후 질문](feedback_check_inventory_before_asking.md) — "재고 있나요/사야하나요" 묻기 전 재고관리 엑셀부터, 있으면 사입단가 COGS+판매수량 차감
+- [🚨Uber Eats=기프트카드 기본](feedback_uber_eats_giftcard_default.md) — COGS 에 factor 0.7999 기본 적용, 영수증에 카드 청구 찍혀도 환불→Uber Cash 재결제 패턴 있음
 - [영수증 폴러 발신자 allowlist](feedback_receipt_sender_allowlist.md) — +receipt 포워딩 깜빡해도 lululemon/Costco/Walmart/Nespresso 발신자로 자동수집, 마케팅 공유주소는 금지
 - [🚨상세카피 개수말고 품질](feedback_detail_copy_quality_over_count.md) — 정원 채우기가 번역투·자명한사실·없는비교군·헤더복창을 만든다, 쓸말 없으면 줄여라
 - [🚨Todoist 부모재사용 검증](feedback_todoist_parent_reuse_verify.md) — 재사용 전 fetch로 상태확인, reparent 후 projectId 리스팅 검증, 애매하면 한번에 확정
