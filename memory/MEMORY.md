@@ -56,7 +56,7 @@
 - [🔄 상세개편 WIP](project_detail_overhaul_wip.md) — 도브 오리지널 옵션추가(사진대기)·도브블로그·구형상세 189개중 6개완료, clear 후 이어서
 - [실사용·대체수요 앵글](feedback_capsule_detergent_real_benefits.md) — 클로드가 못 잡음→먼저 물어라. 캡슐세제(야간계량·손목)·이머전씨(커피대신·무카페인)
 - [타입용어 한국어로](feedback_type_terms_korean.md) — 음역 금지: raw→생꿀·unpasteurized→비가열, 영문은 병기만
-- [카테고리 분기개편](reference_naver_category_reorg_2026.md) — 2026-07 완구/인형 세분화, 레고 리스팅 확인필요 플래그
+- [카테고리 분기개편](reference_naver_category_reorg_2026.md) — 2026-07 완구/인형 세분화, 레고 확인필요 유지, 🆕공지사항 insane-search 직접접근 경로 발견(11/4)
 - [팀홀튼 국내유통 현황](reference_tim_hortons_korea_retail.md) — 오리지널블렌드·일부 300g 그라운드 한국 코스트코/백화점 입점, 원두축 취급금지 / K컵·믹스·굿즈만 유효
 - [2026 시즌캘린더](project_seasonal_calendar_2026.md) — 복날+폭염+추석, 수능(11/19,D-19) 초콜릿선물 태그 미착수, 🆕기획전=무료MD선정노출채널(할인10~30%필요)
 - [주간 신규SKU 자동파일럿](project_weekly_new_sku_autopilot.md) — 목요일밤 무인 발굴→§0-A→가격→일괄엑셀, 자동GO 1~2개/주
