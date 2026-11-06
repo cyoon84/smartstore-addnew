@@ -1,6 +1,6 @@
 ---
 name: project_batch_20261106_wip
-description: 11/6(금) 한미 배치 진행중 — 28명 52주문 매출 ₩2,020,120(소희 포함), COGS ₩556,629(28요소). 소희는 오마이집 출고 완료로 export 에서 빠짐, 김혜영 스타벅스 캡슐 4슬리브 신규
+description: 11/6(금) 한미 배치 진행중 — 28명 52주문 매출 ₩2,020,120(소희 포함), COGS ₩743,955(29요소). 윤덕훈 영수증 도착: 36통 중 18통만 구매됐다(품절) → 남은 18통은 11/10 배치 구매목록에 올릴 것
 metadata:
   type: project
 ---
@@ -375,5 +375,26 @@ COGS ₩40,217 은 `_cogs.json` 에 그대로 있어 손댈 게 없다.
 | Columbia 8개입 | 4 | **1** | 3 |
 | Vanilla Flavored 8개입 | 4 | **1** | 3 |
 
-- 🔑 **11/10(화) 배치 Todoist 를 만들 때 남은 18통을 "사야할 제품들" 에 올리지 않는다** — 이미 사놓은 재고다.
+- 🚨 **정정** — 영수증 확인 결과 18통만 샀다(품절). 남은 18통은 11/10 배치 구매목록에 **올려야 한다**. 아래 절 참고.
 - 윤덕훈 parent 태스크 content 는 수취인 이름만 유지(스킬 규칙).
+
+
+## 🧾 윤덕훈 영수증 — 18통만 구매됐다 (2026-11-05 No Frills 2건)
+
+| 영수증 | 매장 | 품목 | 슬리브 | 액면 |
+|---|---|---|--:|--:|
+| A 11:22am | No Frills 6220 Yonge St. | Colombia 1 · Creamy Vanilla 1 · Pike Place 1 · French Roast 3 · Blonde Espresso 6 | 12 | $160.58 |
+| B 2:21pm | No Frills 3555 Don Mills Rd | Pike Place 3 · Caffe Verona 3 | 6 | $82.64 |
+
+- 전부 $12.99/슬리브. **Uber Cash 결제** → factor 0.7999, 실현금 $194.55, FX962.86 → **COGS ₩187,326**(슬리브당 ₩10,407).
+- 장부 **324·325행**, pending mark 완료.
+- 🔑 **영수증 B 표기 ≠ 실제 수령.** 영수증엔 `Colombia ×3 → Pike Place ×3 대체` 로 찍혔으나 사장님 확인:
+  실제로는 **Pike Place 1 + Caffe Verona 2** 로 대체(우버 시스템이 분할 대체를 못 해 채팅 요청).
+  → 실제 수령 = Pike Place 3 · Caffe Verona 3.
+- ✅ 사진 18박스와 품절표기까지 포함해 정확히 일치.
+
+**🚨 남은 18통 = 아직 미구매** — Espresso 8 · Blonde Espresso 2 · Columbia 3 · Vanilla 3 · French Roast 1 · Caffe Verona 1.
+**Espresso 10개입 8통은 두 영수증에 한 통도 없다**(두 매장 다 재고 없음). 11/10 전에 사야 한다.
+Todoist `사야할 제품들` 윤덕훈 7줄에 `산 거 / 남은 거` 를 달았고, Pike Place 4통만 전량 구매돼 cross off.
+
+윤덕훈 매출 BD ₩460,132 은 36통 전부 기준 → **최종 손익은 두 번째 18통 출고 후 확정**.
