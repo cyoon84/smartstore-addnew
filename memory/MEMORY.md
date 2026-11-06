@@ -1,3 +1,4 @@
+- [네이버 공식 help 접근경로](reference_naver_help_official_access.md) — index.help 내비 트리로 FAQ카테고리(등록정보검토=11139) 1차소스 확보, 답변본문은 Playwright 필요(engine 한계)
 - [보고는 쉬운 말로](feedback_plain_language_reporting.md) — 영어 음차 금지(로트·landed·dedup·FX), §5-1 음역금지 규칙을 보고문까지 확대
 - [🆕크로켓 채널](project_croket_channel.md) — 네이버와 별개 판매채널, 수수료 총거래금액(배송비포함) 8%+부가세=8.8%, 정산_크로켓_<월>.md 로 분리
 - [11/3 배치 진행중](project_batch_20261103_wip.md) — 14명 34주문 매출 ₩993,981, COGS ₩534,179, 남은구매 1건(카화와야콩고), 박설지 다우니는 598g 발송 확정
