@@ -429,7 +429,8 @@
       "Bash(cp memory/feedback_blog_content_style.md /Users/chulhee-macmini/.claude/projects/-Volumes-External-claude-smartstore-addnew/memory/)",
       "mcp__3de52f66-c5ee-495c-b311-bf00f0734d44__notion-search",
       "Bash(sed -n '/^codex$/,$p' /Users/chulhee-macmini/.claude/projects/-Volumes-External-claude-smartstore-addnew/cb3ad8c0-6dd1-4da4-abb7-8bbaaf6eca9e/tool-results/b3lcoqf4x.txt | tail -140)",
-      "mcp__e6c00a26-9593-4015-b37b-139101f7ca6c__uncomplete-tasks"
+      "mcp__e6c00a26-9593-4015-b37b-139101f7ca6c__uncomplete-tasks",
+      "Bash(sed -n '/^codex$/,$p' /Users/chulhee-macmini/.claude/projects/-Volumes-External-claude-smartstore-addnew/cb3ad8c0-6dd1-4da4-abb7-8bbaaf6eca9e/tool-results/bfrc2rltk.txt | tail -140)"
     ]
   }
 }
