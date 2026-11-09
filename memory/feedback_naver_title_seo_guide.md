@@ -73,3 +73,9 @@ metadata:
 - **유일한 미세 보강(저위험, tilnote):** "속성이나 태그로 이미 커버되는 키워드는 상품명에서 제외해 간결성을 유지"는 기존 NAVER 공식가이드의 "카테고리 매칭됐으면 카테고리 키워드 불필요" 원칙을 **속성 전반**으로 일반화한 것 — 별도 액션은 없음(이미 §16-2/§16-3 카테고리 맞춤형 속성을 쓰고 있어 상품명에 중복 기입하는 패턴 자체가 없음), 재확인 차원.
 - `i-boss ab-6141-63751`(보강2의 "앞 3단어" 원 출처) — insane-search engine으로도 Cloudflare 챌린지 페이지만 반환, 완전 접근불가 확정(다른 i-boss 글들과 같은 패턴). 앞으로 이 도메인 상품명 SEO 글은 WebSearch 스니펫까지만 참고하고 추가 정독 시도 안 함.
 - 출처: [tilnote.io 2026 초보판매자 가이드](https://tilnote.io/en/pages/6abd32f21bc5b55a946deac9)·WebSearch 교차확인.
+
+## 데일리 학습 보강 7 — 갭없음 재확인 + "클릭기대지수"(2026-11-25 도입)는 유료 쇼핑검색광고 전용, 우리 무관 (2026-11-08, [[project_daily_smartstore_study]])
+신규 소스(tilnote 9/30 발행분·sellingbooster·hectodata·leviosa) 정독 결과 **신규 갭 없음** — 50자·앞단어 가중치·중복/특수문자 금지·속성·태그로 커버되는 키워드 생략 전부 기존 §5·보강1~6과 동일. **신뢰도 패턴 재확인:** "핵심 키워드를 상품명 앞쪽에 배치하고 카테고리·속성 키워드를 활용해 노출 극대화"라는 거의 동일한 문장이 여러 블로그·검색엔진 요약에 반복 — 독립 corroboration이 아니라 syndicated 콘텐츠로 판단(10/25·11/03과 같은 패턴).
+- **진짜 신규 발견(비해당 확인) — "클릭기대지수"(2026-11-25 도입 예정, i-boss 뉴스 스니펫만 확보·원문 403):** 네이버 **쇼핑검색광고(유료, 쇼핑몰 상품형·카탈로그형 소재)** 에만 적용되는 지표로, 일반 등록(organic listing)에는 적용 안 됨. 우리는 광고 미집행이라 액션 불필요 — Slack 제안도 보류.
+- i-boss 도메인(`ab-2987-553828`·`ab-6141-64552`·`ab-2877-18308`)은 이번에도 전부 403 — 기존 "접근 불가 확정" 결론 유지, 앞으로 이 도메인 재시도 안 함.
+- 출처: [tilnote.io](https://tilnote.io/en/pages/6abd32f21bc5b55a946deac9)·[sellingbooster.io](https://sellingbooster.io/community/blog/seumateuseutoeo-sangpummyeong-jakseongbeop-haeksim-wonchik-mit-jeonryak-wanbyeok-gaideu)·WebSearch(클릭기대지수 스니펫).
