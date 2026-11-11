@@ -6,6 +6,8 @@ Codex 에이전트로 운영하기 위한 프로젝트다. 이 `AGENTS.md` 는 �
 
 스토어 ID: **finchmart_ca** · 상품 URL 패턴은 @memory/reference_smartstore_id.md 참고.
 
+**Aside 브라우저에서 실행할 때:** 실행 절차(이미지 보정·네이버 이미지업로드·일괄엑셀·그룹 전환·태그)는 `docs/ASIDE_PLAYBOOK.md` 를 따른다. 새로 알게 된 건 그 파일에 계속 추가.
+
 ---
 
 ## 0. 무엇을 하는가
