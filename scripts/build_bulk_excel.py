@@ -658,6 +658,8 @@ def one_row(target, lookups):
             sys.exit(f"[!] detail.html 없음: {detail_path} (detail_html ref={ref})")
         detail_path = resolved
     detail_html = open(detail_path, encoding="utf-8").read().strip()
+    if len(detail_html) > 32767:
+        print(f"[!] {slug}: 상세 HTML {len(detail_html):,}자 > 엑셀 셀 한도 32,767 — 업로드 시 잘림. 업로드 후 수정 화면 HTML 작성 창에 전체 붙여넣을 것")
     d, warn = build_data(pinfo, detail_html, *lookups)
     return slug, folder, d, warn
 
