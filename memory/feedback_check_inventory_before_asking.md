@@ -1,14 +1,42 @@
 ---
 name: feedback_check_inventory_before_asking
-description: 🚨"재고 있나요/사야하나요" 묻기 전에 재고관리 엑셀 + 북키퍼 장부 COGS 탭을 둘 다 본다. 시트에 행이 없어도 재고가 있을 수 있다
+description: 🚨사장님께 묻기 전에 확인 가능한 출처를 전부 연다 — 재고 엑셀·장부·Todoist·export. MCP 없다고 포기 금지, 브라우저로 직접 열 것
 metadata:
   type: feedback
 ---
 
-**구매목록·Todoist "사야할 제품들"을 만들기 전, 그리고 사장님께 "이거 재고 있나요? 새로 사야 하나요?"
-라고 묻기 전에 — `output/inventory/재고관리_*.xlsx` 를 먼저 연다.**
+**사장님께 "이거 재고 있나요?" "누구 건가요?" "export 다시 주세요" 라고 묻기 전에 —
+내가 열어볼 수 있는 출처를 전부 먼저 연다.**
 
 확인 없이 묻는 건 규칙을 지킨 게 아니라 판단을 떠넘긴 것이다.
+
+**확인 가능한 출처 (묻기 전에 전부)**
+
+| 질문 | 먼저 열 곳 |
+|---|---|
+| 재고 있나 / 사야 하나 | `output/inventory/재고관리_*.xlsx` → 북키퍼 장부 `물건산거 (COGS)` 탭 |
+| 누구 주문인가 / 몇 개인가 | **Todoist 프로젝트 `스마트스토어` `6gjhmh4gvvFQg75p`** (완료 항목까지) |
+| 이미 산 건가 | 장부 COGS 탭 + 세션 시작 "정산 미반영 영수증" 목록 |
+| 매출이 어느 배치인가 | `/Volumes/External/Downloads/스마트스토어_선택주문발주발송관리_*.xlsx` (암호 1111) |
+
+**🚨 MCP 가 없다는 건 포기 사유가 아니다 — 브라우저로 직접 연다 (2026-11-13 신설).**
+Todoist MCP 가 세션에서 빠져 있어도 Claude in Chrome 으로 `app.todoist.com` 탭에서 REST API 를 치면 된다.
+
+```js
+await fetch('/api/v1/tasks?project_id=6gjhmh4gvvFQg75p', {credentials:'include'}).then(r=>r.json())
+// 완료 항목: GET /api/v1/tasks/completed/by_completion_date?since=…&until=…&project_id=…
+// 수정 POST /api/v1/tasks/<id> · 완료 POST /api/v1/tasks/<id>/close · 되살리기 /reopen
+```
+
+> 2026-11-13 — 11/13 캐나다타이어 킨더 서프라이즈 3개가 **누구 건지 모르겠다**며 사장님께
+> export 재발급을 요청했다. 사장님: *"아 todoist에 있잖아"* → *"왜 몰라?"*.
+> 실제로 Todoist 에 백승미 2 · 강혜령 1 로 그대로 있었고, 브라우저로 여는 데 2분 걸렸다.
+> 더 나쁜 건 **그 방법이 사장님이 주신 핸드오프 문서 21번째 줄에 적혀 있었고 내가 이미 읽었다**는 점이다.
+> 한 경로(MCP)가 막히자 다른 경로를 찾는 대신 질문으로 넘어갔다.
+
+**🔑 실패 패턴은 "몰랐다" 가 아니라 "한 경로만 보고 포기했다" 이다.**
+아래 두 사고가 같은 모양이다 — 대상만 재고 엑셀 / Todoist 로 달랐다.
+묻기 전에 스스로에게: **"지금 이걸 내가 열어볼 방법이 정말 하나도 없나?"**
 
 **절차**
 1. 재고관리 엑셀 최신본에서 **상품명 부분일치** 검색 (`~$` 로 시작하는 임시파일 제외).
