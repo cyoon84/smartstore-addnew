@@ -82,6 +82,7 @@ FIELD = {
     "brand":        "브랜드",
     "maker":        "제조사",
     "origin_code":  "원산지코드",
+    "origin_direct":"원산지 직접입력",   # 원산지코드 03(상세설명 참조) 이면 필수 — 비면 업로드 전체 실패
     "importer":     "수입사",
     "multi_origin": "복수원산지여부",
     "ship_method":  "배송방법",
@@ -571,6 +572,10 @@ def build_data(pinfo, detail_html, cat_rows, deliv_rows):
     # 원산지코드 — bulk 우선, 없으면 캐나다(0204006) 기본 고정 (전 상품 캐나다로 깔고 사용자 수동 보정)
     # (앞자리 0 보존 위해 문자열. 국가명 자동해석은 안 씀 — 사용자 지시로 캐나다 기본.)
     d["origin_code"] = str(bulk.get("origin_code") or CONFIG["origin_code"])
+    if bulk.get("origin_direct"):
+        d["origin_direct"] = bulk["origin_direct"]
+    elif d["origin_code"] == "03":
+        d["origin_direct"] = "상세설명 참조"
 
     # 택배사코드 검증
     valid_deliv = {str(r[0]) for r in deliv_rows[1:]}

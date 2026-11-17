@@ -69,7 +69,9 @@ single 기본. 형식은 @docs/LEARNED_RULES.md §0-B, @memory/feedback_dispatch
    `aside exec --permission full-access` 로 Aside 를 불러 (기본 Guard 는 프로젝트 폴더가 막힘) **네이버 이미지업로드 → placeholder(`{{IMG_*}}`) 를 shop-phinf URL로 치환 →
    엑셀 재생성 → 일괄등록 업로드 → 태그·브랜드·단위가격 등 나머지 → 구매자 페이지 확인**까지 맡긴다.
    절차는 `docs/ASIDE_PLAYBOOK.md`. 메인은 이미지를 imgbb 에 올리지 않고 **보정한 로컬 jpg만** 만든다
-   (product_info `images.local_files` + `placeholders`). @memory/feedback_aside_registration_handoff.md
+   (product_info `images.local_files` + `placeholders`). 보정은 `scripts/chatgpt_retouch.sh`(ChatGPT, 톤·제품 비율만).
+   Aside 는 등록 완료 후 product_info.json 에 상품번호를 쓰고 `PRODUCT_INFO_UPDATED: <slug> <번호>` 로 알린다
+   → 메인이 확인 후 `claude_skus.py --tag` 로 레지스트리 등록. @memory/feedback_aside_registration_handoff.md
 6. 완료 후 `등록정보.md` 전체를 Slack `#new-item` 채널에 전송 (@memory/feedback_slack_delivery.md).
 
 ---

@@ -1,4 +1,4 @@
-- [🆕리스팅→Aside 등록 핸드오프](feedback_aside_registration_handoff.md) — 메인은 카피·로컬이미지·엑셀·Codex QA까지, 네이버 이미지업로드·일괄등록은 aside exec 로 (2026-11-17)
+- [🆕리스팅→Aside 등록 핸드오프](feedback_aside_registration_handoff.md) — 메인은 카피·로컬이미지·엑셀·Codex QA까지, 네이버 등록+내가 못 여는 조회(셀러센터·스토어페이지·봇차단 사이트)는 전부 aside exec 로 (2026-11-17)
 - [🆕그룹상품 8대 위반유형(공식)](reference_naver_group_product_violations_2026.md) — 클린프로그램 제재, §13-3과 겹침+단위혼용·옵션명불일치 신규, 카테고리 890~1000개로 확대
 - [🚨재고는 사입−판매로 센다](feedback_inventory_current_stock_formula.md) — 현재고 칸은 수식이라 pandas 가 0 으로 읽고(재고 ₩86,850 놓침), 숫자면 하드코딩 착각치
 - [네이버 공식 help 접근경로](reference_naver_help_official_access.md) — index.help 내비 트리로 FAQ카테고리(등록정보검토=11139) 1차소스 확보, 답변본문은 Playwright 필요(engine 한계)
