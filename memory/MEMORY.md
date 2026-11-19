@@ -1,3 +1,4 @@
+- [🚨11/20 배치 — 이정현 배송지 변경](project_batch_20261120_wip.md) — 한미 변환 때 업로드용 엑셀 주소 교체 + 파이널체크에서 주소도 대조, COGS ₩141,160·남은구매 5건
 - [🆕리스팅→Aside 등록 핸드오프](feedback_aside_registration_handoff.md) — 메인은 카피·로컬이미지·엑셀·Codex QA까지, 네이버 등록+내가 못 여는 조회(셀러센터·스토어페이지·봇차단 사이트)는 전부 aside exec 로 (2026-11-17)
 - [🆕그룹상품 8대 위반유형(공식)](reference_naver_group_product_violations_2026.md) — 클린프로그램 제재, §13-3과 겹침+단위혼용·옵션명불일치 신규, 카테고리 890~1000개로 확대
 - [🚨재고는 사입−판매로 센다](feedback_inventory_current_stock_formula.md) — 현재고 칸은 수식이라 pandas 가 0 으로 읽고(재고 ₩86,850 놓침), 숫자면 하드코딩 착각치
@@ -64,7 +65,7 @@
 - [카테고리 분기개편](reference_naver_category_reorg_2026.md) — 2026-07 완구/인형 세분화, 레고 확인필요 유지, 🆕공지사항 insane-search 직접접근 경로 발견(11/4)
 - [팀홀튼 국내유통 현황](reference_tim_hortons_korea_retail.md) — 오리지널블렌드·일부 300g 그라운드 한국 코스트코/백화점 입점, 원두축 취급금지 / K컵·믹스·굿즈만 유효
 - [2026 시즌캘린더](project_seasonal_calendar_2026.md) — 🚨수능(11/19,D-7) 태그 4회연속 미착수, N+사업자몰 공지 발견(본문미확인), 기획전=무료MD노출채널
-- [주간 신규SKU 자동파일럿](project_weekly_new_sku_autopilot.md) — 목요일밤 무인 발굴→§0-A→가격→일괄엑셀, 자동GO 1~2개/주
+- [주간 신규SKU 자동파일럿](project_weekly_new_sku_autopilot.md) — 🔄11/17 Aside 협업: Aside 리서치·중복확인→GO→메인 상세·이미지·엑셀·Codex→Aside 등록, 다나와 의존 금지
 - [영수증 자동대사](feedback_receipt_auto_reconcile.md) — poller가 이미 장부 기입, 정산 반영은 "정산해!" 라이브 트리거로(무인 자동화 롤백)
 - [정산 최신export 1개만](feedback_settlement_latest_export_only.md) — 발주발송 파일 여러날짜 합치면 취소주문 되살아남
 - [경쟁사 도착가 비교](feedback_competitor_landed_price_compare.md) — lprice 아닌 상품가+배송비, 주간 모니터링 루틴
