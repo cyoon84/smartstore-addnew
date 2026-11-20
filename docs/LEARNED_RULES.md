@@ -2627,6 +2627,18 @@ Today/Upcoming 뷰가 한 배치로 도배된다.
 
 **검증·보고:** `build_bulk_excel.py` 로 배치 1파일 생성 후 §5-1 규칙대로 `bulk-excel-verifier` 필수 통과(FAIL SKU는 배치에서 제외) → Slack `#new-item` 통합 보고("✅ 검증 통과 — 바로 업로드 가능" + 선정 SKU 근거 + 제외 후보 요약). [[project_weekly_new_sku_autopilot]]
 
+### 25-2. 🔄 2026-11-17 개편 — **Aside 가 리서치·중복확인·등록, 메인은 상세·이미지·엑셀·검증**
+
+사장님: *"다나와같이 반쪽짜리 데이터에 의존하지말고 aside browser를 호출해서 리서치해. 이미 같은 제품이 우리 스토어에 있는지도 확인하고. 너가 네이버에 접근을 못하니 이 부분을 aside에서 할려는거다. aside에서 해도 된다 신호 오면 상세페이지랑 이미지 만들고 나머지 등록하는 부분은 aside에다 맡겨."*
+
+- **리서치(Aside):** 현지가 2소스 교차, 네이버쇼핑·쿠팡 **실제 페이지**의 도착가·품절, 그리고 **스마트스토어센터 상품조회로 우리 스토어 중복 확인**(판매중지 포함). 결과는 `output/new-item/_batch/autopilot_<날짜>/research.json`, 후보마다 `verdict: GO|NO-GO|HOLD`.
+- **🚫 이 작업에서 다나와(`kr_price_check.py`)·`naver_search.py shop` 을 §0-A 판정 근거로 쓰지 않는다.** Aside 가 판정 못 하면 탈락.
+- **중복 확인 실패 = NO-GO**(§25-1 "확인 실패 ≠ 없음" 그대로). Aside 가 GO 를 줘도 로컬 product_info 에 상품번호가 있으면 메인이 뒤집는다.
+- **GO 후 메인:** price_calc → 로컬 jpg 이미지(placeholder) → 카피·상세 → 일괄엑셀 → Codex 엑셀검증 + 시각QA 둘 다 PASS.
+- **등록(Aside):** `docs/ASIDE_PLAYBOOK.md` 대로 이미지업로드→치환→엑셀 재생성→업로드→태그·브랜드·속성→구매자 페이지 확인→`PRODUCT_INFO_UPDATED:` → 메인이 `claude_skus.py --tag`.
+- **바뀐 것:** 기존 "최종 업로드는 사장님이 금요일 아침 판단"은 폐기 — Aside 가 등록까지 하고 Slack 에는 결과(상품번호·링크)를 보고한다. `HOLD`(통관 리스크 등 사장님 판단 필요) 후보만 진행 없이 보고.
+- Aside 는 항상 `aside exec --permission full-access --json --timeout`. Aside 연결 실패면 그 주 스킵(대체 수단으로 진행 금지).
+
 ---
 
 ## 26. 🔑 네이버쇼핑 "AI 생성물" 정책 강화 (2026-07-10 시행) — 이미지/영상 대상으로 확인, 텍스트카피 리스크는 낮음 (2026-08-17 신설 → 2026-08-29 갱신)

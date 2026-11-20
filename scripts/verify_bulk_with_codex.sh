@@ -71,6 +71,12 @@ Rules:
   product_info images.rep_image_url / additional_image_urls exactly. Report reachability
   as NOT-CHECKED (out of scope) rather than UNVERIFIED.
   (2026-08-02: a run failed all 9 SKUs purely because DNS was unavailable.)
+- Aside handoff flow (2026-11-17): image cells may hold placeholders like {{IMG_REP}} / {{IMG_1}}
+  instead of https URLs. That is NOT a defect when product_info.images.placeholders lists them and
+  product_info.images.local_files maps each one to an existing local jpg — Aside uploads those to
+  Naver and swaps in shop-phinf URLs before upload. In that case check: rep cell = {{IMG_REP}}
+  (or bulk.rep_image), add cell = bulk.add_images joined by newline, every placeholder mapped to an
+  existing file. Missing rep_image_url/additional_image_urls is expected in this flow.
 - Return the exact structured SKU-by-SKU PASS/FAIL format required by the playbook.
 - End with exactly one machine-readable line:
   VERDICT: PASS

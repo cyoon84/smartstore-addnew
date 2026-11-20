@@ -55,6 +55,13 @@ for slug in slugs:
     html = d / f"{slug}_detail.html"
     if html.exists():
         urls += re.findall(r'<img src="([^"]+)"', html.read_text())
+    # Aside 흐름(2026-11-17): {{IMG_*}} placeholder → product_info.images.local_files 의 로컬 jpg 를 미러로 복사
+    local_map = (json.loads(info.read_text()).get("images", {}).get("local_files") or {}) if info.exists() else {}
+    for k, p in local_map.items():
+        src = pathlib.Path(p)
+        if src.exists():
+            (img_dir / f"{slug[:18]}__{k.strip('{}')}__{src.name}").write_bytes(src.read_bytes())
+    urls = [u for u in urls if not (u and u.startswith("{{"))]
     for u in dict.fromkeys(x for x in urls if x):
         f = img_dir / f"{slug[:18]}__{u.split('/')[-1]}"
         if f.exists():

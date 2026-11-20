@@ -95,6 +95,7 @@ FIELD = {
     "exchange_fee": "교환배송비",
     "as_phone":     "A/S 전화번호",
     "as_guide":     "A/S 안내",
+    "minor_purchase": "미성년자 구매",   # bulk.minor_purchase="N" → 19세 미만 구매 불가(술 함유 초콜릿 등)
     # 상품정보제공고시 (기타 재화) — 개행 제거 후 매칭되므로 개행 없이 기재
     "gosi_name":    "상품정보제공고시품명",
     "gosi_model":   "상품정보제공고시모델명",
@@ -120,6 +121,7 @@ UNIT_BASE_BY_CATEGORY = [
     ("커피믹스/인스턴트커피", (), "g", 10),
     ("유가공품 > 치즈", (), "g", 10),     # 2026-10-21 등록화면 AI 추천 10g — KD 쉐이커 치즈파우더 500g(13825015562)
     ("젤리/사탕/초콜릿", (), "g", 10),    # 2026-11-17 등록화면 AI 추천 10g — 사워패치 젤리·바운티 초콜릿(10g 기준으로 등록됨)
+    ("음료 > 코코아", (), "g", 10),       # 2026-11-17 등록화면 AI 추천 10g — 팀홀튼 캔디케인 핫초코 450g(13882083016)
 ]
 UNIT_EXEMPT_MAX = 30          # 30g/30ml 이하 초소용량은 면제 → 자동 채움 안 함
 # 단위가격 의무 대상 대분류(식품·생활건강·화장품·유아용품). 그 외(패션잡화 가방 19L 등)는 자동 산정 안 함.
@@ -577,6 +579,9 @@ def build_data(pinfo, detail_html, cat_rows, deliv_rows):
         d["origin_direct"] = bulk["origin_direct"]
     elif d["origin_code"] == "03":
         d["origin_direct"] = "상세설명 참조"
+
+    if bulk.get("minor_purchase"):
+        d["minor_purchase"] = bulk["minor_purchase"]
 
     # 택배사코드 검증
     valid_deliv = {str(r[0]) for r in deliv_rows[1:]}
