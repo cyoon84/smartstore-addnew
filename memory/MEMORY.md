@@ -12,6 +12,7 @@
 - [리스테린 프레시버스트 288매](project_listerine_freshburst_wip.md) — 산출물 완료·검증 PASS, 남은 건 등록화면(태그10개·브랜드카탈로그·기타속성)
 - [한미보관 네스프레소 재고(one-off)](project_oneoff_hanmi_nespresso_stock_20260904.md) — 9/4 실사 23슬리브, 정본통합 보류. 7종 단가 확정(구매일 미확인분은 FX 잠정)
 - [🎯한국체류 목표 ₩500,000](project_korea_trip_goal_20260828.md) — 8/28~9/15 마감, 최종 ₩826,657(165.3%)
+- [한미 신고 내용 같으면 한 줄](feedback_hanmi_merge_same_declaration.md) — 상품번호 달라도 HS·영문명·브랜드·단가 같으면 수량 합산, 단 포장 체크리스트는 원본대로 갈라서
 - [한미 선언수량=실물 낱개수](feedback_hanmi_declared_qty_pack.md) — product-mapping 팩수량 열, 우리가 묶은 세트만 2 / 공장 묶음(세라비)은 1, 이름에 2개입 있다고 일괄 채우기 금지
 - [🚨한미 HS 음식=210690](feedback_hanmi_hs_code_food_210690.md) — 기존 21 폐기, 9/1 출고분부터. 매핑 211건 변경완료
 - [🚨한미 박스비·에어캡 개당 $1](feedback_hanmi_box_bubble_wrap_fee.md) — 청구서 TOTAL엔 없고 remaining balance로만 보임, 두 배치 ₩69,893 과대계상했었음
