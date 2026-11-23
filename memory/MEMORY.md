@@ -1,3 +1,4 @@
+- [🆕다우니 링클릴리저 매입처 표기](reference_downy_wrinkle_releaser_skus.md) — Light Fresh Scent·Fabric Spray·Wrinkle Releaser 전부 크리스프린넨 같은 물건(용량만 대조), PC Express 주문확인 메일은 추정치라 실영수증 재대조 필수
 - [🚨11/20 배치 — 이정현 배송지 변경](project_batch_20261120_wip.md) — 한미 변환 때 업로드용 엑셀 주소 교체 + 파이널체크에서 주소도 대조, COGS ₩141,160·남은구매 5건
 - [🆕리스팅→Aside 등록 핸드오프](feedback_aside_registration_handoff.md) — 메인은 카피·로컬이미지·엑셀·Codex QA까지, 네이버 등록+내가 못 여는 조회(셀러센터·스토어페이지·봇차단 사이트)는 전부 aside exec 로 (2026-11-17)
 - [🆕그룹상품 8대 위반유형(공식)](reference_naver_group_product_violations_2026.md) — 클린프로그램 제재, §13-3과 겹침+단위혼용·옵션명불일치 신규, 카테고리 890~1000개로 확대
