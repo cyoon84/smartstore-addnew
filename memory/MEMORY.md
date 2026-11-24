@@ -1,3 +1,4 @@
+- [🚨사진↔상품 눈으로 대조](feedback_verify_photo_mapping.md) — 업로드 순서 추측 금지(2026-11-24 굿즈 4종 사진 뒤바뀜+콜드컵 가격라벨 노출), 컨택트시트 Read + buyer_pages.png 직접 열어 확인
 - [🆕다우니 링클릴리저 매입처 표기](reference_downy_wrinkle_releaser_skus.md) — Light Fresh Scent·Fabric Spray·Wrinkle Releaser 전부 크리스프린넨 같은 물건(용량만 대조), PC Express 주문확인 메일은 추정치라 실영수증 재대조 필수
 - [🚨11/20 배치 — 이정현 배송지 변경](project_batch_20261120_wip.md) — 한미 변환 때 업로드용 엑셀 주소 교체 + 파이널체크에서 주소도 대조, COGS ₩141,160·남은구매 5건
 - [🆕리스팅→Aside 등록 핸드오프](feedback_aside_registration_handoff.md) — 메인은 카피·로컬이미지·엑셀·Codex QA까지, 네이버 등록+내가 못 여는 조회(셀러센터·스토어페이지·봇차단 사이트)는 전부 aside exec 로 (2026-11-17)
