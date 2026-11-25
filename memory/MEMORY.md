@@ -1,3 +1,4 @@
+- [🚨월마트 조회는 무조건 Aside](feedback_walmart_lookup_via_aside.md) — 상품페이지는 curl_cffi 로 열리지만 내 검색 파싱이 false negative(리츠 퍼지커버드를 "없다"고 단정), "없다" 판정을 내 검색만으로 내리지 말 것
 - [🚨사진↔상품 눈으로 대조](feedback_verify_photo_mapping.md) — 업로드 순서 추측 금지(2026-11-24 굿즈 4종 사진 뒤바뀜+콜드컵 가격라벨 노출), 컨택트시트 Read + buyer_pages.png 직접 열어 확인
 - [🆕다우니 링클릴리저 매입처 표기](reference_downy_wrinkle_releaser_skus.md) — Light Fresh Scent·Fabric Spray·Wrinkle Releaser 전부 크리스프린넨 같은 물건(용량만 대조), PC Express 주문확인 메일은 추정치라 실영수증 재대조 필수
 - [🚨11/20 배치 — 이정현 배송지 변경](project_batch_20261120_wip.md) — 한미 변환 때 업로드용 엑셀 주소 교체 + 파이널체크에서 주소도 대조, COGS ₩141,160·남은구매 5건
@@ -68,7 +69,7 @@
 - [카테고리 분기개편](reference_naver_category_reorg_2026.md) — 2026-07 완구/인형 세분화, 레고 확인필요 유지, 🆕공지사항 insane-search 직접접근 경로 발견(11/4)
 - [팀홀튼 국내유통 현황](reference_tim_hortons_korea_retail.md) — 오리지널블렌드·일부 300g 그라운드 한국 코스트코/백화점 입점, 원두축 취급금지 / K컵·믹스·굿즈만 유효
 - [2026 시즌캘린더](project_seasonal_calendar_2026.md) — 🚨수능(11/19,D-7) 태그 4회연속 미착수, N+사업자몰 공지 발견(본문미확인), 기획전=무료MD노출채널
-- [주간 신규SKU 자동파일럿](project_weekly_new_sku_autopilot.md) — 🔄11/17 Aside 협업: Aside 리서치·중복확인→GO→메인 상세·이미지·엑셀·Codex→Aside 등록, 다나와 의존 금지
+- [주간 신규SKU 자동파일럿](project_weekly_new_sku_autopilot.md) — 화·목 23시, 🔄11/17 Aside 협업: Aside 리서치·중복확인→GO→메인 상세·이미지·엑셀·Codex→Aside 등록, 다나와 의존 금지
 - [영수증 자동대사](feedback_receipt_auto_reconcile.md) — poller가 이미 장부 기입, 정산 반영은 "정산해!" 라이브 트리거로(무인 자동화 롤백)
 - [정산 최신export 1개만](feedback_settlement_latest_export_only.md) — 발주발송 파일 여러날짜 합치면 취소주문 되살아남
 - [경쟁사 도착가 비교](feedback_competitor_landed_price_compare.md) — lprice 아닌 상품가+배송비, 주간 모니터링 루틴

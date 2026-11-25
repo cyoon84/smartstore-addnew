@@ -353,6 +353,32 @@ r = requests.get(costco_product_url, impersonate="chrome", timeout=45)   # 200
 - ⚠️ 여전히 **온라인가 ≠ 창고 매대가**(K2+D3: 온라인 $27.99 vs 창고 $24.99). 창고가는 yepsavings 또는 사장님 확인.
 - 그 외 접근성 실측(2026-08-21): **metro.ca 200**(정가·세일가 둘 다) · **safeway.ca 200** · **gianttiger.ca 200**(Shopify) · **well.ca 200** · **ca.attitudeliving.com 200**(Shopify) · walmart.ca ❌ 봇페이지 · yourindependentgrocer.ca ❌ 403 · smartstore.naver.com ❌ 429.
 
+### 0-G-6. 🚨 **월마트(walmart.ca) 조회는 무조건 Aside** — 상품페이지가 열린다고 검색까지 믿으면 안 된다 (2026-11-25)
+
+**사장님 지시: "너 검색 못하니까 월마트는 무조건 aside한테 시켜."**
+
+walmart.ca 는 `curl_cffi` impersonate="chrome" 으로 **상품페이지가 200 으로 열린다**(338KB 정상, `__NEXT_DATA__` 에서
+`Size`·`Assembled Product Weight`·`og:image` 까지 다 뽑힘 — 위 §0-G-3 의 "walmart.ca ❌ 봇페이지" 는 그 점에서 낡았다).
+그래서 "이제 월마트는 내가 직접 된다" 고 판단해 **검색까지 직접 돌린 것이 사고의 원인**이다.
+
+**🔑 상품페이지 fetch 와 검색 결과 파싱은 별개다.** 내 파서는 `__NEXT_DATA__` 에서 `name`+`price` 키를 가진 dict 를
+긁는 방식이라 **검색 결과 전체를 담지 못한다.** 그래서 있는 제품이 안 나온다 = **false negative.**
+
+> 2026-11-25 — 정예은 주문의 리츠를 찾느라 `ritz holiday`·`ritz fudge covered`·`ritz chocolate fudge crackers`
+> 세 쿼리를 내 파서로 돌리고 **"월마트 온라인엔 리츠 홀리데이가 안 잡힙니다. 나오는 리츠는 드리즐드 미니 퍼지와
+> 캬라멜 두 개뿐"** 이라고 사장님께 단정 보고했다. 실제로는 `RITZ Fudge Covered Crackers Baked in Canada`
+> (item **6000203824246**)가 멀쩡히 있었고, 사장님이 URL 을 직접 던지며 *"이 멍청아"* 로 지적.
+
+**규칙:**
+- **월마트 가격·재고·검색·제품 유무 판정은 전부 `aside exec` 로 넘긴다.** 내가 직접 검색하지 않는다.
+- **내 `curl_cffi` 는 보조 용도만** — Aside 가 준 URL 로 제품 사진을 받아 **라벨을 눈으로 확인**하는 데만 쓴다
+  ([[feedback_verify_photo_mapping]] 대로 사진은 계속 내가 직접 본다). 사양값 교차확인도 Aside 보고의 **검증**으로만.
+- 🔑 **"없다 / 안 잡힌다" 는 부정 판정을 내 검색 결과만으로 내리지 않는다.** §25-1 "확인 실패 ≠ 없음" 과 **같은 구조**다 —
+  거기서는 스마트스토어 429 를 "미등록" 으로 읽었고, 여기서는 빈 검색 결과를 "미취급" 으로 읽었다.
+  fetch 가 200 이라는 사실은 **그 페이지가 열렸다**는 뜻일 뿐, **검색 결과가 완전하다**는 뜻이 아니다.
+- 다른 사이트에 이 교훈을 확장할 때도 같은 선: **상품페이지 직접 fetch 가 되는 것**(코스토코·메트로·Shopify 몰 등)과
+  **그 사이트 검색을 신뢰할 수 있는 것**은 별개로 판단한다.
+
 ### 0-G-5. 🔑 **공식몰 옵션 표기와 제품 라벨이 다르면 라벨이 정본** (2026-08-21)
 
 브랜드 공식몰의 옵션/사양 값이 **실제 패키지 라벨과 어긋나는 경우가 있다.** 규격을 잘못 등록하면 반품 사유가 되므로 **라벨(제품컷 확대 판독)을 정본으로 채택**한다(§9).
@@ -2668,7 +2694,8 @@ PC Express 확인메일은 `Estimated total` 이고, 픽업·배송 시점에 �
 - **GO 후 메인:** price_calc → 로컬 jpg 이미지(placeholder) → 카피·상세 → 일괄엑셀 → Codex 엑셀검증 + 시각QA 둘 다 PASS.
 - **등록(Aside):** `docs/ASIDE_PLAYBOOK.md` 대로 이미지업로드→치환→엑셀 재생성→업로드→태그·브랜드·속성→구매자 페이지 확인→`PRODUCT_INFO_UPDATED:` → 메인이 `claude_skus.py --tag`.
 - **바뀐 것:** 기존 "최종 업로드는 사장님이 금요일 아침 판단"은 폐기 — Aside 가 등록까지 하고 Slack 에는 결과(상품번호·링크)를 보고한다. `HOLD`(통관 리스크 등 사장님 판단 필요) 후보만 진행 없이 보고.
-- Aside 는 항상 `aside exec --permission full-access --json --timeout`. Aside 연결 실패면 그 주 스킵(대체 수단으로 진행 금지).
+- Aside 는 항상 `aside exec --permission full-access --json --timeout`. Aside 연결 실패면 그 회차 스킵(대체 수단으로 진행 금지).
+- **2026-11-24 — 실행 주기를 주 2회(화·목 23:00, cron `0 23 * * 2,4`)로 늘렸다**(사장님 지시). 회당 1~2 SKU 그대로, 로테이션 카테고리는 회차마다 한 칸씩 넘어간다.
 
 ---
 

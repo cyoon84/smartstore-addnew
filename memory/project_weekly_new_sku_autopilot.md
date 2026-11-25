@@ -5,6 +5,8 @@ metadata:
   type: project
 ---
 
+**📅 2026-11-24 — 주 2회(화·목 23:00)로 변경, 회당 1~2 SKU 유지.**
+
 **🔄 2026-11-17 개편 (최신 — 아래 옛 설명보다 우선):** Aside 가 리서치(현지가·네이버쇼핑/쿠팡 실페이지 도착가·**스마트스토어센터로 우리 스토어 중복확인**)→GO/NO-GO/HOLD 신호 → GO 만 메인이 가격·로컬 이미지·상세·엑셀·Codex 검증 → Aside 가 네이버 등록까지. 다나와 의존 금지, 중복확인 실패=NO-GO, Aside 연결 실패면 그 주 스킵. "업로드는 사장님" 은 폐기(HOLD 만 사장님 판단). 상세 = LEARNED_RULES §25-2, [[feedback_aside_registration_handoff]].
 
 **무엇(옛 설명):** scheduled-task `weekly-new-sku-autopilot` (매주 목 23:00, cron `0 23 * * 4`). 사람 확인 없이 신규 소싱 후보 발굴 → dedup → §0-A 국내시세 → 가격계산(price_calc.py) → 카피(listing-writer) → 저장 → `build_bulk_excel.py` → `bulk-excel-verifier` 검증까지 끝내, 금요일 아침 사용자가 바로 네이버에 올릴 수 있는 일괄등록 엑셀을 준비한다. 실제 네이버 업로드는 사용자가 직접 함 — 이 작업은 파일만 준비.
