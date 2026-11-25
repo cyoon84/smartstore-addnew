@@ -2127,7 +2127,15 @@ PC Express(RCSS·No Frills·Loblaws)·Instacart·Walmart 등은 **품목마다 �
 3. 그 제품을 산 `사야할 제품들` (해당 출고일 배치 부모, §20-2 규칙대로 기존 부모 재사용) 밑 항목을 `complete-tasks`로 cross off (§20). 이미 완료면 스킵.
 4. **[북키퍼 병행] `profit-expense-tracker` 지출 장부에도 같은 영수증을 동시에 기입** — `python3 /Volumes/External/claude/profit-expense-tracker/scripts/add_expense.py -c <카테고리> -d <날짜> -m <merchant> --subtotal/--tax/--total --method <결제수단> --receipt <원본경로>`. 정산 영수증(사입)은 보통 **`물건산거 (COGS)`** 탭, 주유·주차·정비·식비·supply·구독은 각 탭. 영수증 원본은 add_expense 가 `profit-expense-tracker/receipts/<YYYY-MM>/` 로 별도 복사(정산의 `output/receipts/<출고일>/` 와 **양쪽 다** 보관). 이건 비용(지출) 장부라 정산 COGS 와 목적이 다름(이중집계 아님 — 매출측 정산 vs 지출측 장부). (2026-07-18 사용자 "정산 프로세스 할 때 parallel로". 북키퍼 프로젝트 = [[project_bookkeeper_expense_tracker]])
 
-네 단계 중 하나라도 빼먹지 말 것 — 사용자가 매번 "보관은?" "Todoist도 지워줘" "장부에도 넣어"로 나눠 요청하게 만들지 않는다. 4번 북키퍼 기입은 1~3번과 **같은 턴에 병행**(별도 요청 기다리지 말 것).
+5. **🆕 Aside 로 QuickBooks 포워딩 (2026-11-25 사장님 지시 — "장부에 넣고 aside한테 quickbook으로 forwarding시켜")** —
+   `aside exec --permission full-access` 로 그 영수증 메일을 **`finchmart_to@qbodocs.com`** 로 전달시킨다.
+   프롬프트에 **메일 제목·발신자·날짜**를 적어 대상을 특정하고, **전달만** 하게 한다(답장·삭제·라벨 변경 금지).
+   그동안 Gmail MCP 가 드래프트까지만 돼서 막혀 있던 경로인데, Aside 는 사장님 로그인 브라우저를 쓰므로 그냥 된다
+   (§20-1 의 Drive 업로드 폐기 → 로컬 보관 + QBO 포워딩으로 정리). [[feedback_receipt_forward_to_quickbooks]]
+   ⚠️ **PC Express 는 "주문 확인메일" 로 이 절차를 시작하지 않는다** — Estimated total 이라 품목·금액이 바뀐다(§20-17).
+   **실영수증이 온 뒤에** 1~5 를 돌린다.
+
+다섯 단계 중 하나라도 빼먹지 말 것 — 사용자가 매번 "보관은?" "Todoist도 지워줘" "장부에도 넣어"로 나눠 요청하게 만들지 않는다. 4번 북키퍼 기입은 1~3번과 **같은 턴에 병행**(별도 요청 기다리지 말 것).
 
 **🔑 재고에서 깐 제품도 즉시 cross off — "구매 영수증이 없으니 미완료"가 아니다 (2026-07-26):** cross off 트리거는 "영수증 도착"이 아니라 **그 항목의 COGS 가 정산에 반영됐는가**다. 재고 차감분은 영수증이 새로 오지 않으므로(이미 과거에 산 물건) 그냥 두면 영원히 미완료로 남는다 — **재고 landed 원가로 COGS 를 넣는 그 순간 같이 `complete-tasks`** 한다. 부분 재고(주문 2 = 재고1 + 구매1)면 구매분이 남아 있으니 항목 유지, **전량 재고 충당이면 즉시 완료**. (2026-07-26 황수영 도브 16개입 — 재고 2→1 차감하고 COGS ₩17,733 까지 반영해놓고 Todoist 만 미완료로 남겨 사용자가 "황수영도 재고에서 깐거면 사야할 제품에서 crossed off해야하는거 아냐? 좀!" 지적.)
 
