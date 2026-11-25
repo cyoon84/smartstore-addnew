@@ -1,3 +1,4 @@
+- [🚨식료품은 무조건 Do not substitute](feedback_grocery_no_substitute.md) — PC Express 기본값이 자동대체인 줄이 섞여 있음, 대체품 오면 그대로 오배송. 담은 직후 줄별 대체설정 확인
 - [🚨월마트 조회는 무조건 Aside](feedback_walmart_lookup_via_aside.md) — 상품페이지는 curl_cffi 로 열리지만 내 검색 파싱이 false negative(리츠 퍼지커버드를 "없다"고 단정), "없다" 판정을 내 검색만으로 내리지 말 것
 - [🚨사진↔상품 눈으로 대조](feedback_verify_photo_mapping.md) — 업로드 순서 추측 금지(2026-11-24 굿즈 4종 사진 뒤바뀜+콜드컵 가격라벨 노출), 컨택트시트 Read + buyer_pages.png 직접 열어 확인
 - [🆕다우니 링클릴리저 매입처 표기](reference_downy_wrinkle_releaser_skus.md) — Light Fresh Scent·Fabric Spray·Wrinkle Releaser 전부 크리스프린넨 같은 물건(용량만 대조), PC Express 주문확인 메일은 추정치라 실영수증 재대조 필수
