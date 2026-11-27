@@ -1,4 +1,6 @@
+- [🚨매핑 누락은 소스 페이지 열고](feedback_mapping_from_source_page.md) — 성분으로 카테고리 추측(블루베리빌베리→EYE VITAMIN) 금지, 실제 제품명 사용. 단가도 합계 역산 말고 영수증 숫자
 - [🚨영수증은 QuickBooks 포워딩까지](feedback_receipt_forward_to_quickbooks.md) — 장부 기입 다음 Aside 로 finchmart_to@qbodocs.com 전달, PC Express 확인메일로 시작하지 말 것(추정치)
+- [Same-Day 배달가=마진10%](feedback_sameday_price_margin.md) — 코스트코 Same-Day 원가면 +10%(매장가 대비 20%), 매장가면 +20%
 - [🚨식료품은 무조건 Do not substitute](feedback_grocery_no_substitute.md) — PC Express 기본값이 자동대체인 줄이 섞여 있음, 대체품 오면 그대로 오배송. 담은 직후 줄별 대체설정 확인
 - [🚨월마트 조회는 무조건 Aside](feedback_walmart_lookup_via_aside.md) — 상품페이지는 curl_cffi 로 열리지만 내 검색 파싱이 false negative(리츠 퍼지커버드를 "없다"고 단정), "없다" 판정을 내 검색만으로 내리지 말 것
 - [🚨사진↔상품 눈으로 대조](feedback_verify_photo_mapping.md) — 업로드 순서 추측 금지(2026-11-24 굿즈 4종 사진 뒤바뀜+콜드컵 가격라벨 노출), 컨택트시트 Read + buyer_pages.png 직접 열어 확인
